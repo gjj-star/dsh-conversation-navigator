@@ -4,6 +4,10 @@ Codex 风格的 **DeepSeek Harness(DSH)Web 端会话导航面板**:在对话页*
 
 纯浏览器插件(无宿主行为)、纯 JavaScript、零构建、零 npm 依赖(按钮/Tooltip 复用 DSH 内核 seed 的官方 primitives)。
 
+![会话导航面板](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/screenshots/01-main.png)
+
+> 完整截图见 [assets/screenshots](./assets/screenshots)。其中「社区皮肤适配」两张为第三方皮肤下的效果(动漫女仆主题与君の名は主题),非插件自带。
+
 ## 功能
 
 - **按轮折叠大纲**:默认只显示"第 N 轮 + 你的问题"列表,长对话一目了然
