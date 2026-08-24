@@ -1,6 +1,6 @@
 {
   "name": "dsh-conversation-navigator",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "Codex 风格的 DSH(DeepSeek Harness)会话导航插件:按轮折叠的对话大纲面板,支持节点点击跳转、滚动位置高亮与轨迹视图同款配色。",
   "keywords": [
     "dsh",
