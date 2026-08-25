@@ -8,7 +8,7 @@
 [![awesome · DSH plugin](https://awesome-dsh-plugin.com/badge.svg)](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek_Harness-Plugin-blue?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
 
-Codex 风格的 **DeepSeek Harness(DSH)Web 端会话导航面板**:在对话页**右侧**悬浮展示按轮折叠的对话大纲,点击任意节点平滑跳转,滚动对话时实时高亮当前阅读位置,步次徽标配色与内置"轨迹"视图统一。
+**DeepSeek Harness(DSH)Web 端会话导航面板**:在对话页**右侧**悬浮展示按轮折叠的对话大纲,点击任意节点平滑跳转,滚动对话时实时高亮当前阅读位置,步次徽标配色与内置"轨迹"视图统一。
 
 纯浏览器插件(无宿主行为)、纯 JavaScript、零构建、零 npm 依赖(按钮/Tooltip 复用 DSH 内核 seed 的官方 primitives)。
 
@@ -29,7 +29,7 @@ Codex 风格的 **DeepSeek Harness(DSH)Web 端会话导航面板**:在对话页*
 - **位置跟踪**:手动滚动对话时,面板自动高亮并跟随当前正在阅读的轮次
 - **右侧定位**:面板锚定视口右侧,收起/展开左侧边栏时纹丝不动
 - **回到最新 / 全部折叠**:面板底部两个快捷按钮
-- **轨迹配色**:用户/插话 = 业务蓝、上下文 = 成功绿、助手 = 紫罗兰、工具 = 琥珀、压缩 = 中性灰(取自 `dsh-client-ui-trajectory` 的 kindTag 主题 token,自动适配明暗主题)
+- **轨迹配色**:用户/插话 = 业务蓝、上下文 = 成功绿、助手 = 紫罗兰、工具 = 琥珀、压缩 = 中性灰(与内置轨迹视图一致的 `--dsw` 主题 token,自动适配明暗主题)
 - **DSH 原生风格**:操作按钮复用官方 `Button`/`Tooltip` 组件与官方图标(搜索、关闭);其余操作图标(导航、加载更早、加载全部、回到最新、全部折叠、切换轮次等)为按 DSH 描边风格手绘的内联 SVG,`currentColor` 自动适配明暗主题
 - 切换工作区/会话自动跟随并重建大纲
 
@@ -81,6 +81,8 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 lib/
   index.js   # 宿主侧空入口(纯浏览器插件)
   client.js  # 浏览器端完整实现(window.__ModuleLoader__ 模块格式)
+assets/
+  screenshots/   # 截图(README 主图 + 市场截图墙)
 cordis.patch.yml     # 组合包补丁层(插入插件行)
 example.patch.yml    # 手动安装时的补丁示例
 ```
