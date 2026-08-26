@@ -73,7 +73,7 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 - 位置跟踪:捕获 `[data-conversation-scroll]` 滚动容器的 scroll 事件(节流 120ms),计算视口顶部首个可见节点
 - 关键词过滤:仅为 `user` 与 `assistant-step` 节点提取检索文本(`dialogueText`),大小写不敏感匹配,命中片段以 `<mark>` 高亮并按首个命中位置截取显示窗口
 - 悬停全文:轮次头气泡读取 `fullDialogueText`(用户节点全部文本块拼接),用 `Tooltip` 展示并限宽 340px
-- 显示/隐藏/极简模式:`viewMode` 四态循环(full/hidden/minimal/minimal-left),隐藏时仅把轮次头标题替换为轨迹徽标(`titleNode` 策略);极简右对齐由 CSS `right` 锚定视口右缘、左对齐以 `scrollport.left + 12` 钉在对话区左缘(定位 key 含 `r.left`,随侧栏宽度跟随);搜索框展开时按钮让位
+- 显示/隐藏/极简模式:`viewMode` 四态循环(full/hidden/minimal/minimal-left),隐藏时仅把轮次头标题替换为轨迹徽标(`titleNode` 策略);极简右对齐由 CSS `right` 锚定视口右缘、左对齐以 `scrollport.left + 12` 钉在对话区左缘(定位 key 含 `r.left`,并用 ResizeObserver 监听对话区宽度变化,左侧栏展开/折叠时紧贴跟随);搜索框展开时按钮让位
 - 拖动定位与持久化:面板头部拖拽(pointer events,视口夹边),拖动或图钉切换 `docked` 状态;`place()` 对自由放置的面板只做视口夹边、不再自动停靠;位置、停靠状态与对齐选择存于 localStorage(`dsh-cnvnav:ui:v1`)
 - 样式:`Button`/`Tooltip`/搜索与关闭图标复用 `@deepseek-ai/dsh-client-ui-primitives`,其余图标为内联 SVG;面板容器自建 `<style>` 注入,颜色使用 `--dsw-*` 主题 token;插件卸载时随 fiber 清理
 
