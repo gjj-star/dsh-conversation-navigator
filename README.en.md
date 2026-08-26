@@ -39,7 +39,7 @@ Browser-only (no host behavior), plain JavaScript, zero build step, zero npm dep
 - **Load earlier / Load all**: two buttons on top — "Load earlier" pages one batch back, "Load all" loads every historical turn into the navigator for arbitrary jumps (the page itself stays lazily loaded until you click)
 - **Position tracking**: scrolling the conversation highlights and follows the turn you are currently reading
 - **Right-side docking (default)**: the panel is anchored to the right edge of the viewport and stays put when the left sidebar collapses or expands; unpin (drag it or hit the pin) to place it anywhere
-- **Back to latest / Collapse all**: two shortcut buttons at the bottom
+- **Back to latest / Collapse all**: two shortcut buttons at the bottom; "Collapse all" is disabled when no turn is expanded, so it never looks broken for doing nothing
 - **Trajectory colors**: user/steering = business blue, context = success green, assistant = violet, tool = amber, compaction = neutral gray (`--dsw` theme tokens matching the built-in trajectory view, light/dark adaptive)
 - **Native DSH look**: action buttons reuse the official `Button`/`Tooltip` components and official icons (search, close); the remaining icons (navigate, load earlier, load all, back to latest, collapse all, switch modes, …) are inline SVGs drawn in the DSH stroke style, `currentColor` adaptive to light/dark themes
 - Follows workspace/session switches automatically and rebuilds the outline
