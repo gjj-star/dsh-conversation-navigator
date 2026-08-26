@@ -19,7 +19,7 @@ Browser-only (no host behavior), plain JavaScript, zero build step, zero npm dep
 ![Minimal mode · collapsed](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-minimal-hide.png)
 ![Minimal mode · expanded](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-minimal-expand.png)
 
-> Three modes: full, hidden, and minimal (collapsed shows only the in-row indicator bars; hover expands the positioning panel). More screenshots in [assets/screenshots](./assets/screenshots). The two "community skins" shots are taken under third-party skins (whale-girl maid theme and the "Your Name" theme), not bundled with the plugin.
+> Four forms: full, hidden, minimal-right, and minimal-left (the minimal strips collapse to the in-row indicator bars; hover expands the positioning panel). More screenshots in [assets/screenshots](./assets/screenshots). The two "community skins" shots are taken under third-party skins (whale-girl maid theme and the "Your Name" theme), not bundled with the plugin.
 
 ## Features
 
@@ -27,15 +27,18 @@ Browser-only (no host behavior), plain JavaScript, zero build step, zero npm dep
 - **Keyword filter**: click the top-left search icon to reveal the inline input; matches only your questions + the assistant's actual reply text (context, tool calls, commands, compaction and reasoning never match); hits are highlighted and the list text is windowed to the keyword
 - **Expand / collapse steps**: the arrow button on the right of each turn row (`▸ N`, rotates to `▾` when expanded) smoothly expands or collapses the turn's step details (assistant replies, tool calls, commands, compaction points, etc.)
 - **Hover full text**: rest the mouse on a turn row and a bubble shows the user's complete question, no longer truncated to one line
-- **Full / Hidden / Minimal modes**: the header toggle cycles three states —
+- **Full / Hidden / Minimal modes**: the header toggle cycles four states —
   - **Full**: the classic grouped view (system events like compaction are shown bold, at the same level as turns)
   - **Hidden**: every row is a trajectory badge + text (user = business blue, assistant = violet, compaction = neutral gray)
-  - **Minimal**: collapsed shows only the in-row indicator bars (current = solid brand color, others = 40% foreground-color mix); hovering expands a fixed 7-row positioning panel from right to left (click to jump, hover bubble for the full question, thumb-only scrollbar beyond 7 rows); a floating button above the bars returns to Full mode; the toggle yields while the search input is open
+  - **Minimal-right**: the indicator-bar strip docked to the right edge of the viewport
+  - **Minimal-left**: the same strip pinned to the left edge of the conversation area (at the right border of the DSH sidebar), leaving the right side for dsh-better-sidebar
+  - The minimal strip collapses to the in-row indicator bars (current = solid brand color, others = 40% foreground-color mix); hovering expands a fixed 7-row positioning panel (click to jump, hover bubble for the full question, thumb-only scrollbar beyond 7 rows; right-aligned expands from right to left, left-aligned from left to right); a floating button above the bars returns to Full mode; the toggle yields while the search input is open
+- **Draggable panel**: in Full / Hidden mode, grab the header to drag the panel anywhere in the viewport (auto-clamped to the edges); the pin button in the header toggles between the default right-dock and the last dragged position; the dragged position and the minimal left/right alignment survive page reloads via localStorage
 - **Silky motion**: panel fade, step expand/collapse height transitions, staggered fade-in of filter results, rotating collapse arrow — all pure CSS, zero dependencies
 - **Click to locate**: click a turn or a step to smooth-scroll the conversation to that exact position (fold state is preserved)
 - **Load earlier / Load all**: two buttons on top — "Load earlier" pages one batch back, "Load all" loads every historical turn into the navigator for arbitrary jumps (the page itself stays lazily loaded until you click)
 - **Position tracking**: scrolling the conversation highlights and follows the turn you are currently reading
-- **Right-side docking**: the panel is anchored to the right edge of the viewport and stays put when the left sidebar collapses or expands
+- **Right-side docking (default)**: the panel is anchored to the right edge of the viewport and stays put when the left sidebar collapses or expands; unpin (drag it or hit the pin) to place it anywhere
 - **Back to latest / Collapse all**: two shortcut buttons at the bottom
 - **Trajectory colors**: user/steering = business blue, context = success green, assistant = violet, tool = amber, compaction = neutral gray (`--dsw` theme tokens matching the built-in trajectory view, light/dark adaptive)
 - **Native DSH look**: action buttons reuse the official `Button`/`Tooltip` components and official icons (search, close); the remaining icons (navigate, load earlier, load all, back to latest, collapse all, switch modes, …) are inline SVGs drawn in the DSH stroke style, `currentColor` adaptive to light/dark themes
@@ -63,7 +66,7 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 
 ## Updates
 
-Edit `lib/client.js` and restart `dsh web`; the plugin has no persistent state — expand/collapse, mode selection and search keywords live only within the page session.
+Edit `lib/client.js` and restart `dsh web`. Only the panel position, docked state and minimal alignment persist (localStorage `dsh-cnvnav:ui:v1`); expand/collapse, mode selection and search keywords still live only within the page session.
 
 ## How it works
 
@@ -74,7 +77,8 @@ Edit `lib/client.js` and restart `dsh web`; the plugin has no persistent state �
 - Position tracking: captures scroll events on the `[data-conversation-scroll]` container (throttled 120ms) and computes the first visible node at the viewport top
 - Keyword filter: extracts searchable text only for `user` and `assistant-step` nodes (`dialogueText`), case-insensitive matching, hits wrapped in `<mark>` and the display windowed around the first hit
 - Hover full text: the turn-row bubble reads `fullDialogueText` (all text blocks of the user node joined), shown via `Tooltip` with a 340px width cap
-- Modes: the header button cycles `viewMode` (full/hidden/minimal); hidden replaces the turn head title with a trajectory badge (`titleNode` strategy); minimal renders a dedicated positioning panel (collapsed shows only the in-row bars, hover expands); the toggle yields while the search input is open
+- Modes: the header button cycles `viewMode` (full/hidden/minimal/minimal-left); hidden replaces the turn head title with a trajectory badge (`titleNode` strategy); minimal-right is docked by CSS `right`, minimal-left is pinned to `scrollport.left + 12` (the placement key includes `r.left` so it follows the sidebar width); the toggle yields while the search input is open
+- Drag & persistence: the full-panel header is draggable (pointer events, clamped to the viewport); dragging or the pin toggles `docked`; `place()` only clamps a freely-placed panel into the viewport instead of re-docking it; the position, docked state and alignment choice persist in localStorage (`dsh-cnvnav:ui:v1`)
 - Styling: `Button`/`Tooltip`/search & close icons reuse `@deepseek-ai/dsh-client-ui-primitives`, the rest are inline SVGs; the panel injects its own `<style>` element, colors use `--dsw-*` theme tokens; everything is cleaned up with the fiber on unload
 
 ## Compatibility
