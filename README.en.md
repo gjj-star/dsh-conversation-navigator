@@ -41,7 +41,7 @@ Browser-only (no host behavior), plain JavaScript, zero build step, zero npm dep
 - **Right-side docking (default)**: the panel is anchored to the right edge of the viewport and stays put when the left sidebar collapses or expands; unpin (drag it or hit the pin) to place it anywhere
 - **Back to latest / Collapse all**: two shortcut buttons at the bottom; "Collapse all" is disabled when no turn is expanded, so it never looks broken for doing nothing
 - **Trajectory colors**: user/steering = business blue, context = success green, assistant = violet, tool = amber, compaction = neutral gray (`--dsw` theme tokens matching the built-in trajectory view, light/dark adaptive)
-- **Native DSH look**: action buttons reuse the official `Button`/`Tooltip` components and official icons (search, close); the remaining icons (navigate, load earlier, load all, back to latest, collapse all, switch modes, …) are inline SVGs drawn in the DSH stroke style, `currentColor` adaptive to light/dark themes
+- **Native DSH look**: action buttons reuse the official `Button`/`Tooltip` components and official icons (search, close); the remaining icons (navigate, load earlier, load all, back to latest, collapse all, switch modes, …) are outline icons from **Lucide** (ISC License, [lucide.dev](https://lucide.dev)), `currentColor` adaptive to light/dark themes
 - Follows workspace/session switches automatically and rebuilds the outline
 
 ## Install
@@ -79,7 +79,7 @@ Edit `lib/client.js` and restart `dsh web`. Only the panel position, docked stat
 - Hover full text: the turn-row bubble reads `fullDialogueText` (all text blocks of the user node joined), shown via `Tooltip` with a 340px width cap
 - Modes: the header button cycles `viewMode` (full/hidden/minimal/minimal-left); hidden replaces the turn head title with a trajectory badge (`titleNode` strategy); minimal-right is docked by CSS `right`, minimal-left is pinned to `scrollport.left + 12` (the placement key includes `r.left` and a ResizeObserver on the chat area re-anchors it whenever the left sidebar expands or collapses); the toggle yields while the search input is open
 - Drag & persistence: the full-panel header is draggable (pointer events, clamped to the viewport); dragging or the pin toggles `docked`; `place()` only clamps a freely-placed panel into the viewport instead of re-docking it; the position, docked state and alignment choice persist in localStorage (`dsh-cnvnav:ui:v1`)
-- Styling: `Button`/`Tooltip`/search & close icons reuse `@deepseek-ai/dsh-client-ui-primitives`, the rest are inline SVGs; the panel injects its own `<style>` element, colors use `--dsw-*` theme tokens; everything is cleaned up with the fiber on unload
+- Styling: `Button`/`Tooltip`/search & close icons reuse `@deepseek-ai/dsh-client-ui-primitives`, the rest are inline Lucide SVGs (ISC License); the panel injects its own `<style>` element, colors use `--dsw-*` theme tokens; everything is cleaned up with the fiber on unload
 
 ## Compatibility
 

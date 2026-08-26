@@ -37,7 +37,7 @@
 - **右侧定位**:默认锚定视口右侧,收起/展开左侧边栏时纹丝不动;解除停靠(拖动/图钉)后可自由放置
 - **回到最新 / 全部折叠**:面板底部两个快捷按钮;「全部折叠」在没有展开的轮次时置灰,避免误以为失效
 - **轨迹配色**:用户/插话 = 业务蓝、上下文 = 成功绿、助手 = 紫罗兰、工具 = 琥珀、压缩 = 中性灰(与内置轨迹视图一致的 `--dsw` 主题 token,自动适配明暗主题)
-- **DSH 原生风格**:操作按钮复用官方 `Button`/`Tooltip` 组件与官方图标(搜索、关闭);其余操作图标(导航、加载更早、加载全部、回到最新、全部折叠、切换轮次等)为按 DSH 描边风格手绘的内联 SVG,`currentColor` 自动适配明暗主题
+- **DSH 原生风格**:操作按钮复用官方 `Button`/`Tooltip` 组件与官方图标(搜索、关闭);其余操作图标(导航、加载更早、加载全部、回到最新、全部折叠、切换轮次等)取自 **Lucide** 描边图标集(ISC License,[lucide.dev](https://lucide.dev)),`currentColor` 自动适配明暗主题
 - 切换工作区/会话自动跟随并重建大纲
 
 ## 安装
@@ -75,7 +75,7 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 - 悬停全文:轮次头气泡读取 `fullDialogueText`(用户节点全部文本块拼接),用 `Tooltip` 展示并限宽 340px
 - 显示/隐藏/极简模式:`viewMode` 四态循环(full/hidden/minimal/minimal-left),隐藏时仅把轮次头标题替换为轨迹徽标(`titleNode` 策略);极简右对齐由 CSS `right` 锚定视口右缘、左对齐以 `scrollport.left + 12` 钉在对话区左缘(定位 key 含 `r.left`,并用 ResizeObserver 监听对话区宽度变化,左侧栏展开/折叠时紧贴跟随);搜索框展开时按钮让位
 - 拖动定位与持久化:面板头部拖拽(pointer events,视口夹边),拖动或图钉切换 `docked` 状态;`place()` 对自由放置的面板只做视口夹边、不再自动停靠;位置、停靠状态与对齐选择存于 localStorage(`dsh-cnvnav:ui:v1`)
-- 样式:`Button`/`Tooltip`/搜索与关闭图标复用 `@deepseek-ai/dsh-client-ui-primitives`,其余图标为内联 SVG;面板容器自建 `<style>` 注入,颜色使用 `--dsw-*` 主题 token;插件卸载时随 fiber 清理
+- 样式:`Button`/`Tooltip`/搜索与关闭图标复用 `@deepseek-ai/dsh-client-ui-primitives`,其余图标为 Lucide 内联 SVG(ISC License);面板容器自建 `<style>` 注入,颜色使用 `--dsw-*` 主题 token;插件卸载时随 fiber 清理
 
 ## 兼容性说明
 
