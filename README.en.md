@@ -9,6 +9,8 @@
 [![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen?style=flat-square)](https://www.npmjs.com/package/dsh-conversation-navigator)
 [![awesome · DSH plugin](https://awesome-dsh-plugin.com/badge.svg)](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek_Harness-Plugin-blue?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
+[![dsh.so risk](https://www.dsh.so/badge/dsh-conversation-navigator-2.svg)](https://www.dsh.so/artifact/dsh-conversation-navigator-2/)
+[![dsh.so install](https://www.dsh.so/badge/install/dsh-conversation-navigator-2.svg)](https://www.dsh.so/artifact/dsh-conversation-navigator-2/)
 
 A **DeepSeek Harness (DSH) Web conversation navigator panel**: a turn-folded outline floating on the **right** side of the conversation page. Click any node to smooth-jump, watch the current reading position highlight as you scroll, with step badges colored to match the built-in "Trajectory" view.
 

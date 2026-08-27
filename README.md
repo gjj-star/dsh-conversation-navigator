@@ -9,6 +9,8 @@
 [![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen?style=flat-square)](https://www.npmjs.com/package/dsh-conversation-navigator)
 [![awesome · DSH plugin](https://awesome-dsh-plugin.com/badge.svg)](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek_Harness-Plugin-blue?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
+[![dsh.so risk](https://www.dsh.so/badge/dsh-conversation-navigator-2.svg)](https://www.dsh.so/artifact/dsh-conversation-navigator-2/)
+[![dsh.so install](https://www.dsh.so/badge/install/dsh-conversation-navigator-2.svg)](https://www.dsh.so/artifact/dsh-conversation-navigator-2/)
 
 **DeepSeek Harness(DSH)Web 端会话导航面板**:在对话页**右侧**悬浮展示按轮折叠的对话大纲,点击任意节点平滑跳转,滚动对话时实时高亮当前阅读位置,步次徽标配色与内置"轨迹"视图统一。
 
