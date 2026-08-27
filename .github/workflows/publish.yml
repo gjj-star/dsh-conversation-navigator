@@ -20,7 +20,22 @@ jobs:
         with:
           node-version: 22
           registry-url: 'https://registry.npmjs.org'
+      # 幂等保护: 版本已发布(例如手动发过再补 tag/Release)时跳过, 避免 403 撞车
+      - name: Skip if version already published
+        id: skip
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view dsh-conversation-navigator@$VERSION version >/dev/null 2>&1; then
+            echo "v$VERSION already on npm — skipping publish"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "v$VERSION not on npm — will publish"
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Publish
+        if: steps.skip.outputs.skip != 'true'
         run: npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
