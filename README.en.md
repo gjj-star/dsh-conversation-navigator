@@ -37,6 +37,7 @@ Browser-only (no host behavior), plain JavaScript, zero build step, zero npm dep
   - **Minimal-left**: the same strip pinned to the left edge of the conversation area (at the right border of the DSH sidebar), leaving the right side for dsh-better-sidebar
   - The minimal strip collapses to the in-row indicator bars (current = solid brand color, others = 40% foreground-color mix); hovering expands a fixed 7-row positioning panel (click to jump, hover bubble for the full question, thumb-only scrollbar beyond 7 rows; right-aligned expands from right to left, left-aligned from left to right); a floating button above the bars keeps cycling forward (minimal-right → minimal-left → Full); the toggle yields while the search input is open
 - **Draggable panel**: in Full / Hidden mode, grab the header to drag the panel anywhere in the viewport (auto-clamped to the edges; the expanded height is capped at half the viewport with the top edge fixed and the panel growing downward — expanding a huge turn scrolls the list internally while the "Back to latest / Collapse all" footer stays reachable); the pin button in the header toggles between the default right-dock and the last dragged position; the dragged position and the minimal left/right alignment survive page reloads via localStorage
+- **Resizable panel**: drag from the bottom-left rounded corner (Full / Hidden modes only) — width 240–560 px, height vertical. Height follows a content-adaptive + cap model: actual height = min(turn content, the cap you drag to), tracking the number of turns with no blank space under the footer; floor ~3 turns, ceiling within the conversation viewport. The drag tracks the pointer 1:1 and is fully reversible; width/height persist in localStorage
 - **Silky motion**: panel fade, step expand/collapse height transitions, staggered fade-in of filter results, rotating collapse arrow — all pure CSS, zero dependencies
 - **Click to locate**: click a turn or a step to smooth-scroll the conversation to that exact position (fold state is preserved)
 - **Load earlier / Load all**: two buttons on top — "Load earlier" pages one batch back, "Load all" loads every historical turn into the navigator for arbitrary jumps (the page itself stays lazily loaded until you click)
@@ -69,7 +70,9 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 
 ## Updates
 
-Edit `lib/client.js` and restart `dsh web`. Only the panel position, docked state and minimal alignment persist (localStorage `dsh-cnvnav:ui:v1`); expand/collapse, mode selection and search keywords still live only within the page session.
+Edit `lib/client.js` and restart `dsh web`. Docked state, dragged position, minimal alignment and the panel width/height persist (localStorage `dsh-cnvnav:ui:v1`); expand/collapse, mode selection and search keywords still live only within the page session.
+
+> Published to npm as `dsh-conversation-navigator` (the version badge above always shows the latest release); to upgrade an installed copy, update from the marketplace or run `dsh plugin --profile web add dsh-conversation-navigator` again, then restart.
 
 ## How it works
 
@@ -82,6 +85,7 @@ Edit `lib/client.js` and restart `dsh web`. Only the panel position, docked stat
 - Hover full text: the turn-row bubble reads `fullDialogueText` (all text blocks of the user node joined), shown via `Tooltip` with a 340px width cap
 - Modes: the header button cycles `viewMode` (full/hidden/minimal/minimal-left); hidden replaces the turn head title with a trajectory badge (`titleNode` strategy); minimal-right is docked by CSS `right`, minimal-left is pinned to `scrollport.left + 12` (the placement key includes `r.left` and a ResizeObserver on the chat area re-anchors it whenever the left sidebar expands or collapses); the toggle yields while the search input is open
 - Drag & persistence: the full-panel header is draggable (pointer events, clamped to the viewport); dragging or the pin toggles `docked`; `place()` only clamps a freely-placed panel into the viewport instead of re-docking it; the position, docked state and alignment choice persist in localStorage (`dsh-cnvnav:ui:v1`)
+- Resize: a transparent bottom-left corner grip captures pointer events; width writes `style.width` directly (240–560), height only adjusts `maxHeight` while `height` stays `auto`, so the actual height is always min(content, cap) with no blank space; dragging follows the start point linearly (`base + delta`) and shares the same container/viewport clamps as `place()` so nothing snaps on release; width/height persist as `panelWidth`/`panelHeight`
 - Styling: `Button`/`Tooltip`/search & close icons reuse `@deepseek-ai/dsh-client-ui-primitives`, the rest are inline Lucide SVGs (ISC License); the panel injects its own `<style>` element, colors use `--dsw-*` theme tokens; everything is cleaned up with the fiber on unload
 
 ## Compatibility
