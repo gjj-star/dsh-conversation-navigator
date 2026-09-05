@@ -64,20 +64,20 @@ pnpm pack
 dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 ```
 
-`dsh plugin` forwards to pnpm inside the profile directory, so **pnpm must be on your PATH**; installation appends this package to the profile's `dsh.profile.bundles`, and its bundled `cordis.patch.yml` layer inserts the plugin row. Restart `dsh web` and the panel appears (expanded by default).
+`dsh plugin` forwards to pnpm inside the profile directory, so **pnpm must be on your PATH**; installation appends this package to the profile's `dsh.profile.bundles`, and its bundled `cordis.patch.yml` layer inserts the plugin row. Restart `dsh web` and the panel appears. **Dual-form defaults**: on official DSH < 0.1.2-rc.1 (no built-in navigator) the panel is expanded by default; on official DSH ≥ 0.1.2-rc.1 (the conversation view ships the built-in TurnNavigator rail) the panel starts closed in "minimal-left" form, summoned by the "导航" title-bar toggle, with zero overlap against the official right-edge rail.
 
 > Manual install (no pnpm): place the repo at `<DSH_HOME>\profiles\<profile>\node_modules\dsh-conversation-navigator` and append the content of [`example.patch.yml`](./example.patch.yml) to the top-level array of the profile's `cordis.patch.yml`.
 
 ## Updates
 
-Edit `lib/client.js` and restart `dsh web`. Docked state, dragged position, minimal alignment and the panel width/height persist (localStorage `dsh-cnvnav:ui:v1`); expand/collapse, mode selection and search keywords still live only within the page session.
+Edit `lib/client.js` and restart `dsh web`. Docked state, dragged position, minimal alignment, the panel width/height and the open/closed state persist (localStorage `dsh-cnvnav:ui:v1`); search keywords still live only within the page session.
 
 > Published to npm as `dsh-conversation-navigator` (the version badge above always shows the latest release); to upgrade an installed copy, update from the marketplace or run `dsh plugin --profile web add dsh-conversation-navigator` again, then restart.
 
 ## How it works
 
 - Slots: `conversation.session.header.utilities` (the "导航" toggle in the title bar) + `shell.overlay` (the floating panel)
-- Data: the session-level standard props `useSession` (selects the stable render order `order` of `ConversationSnapshot.chat` + the `ChatNodeStore`), grouped by `node.location` turn
+- Data (dual-form): legacy hosts read the session-level standard props `useSession` (the stable render order `order` of `ConversationSnapshot.chat` + the `ChatNodeStore`), grouped by `node.location` turn; new hosts (official ≥ 0.1.2-rc.1) read the `uiConversation.binding(binding).target("chat")` snapshot's `legacy` compatibility projection (ordered `nodes` + `turnEnds` turn boundaries), re-derived automatically on `loadOlder`
 - History backfill: pages back through `sessions`'s `binding(sessionId).session.loadOlder()`, "Load all" loops until `hasMore=false`
 - Jumping: reuses the DSH chat view's own stable DOM anchor `[data-chat-anchor-key]` (the same anchor the product uses internally for paging/scroll positioning) with `scrollIntoView` smooth scrolling
 - Position tracking: captures scroll events on the `[data-conversation-scroll]` container (throttled 120ms) and computes the first visible node at the viewport top
@@ -90,8 +90,10 @@ Edit `lib/client.js` and restart `dsh web`. Docked state, dragged position, mini
 
 ## Compatibility
 
-- Target platform: DSH Web (`dsh.client.platform: web`), depends on the kernel seed's `react`, `slots`, `sessions` services and `@deepseek-ai/dsh-client-ui-primitives`, plus the standard capabilities provided by `dsh-client-runtime` and `dsh-client-ui-conversation` (`dsh.client.inject` declares runtime and conversation)
-- **Version-sensitive points**: `[data-chat-anchor-key]` / `[data-conversation-scroll]` are the current DOM anchor conventions of the DSH chat view; if they change after a DSH upgrade, only `findAnchor` / `computeActiveKey` in `lib/client.js` need adjusting
+- Target platform: DSH Web (`dsh.client.platform: web`), depends on the kernel seed's `react`, `slots`, `sessions` services and `@deepseek-ai/dsh-client-ui-primitives`; `dsh.client.inject` declares `@deepseek-ai/dsh-client-ui-conversation` (`dsh-client-runtime` was removed in official v0.1.2-rc.1 and is no longer injected)
+- **Dual form (0.2.6)**: the host form is detected at runtime via feature detection — the presence of the `uiConversation` service marks the new host (official ≥ 0.1.2-rc.1); no hardcoded version numbers. Legacy hosts keep the full navigator (expanded by default); new hosts coexist with the official TurnNavigator: closed by default, "minimal-left" form, always-visible search box — the official rail handles jumping, this plugin focuses on keyword search, bulk "Load all" and step-level badges
+- **Host dependency declaration**: `@deepseek-ai/dsh-client-ui-conversation` is declared as a `peerDependencies` semver range (the awesome-dsh-plugin convention; dshmarket's dependency check surfaces host compatibility from it)
+- **Version-sensitive points**: `[data-chat-anchor-key]` / `[data-conversation-scroll]` are the current DOM anchor conventions of the DSH chat view (verified still present in official v0.1.2-rc.1); if they change after a DSH upgrade, only `findAnchor` / `computeActiveKey` in `lib/client.js` need adjusting
 - No hard `timer` dependency: the client timer service is used for throttling when present, and degrades to unthrottled otherwise
 
 ## Structure

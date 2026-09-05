@@ -60,20 +60,20 @@ pnpm pack
 dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 ```
 
-`dsh plugin` 在 profile 目录内转发给 pnpm,因此需要 **pnpm 在 PATH 上**;安装会自动把本包追加进 profile 的 `dsh.profile.bundles`,其自带的 `cordis.patch.yml` 层负责插入插件行。重启 `dsh web` 后生效,面板默认展开。
+`dsh plugin` 在 profile 目录内转发给 pnpm,因此需要 **pnpm 在 PATH 上**;安装会自动把本包追加进 profile 的 `dsh.profile.bundles`,其自带的 `cordis.patch.yml` 层负责插入插件行。重启 `dsh web` 后生效。**双形态默认值**:官方 < 0.1.2-rc.1(无内置导航)时面板默认展开;官方 ≥ 0.1.2-rc.1(会话视图内置 TurnNavigator 轮次轨道)时面板默认关闭、默认形态为「极简·左」,由标题栏「导航」按钮主动呼出,与官方右侧轨道零重叠。
 
 > 手动方式(不依赖 pnpm):把仓库放进 `<DSH_HOME>\profiles\<profile>\node_modules\dsh-conversation-navigator`,并在 profile 的 `cordis.patch.yml` 顶层数组追加 [`example.patch.yml`](./example.patch.yml) 的内容。
 
 ## 更新
 
-修改 `lib/client.js` 后重启 `dsh web` 即可;停靠状态、拖动位置、极简左/右对齐与面板宽高持久化于 localStorage(`dsh-cnvnav:ui:v1`),展开/折叠、模式、搜索关键词等界面状态仍只存于页面会话内。
+修改 `lib/client.js` 后重启 `dsh web` 即可;停靠状态、拖动位置、极简左/右对齐、面板宽高与面板展开/收起(`open`)持久化于 localStorage(`dsh-cnvnav:ui:v1`),搜索关键词等界面状态仍只存于页面会话内。
 
 > 已发布到 npm(`dsh-conversation-navigator`,徽章实时显示最新版本);升级已安装副本:市场更新或 `dsh plugin --profile web add dsh-conversation-navigator` 后重启。
 
 ## 工作原理
 
 - 注册槽位:`conversation.session.header.utilities`(标题栏「导航」开关)+ `shell.overlay`(浮动面板)
-- 数据来源:会话级标准 props 的 `useSession`(选择 `ConversationSnapshot.chat` 的稳定渲染顺序 `order` + `ChatNodeStore`),按 `node.location` 的 turn 分组
+- 数据来源(双形态):旧宿主走会话级标准 props 的 `useSession`(选择 `ConversationSnapshot.chat` 的 `order` + `ChatNodeStore`),按 `node.location` 的 turn 分组;新宿主(官方 ≥ 0.1.2-rc.1)走 `uiConversation.binding(binding).target("chat")` 快照的 `legacy` 兼容投影(有序 `nodes` + `turnEnds` 轮次边界),随 `loadOlder` 自动重派生
 - 历史补载:通过 `sessions` 服务的 `binding(sessionId).session.loadOlder()` 分页向后加载,「加载全部」循环至 `hasMore=false`
 - 跳转定位:复用 DSH 聊天视图自身的稳定 DOM 锚点 `[data-chat-anchor-key]`(与产品内部 paging/scroll 定位同源),`scrollIntoView` 平滑滚动
 - 位置跟踪:捕获 `[data-conversation-scroll]` 滚动容器的 scroll 事件(节流 120ms),计算视口顶部首个可见节点
@@ -86,8 +86,10 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 
 ## 兼容性说明
 
-- 目标平台:DSH Web 端(`dsh.client.platform: web`),依赖内核 seed 的 `react`、`slots`、`sessions` 服务与 `@deepseek-ai/dsh-client-ui-primitives`,以及 `dsh-client-runtime`、`dsh-client-ui-conversation` 提供的标准能力(`dsh.client.inject` 已声明 runtime 与 conversation)
-- **版本敏感点**:`[data-chat-anchor-key]` / `[data-conversation-scroll]` 是当前 DSH 聊天视图的 DOM 锚点约定,DSH 升级后若锚点变化,只需调整 `lib/client.js` 中 `findAnchor` / `computeActiveKey` 两个函数
+- 目标平台:DSH Web 端(`dsh.client.platform: web`),依赖内核 seed 的 `react`、`slots`、`sessions` 服务与 `@deepseek-ai/dsh-client-ui-primitives`;`dsh.client.inject` 声明 `@deepseek-ai/dsh-client-ui-conversation`(`dsh-client-runtime` 已于官方 v0.1.2-rc.1 移除,不再注入)
+- **双形态(0.2.6)**:运行时用 feature detection 区分宿主——存在 `uiConversation` 服务即新宿主(官方 ≥ 0.1.2-rc.1),不硬编码版本号。旧宿主保持全功能导航器(默认展开);新宿主与官方内置 TurnNavigator 共存:默认关闭 + 「极简·左」形态 + 搜索框常驻,官方轨道负责跳转,本插件专注关键词搜索、批量「加载全部」与步次级徽标
+- **宿主依赖声明**:`@deepseek-ai/dsh-client-ui-conversation` 以 peerDependencies + semver 范围声明(awesome-dsh-plugin 约定,dshmarket 的依赖检查据此展示宿主兼容性)
+- **版本敏感点**:`[data-chat-anchor-key]` / `[data-conversation-scroll]` 是当前 DSH 聊天视图的 DOM 锚点约定(官方 v0.1.2-rc.1 中已验证仍在),DSH 升级后若锚点变化,只需调整 `lib/client.js` 中 `findAnchor` / `computeActiveKey` 两个函数
 - 未声明 `timer` 硬依赖:客户端的 timer 服务存在则用于节流,不存在时自动退化为未节流模式
 
 ## 目录结构
