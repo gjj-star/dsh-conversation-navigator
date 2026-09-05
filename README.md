@@ -22,7 +22,7 @@
 ![极简模式·收起](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-minimal-hide.png)
 ![极简模式·展开](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-minimal-expand.png)
 
-> 四种形态:显示轮次、隐藏轮次、极简·右、极简·左(极简收起仅露行内指示条,悬停展开定位面板)。完整截图见 [assets/screenshots](./assets/screenshots)。其中「社区皮肤适配」两张为第三方皮肤下的效果(鲸鱼娘女仆主题与君の名は主题),非插件自带。
+> 三种形态:显示轮次、隐藏轮次、极简·左(极简·右已暂缓,代码保留在仓库中;极简收起仅露行内指示条,悬停展开定位面板)。完整截图见 [assets/screenshots](./assets/screenshots)。其中「社区皮肤适配」两张为第三方皮肤下的效果(鲸鱼娘女仆主题与君の名は主题),非插件自带。
 
 ## 功能
 
@@ -30,8 +30,8 @@
 - **关键词过滤**:点击左上角搜索图标呼出输入框,只按「你的提问 + 助手实际回复文本」过滤(上下文、工具、命令、压缩、推理等不参与匹配),命中词高亮,列表文本自动定位到关键词处
 - **展开/折叠步次**:点击轮次行右侧的箭头按钮(`▸ N`,展开时旋转为 `▾`)平滑展开/折叠该轮的步次明细(助手回复、工具调用、命令、压缩点等)
 - **悬停查看全文**:鼠标在轮次行停留片刻,气泡显示该轮用户提问的完整原文,不再被单行截断
-- **显示 / 隐藏 / 极简四种形态**:头部切换按钮四态循环——「显示轮次」为经典分组视图(压缩等系统事件与轮次同级加粗展示)→「隐藏轮次」每行统一为轨迹徽标 + 文本(用户 = 业务蓝、助手 = 紫罗兰、压缩 = 中性灰)→「极简·右」视口右缘指示条→「极简·左」锚定对话区左缘(为 dsh-better-sidebar 让出右侧),再回到「显示轮次」;
-- 「极简」形态收起时只露行内指示条(当前 = 品牌色实色、非当前 = 主题前景色掺 40%),悬停展开 7 行画幅的定位面板(点击跳转、悬停全文气泡、超 7 条仅滑块滚动;右对齐从右向左展开、左对齐向右展开),外置悬浮按钮继续循环(极简·右→极简·左→显示轮次),搜索框展开时按钮自动让位
+- **显示 / 隐藏 / 极简·左三种形态**:头部切换按钮三态循环——「显示轮次」为经典分组视图(压缩等系统事件与轮次同级加粗展示)→「隐藏轮次」每行统一为轨迹徽标 + 文本(用户 = 业务蓝、助手 = 紫罗兰、压缩 = 中性灰)→「极简·左」锚定对话区左缘(为 dsh-better-sidebar 让出右侧,并与官方右侧轨道零重叠),再回到「显示轮次」;「极简·右」形态自 0.2.6 起暂缓(与官方 TurnNavigator 轨道视觉重叠),代码保留;
+- 「极简」形态收起时只露行内指示条(当前 = 品牌色实色、非当前 = 主题前景色掺 40%),悬停展开 7 行画幅的定位面板(点击跳转、悬停全文气泡、超 7 条仅滑块滚动;左对齐向右展开),外置悬浮按钮继续循环(极简·左→显示轮次),搜索框展开时按钮自动让位
 - **面板可拖动**:显示轮次 / 隐藏轮次面板按住头部即可拖到视口任意位置(自动夹边;展开高度至多半屏,上边缘固定、下边缘展开,超长轮次时列表内部滚动,底部「回到最新/全部折叠」始终可达),头部图钉按钮在「默认右侧停靠」与「上次拖动位置」间切换;拖动位置与极简左/右对齐选择持久化于 localStorage,刷新页面原样恢复
 - **面板尺寸可调**:左下角圆角处拖拽缩放(仅显示轮次 / 隐藏轮次)——横向拖宽(240–560px),纵向拖高/拖矮;高度采用「内容自适应 + 上限」模型:实际高度 = min(轮次内容, 你拖到的上限),随轮数变化、不会在底部产生空白,下限约 3 轮,上限不超过会话可视区;拖拽 1:1 线性跟随、可逆,尺寸持久化于 localStorage
 - **丝滑动效**:面板开合淡入淡出、步次展开/折叠高度过渡、过滤结果逐条级联淡入、折叠箭头旋转——全部纯 CSS 实现,零依赖
@@ -60,26 +60,26 @@ pnpm pack
 dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 ```
 
-`dsh plugin` 在 profile 目录内转发给 pnpm,因此需要 **pnpm 在 PATH 上**;安装会自动把本包追加进 profile 的 `dsh.profile.bundles`,其自带的 `cordis.patch.yml` 层负责插入插件行。重启 `dsh web` 后生效。**双形态默认值**:官方 < 0.1.2-rc.1(无内置导航)时面板默认展开;官方 ≥ 0.1.2-rc.1(会话视图内置 TurnNavigator 轮次轨道)时面板默认关闭、默认形态为「极简·左」,由标题栏「导航」按钮主动呼出,与官方右侧轨道零重叠。
+`dsh plugin` 在 profile 目录内转发给 pnpm,因此需要 **pnpm 在 PATH 上**;安装会自动把本包追加进 profile 的 `dsh.profile.bundles`,其自带的 `cordis.patch.yml` 层负责插入插件行。重启 `dsh web` 后生效。**双形态默认值**:官方 < 0.1.2-rc.1(无内置导航)时面板默认展开;官方 ≥ 0.1.2-rc.1(会话视图内置 TurnNavigator 轮次轨道)时面板默认关闭、默认形态为「极简·左」、搜索框默认收起,由标题栏「导航」按钮主动呼出,与官方右侧轨道零重叠。
 
 > 手动方式(不依赖 pnpm):把仓库放进 `<DSH_HOME>\profiles\<profile>\node_modules\dsh-conversation-navigator`,并在 profile 的 `cordis.patch.yml` 顶层数组追加 [`example.patch.yml`](./example.patch.yml) 的内容。
 
 ## 更新
 
-修改 `lib/client.js` 后重启 `dsh web` 即可;停靠状态、拖动位置、极简左/右对齐、面板宽高与面板展开/收起(`open`)持久化于 localStorage(`dsh-cnvnav:ui:v1`),搜索关键词等界面状态仍只存于页面会话内。
+修改 `lib/client.js` 后重启 `dsh web` 即可;停靠状态、拖动位置、极简左对齐、面板宽高持久化于 localStorage(`dsh-cnvnav:ui:v2`;面板的展开/收起 `open` 不再持久化——新宿主每次启动都从默认关闭开始,搜索关键词等界面状态仍只存于页面会话内。
 
 > 已发布到 npm(`dsh-conversation-navigator`,徽章实时显示最新版本);升级已安装副本:市场更新或 `dsh plugin --profile web add dsh-conversation-navigator` 后重启。
 
 ## 工作原理
 
 - 注册槽位:`conversation.session.header.utilities`(标题栏「导航」开关)+ `shell.overlay`(浮动面板)
-- 数据来源(双形态):旧宿主走会话级标准 props 的 `useSession`(选择 `ConversationSnapshot.chat` 的 `order` + `ChatNodeStore`),按 `node.location` 的 turn 分组;新宿主(官方 ≥ 0.1.2-rc.1)走 `uiConversation.binding(binding).target("chat")` 快照的 `legacy` 兼容投影(有序 `nodes` + `turnEnds` 轮次边界),随 `loadOlder` 自动重派生
+- 数据来源(双形态):旧宿主走会话级标准 props 的 `useSession`;新宿主(官方 ≥ 0.1.2-rc.1)走 `uiConversation.binding(binding).target("chat")` 快照——主通道为官方 `timeline.turnOrder` + `locations` 索引分组,`ChatNodeStore.values()` 兜底(依节点自带 `location` 或 `anchorSeq` 对照轮次边界归组),再用官方 `turnOutline` 投影(`sessions.projectionStore(sid).get("turnOutline")` / slot 标准 props 的 `useProjection`,与官方 rail 的 `mergeTurnRailItems` 同源)补上被组装器漏挂的用户消息与加载窗口外的轮次;随 `loadOlder` 自动重派生
 - 历史补载:通过 `sessions` 服务的 `binding(sessionId).session.loadOlder()` 分页向后加载,「加载全部」循环至 `hasMore=false`
 - 跳转定位:复用 DSH 聊天视图自身的稳定 DOM 锚点 `[data-chat-anchor-key]`(与产品内部 paging/scroll 定位同源),`scrollIntoView` 平滑滚动
 - 位置跟踪:捕获 `[data-conversation-scroll]` 滚动容器的 scroll 事件(节流 120ms),计算视口顶部首个可见节点
 - 关键词过滤:仅为 `user` 与 `assistant-step` 节点提取检索文本(`dialogueText`),大小写不敏感匹配,命中片段以 `<mark>` 高亮并按首个命中位置截取显示窗口
 - 悬停全文:轮次头气泡读取 `fullDialogueText`(用户节点全部文本块拼接),用 `Tooltip` 展示并限宽 340px
-- 显示/隐藏/极简模式:`viewMode` 四态循环(full/hidden/minimal/minimal-left),隐藏时仅把轮次头标题替换为轨迹徽标(`titleNode` 策略);极简右对齐由 CSS `right` 锚定视口右缘、左对齐以 `scrollport.left + 12` 钉在对话区左缘(定位 key 含 `r.left`,并用 ResizeObserver 监听对话区宽度变化,左侧栏展开/折叠时紧贴跟随);搜索框展开时按钮让位
+- 显示/隐藏/极简模式:`viewMode` 三态循环(full/hidden/minimal-left,「极简·右」minimal 已注释保留),隐藏时仅把轮次头标题替换为轨迹徽标(`titleNode` 策略);极简左对齐以 `scrollport.left + 12` 钉在对话区左缘(定位 key 含 `r.left`,并用 ResizeObserver 监听对话区宽度变化,左侧栏展开/折叠时紧贴跟随);搜索框展开时按钮让位
 - 拖动定位与持久化:面板头部拖拽(pointer events,视口夹边),拖动或图钉切换 `docked` 状态;`place()` 对自由放置的面板只做视口夹边、不再自动停靠;位置、停靠状态与对齐选择存于 localStorage(`dsh-cnvnav:ui:v1`)
 - 拖拽缩放:左下角透明热区捕获 pointer 事件;宽度直接写 `style.width`(240–560),高度只调 `maxHeight` 并保持 `height:auto`,使实际高度恒为 min(内容, 上限) 而不产生空白;拖动以起点为基准线性跟随(`base + 位移`),上限与 `place()` 的容器/视口钳制同源,松手零回弹;宽高随 `panelWidth`/`panelHeight` 持久化
 - 样式:`Button`/`Tooltip`/搜索与关闭图标复用 `@deepseek-ai/dsh-client-ui-primitives`,其余图标为 Lucide 内联 SVG(ISC License);面板容器自建 `<style>` 注入,颜色使用 `--dsw-*` 主题 token;插件卸载时随 fiber 清理
@@ -87,7 +87,8 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 ## 兼容性说明
 
 - 目标平台:DSH Web 端(`dsh.client.platform: web`),依赖内核 seed 的 `react`、`slots`、`sessions` 服务与 `@deepseek-ai/dsh-client-ui-primitives`;`dsh.client.inject` 声明 `@deepseek-ai/dsh-client-ui-conversation`(`dsh-client-runtime` 已于官方 v0.1.2-rc.1 移除,不再注入)
-- **双形态(0.2.6)**:运行时用 feature detection 区分宿主——存在 `uiConversation` 服务即新宿主(官方 ≥ 0.1.2-rc.1),不硬编码版本号。旧宿主保持全功能导航器(默认展开);新宿主与官方内置 TurnNavigator 共存:默认关闭 + 「极简·左」形态 + 搜索框常驻,官方轨道负责跳转,本插件专注关键词搜索、批量「加载全部」与步次级徽标
+- **双形态(0.2.6)**:运行时用 feature detection 区分宿主——存在 `uiConversation` 服务即新宿主(官方 ≥ 0.1.2-rc.1),不硬编码版本号。`uiConversation` 已加入客户端 `exports.inject` 声明,运行时保证其先就绪,宿主检测稳定不再随加载时序翻转。旧宿主保持全功能导航器(默认展开);新宿主与官方内置 TurnNavigator 共存:默认关闭 + 「极简·左」 + 搜索框默认收起,官方轨道负责跳转,本插件专注关键词搜索、批量「加载全部」与步次级徽标
+- **宿主版本说明**:已在官方 **DSH v0.1.2-rc.1**(Web 端)完整验证——含新的 `uiConversation` 服务、`conversation.session.header.utilities` 空 props 契约、chat target 快照(`timeline`/`locations`/`nodes`/`navigation`/`legacy`)与 `turnOutline` 投影;旧宿主(无 `uiConversation`)经 `useSession` 路径兼容保留,未在 0.1.2-rc.1 之前的官方版本上逐一回归
 - **宿主依赖声明**:`@deepseek-ai/dsh-client-ui-conversation` 以 peerDependencies + semver 范围声明(awesome-dsh-plugin 约定,dshmarket 的依赖检查据此展示宿主兼容性)
 - **版本敏感点**:`[data-chat-anchor-key]` / `[data-conversation-scroll]` 是当前 DSH 聊天视图的 DOM 锚点约定(官方 v0.1.2-rc.1 中已验证仍在),DSH 升级后若锚点变化,只需调整 `lib/client.js` 中 `findAnchor` / `computeActiveKey` 两个函数
 - 未声明 `timer` 硬依赖:客户端的 timer 服务存在则用于节流,不存在时自动退化为未节流模式
