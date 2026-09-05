@@ -1,6 +1,6 @@
 {
   "name": "dsh-conversation-navigator",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "DSH(DeepSeek Harness)会话导航插件:按轮折叠的对话大纲面板,支持节点点击跳转、滚动位置高亮与轨迹视图同款配色。",
   "keywords": [
     "dsh",
@@ -32,6 +32,9 @@
   "engines": {
     "node": ">=18"
   },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-client-ui-conversation": ">=0.1.1-rc.2 <0.2.0"
+  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
@@ -39,7 +42,6 @@
     "client": {
       "platform": "web",
       "inject": [
-        "@deepseek-ai/dsh-client-runtime",
         "@deepseek-ai/dsh-client-ui-conversation"
       ]
     }
