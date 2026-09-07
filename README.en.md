@@ -96,6 +96,19 @@ Edit `lib/client.js` and restart `dsh web`. Docked state, dragged position, mini
 - **Version-sensitive points**: `[data-chat-anchor-key]` / `[data-conversation-scroll]` are the current DOM anchor conventions of the DSH chat view (verified still present in official v0.1.2-rc.1); if they change after a DSH upgrade, only `findAnchor` / `computeActiveKey` in `lib/client.js` need adjusting
 - No hard `timer` dependency: the client timer service is used for throttling when present, and degrades to unthrottled otherwise
 
+## Host ↔ plugin version
+
+Official v0.1.2-rc.1 made a breaking change to the conversation data layer (conversation nodes moved from the `session.chat` snapshot to the `uiConversation` chat target snapshot), so the plugin forks by host version:
+
+| Host `dsh-client-ui-conversation` | Matching plugin version | npm tag |
+|---|---|---|
+| **≥ 0.1.2-rc.1** (has the `uiConversation` service) | **0.2.6 and later** (currently 0.2.8) | `latest` (default) |
+| **≤ 0.1.1-rc.2** (no `uiConversation`, legacy `session.chat` snapshot) | **0.2.5 and earlier** | `legacy` |
+
+- New hosts can install the latest normally (`dsh plugin --profile web add dsh-conversation-navigator`).
+- Legacy hosts should pin the legacy tag: `npm i dsh-conversation-navigator@legacy` (= 0.2.5).
+- From 0.2.6 the `peerDependencies` range is `>=0.1.2-rc.1 <0.2.0` (new host only); 0.2.5 and earlier declare no such range.
+
 ## Structure
 
 ```

@@ -93,6 +93,19 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 - **版本敏感点**:`[data-chat-anchor-key]` / `[data-conversation-scroll]` 是当前 DSH 聊天视图的 DOM 锚点约定(官方 v0.1.2-rc.1 中已验证仍在),DSH 升级后若锚点变化,只需调整 `lib/client.js` 中 `findAnchor` / `computeActiveKey` 两个函数
 - 未声明 `timer` 硬依赖:客户端的 timer 服务存在则用于节流,不存在时自动退化为未节流模式
 
+## 宿主版本 ↔ 插件版本
+
+官方 v0.1.2-rc.1 对会话数据层做了一次爆破性更新(会话节点从 `session.chat` 快照迁移到 `uiConversation` 的 chat target 快照),因此插件按宿主版本分叉:
+
+| 宿主 `dsh-client-ui-conversation` | 对应插件版本 | npm 标签 |
+|---|---|---|
+| **≥ 0.1.2-rc.1**（有 `uiConversation` 服务） | **0.2.6 及以后**（当前 0.2.8） | `latest`（默认） |
+| **≤ 0.1.1-rc.2**（无 `uiConversation`，旧 `session.chat` 快照） | **0.2.5 及以前** | `legacy` |
+
+- 新宿主直接安装最新版即可（`dsh plugin --profile web add dsh-conversation-navigator`）。
+- 旧宿主请指定旧标签：`npm i dsh-conversation-navigator@legacy`（= 0.2.5）。
+- 0.2.6 起 `peerDependencies` 声明为 `>=0.1.2-rc.1 <0.2.0`（仅新宿主）；0.2.5 及以前不声明该范围。
+
 ## 目录结构
 
 ```
