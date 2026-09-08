@@ -17,12 +17,10 @@ A **DeepSeek Harness (DSH) Web conversation navigator panel**: a turn-folded out
 
 Browser-only (no host behavior), plain JavaScript, zero build step, zero npm dependencies (buttons/tooltips reuse the official primitives from the DSH kernel seed).
 
-![Full mode](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-main.png)
-![Hidden mode](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-no-round.png)
-![Minimal mode · collapsed](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-minimal-hide.png)
-![Minimal mode · expanded](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-minimal-expand.png)
+![Dark mode](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/dark.png)
+![Light mode](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/light.png)
 
-> Three forms: full, hidden, and minimal-left (minimal-right is shelved as of 0.2.6, code retained). The minimal strips collapse to the in-row indicator bars; hover expands the positioning panel. More screenshots in [assets/screenshots](./assets/screenshots). The two "community skins" shots are taken under third-party skins (whale-girl maid theme and the "Your Name" theme), not bundled with the plugin.
+> The conversation navigator in dark and light mode. Three forms: full, hidden, and minimal-left (minimal-right is shelved as of 0.2.6, code retained). The minimal strips collapse to the in-row indicator bars; hover expands the positioning panel. More screenshots in [assets/screenshots](./assets/screenshots).
 
 ## Features
 

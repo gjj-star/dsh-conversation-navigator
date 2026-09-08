@@ -17,12 +17,10 @@
 
 纯浏览器插件(无宿主行为)、纯 JavaScript、零构建、零 npm 依赖(按钮/Tooltip 复用 DSH 内核 seed 的官方 primitives)。
 
-![显示轮次模式](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-main.png)
-![隐藏轮次模式](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-no-round.png)
-![极简模式·收起](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-minimal-hide.png)
-![极简模式·展开](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/mode-minimal-expand.png)
+![深色模式](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/dark.png)
+![浅色模式](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/light.png)
 
-> 三种形态:显示轮次、隐藏轮次、极简·左(极简·右已暂缓,代码保留在仓库中;极简收起仅露行内指示条,悬停展开定位面板)。完整截图见 [assets/screenshots](./assets/screenshots)。其中「社区皮肤适配」两张为第三方皮肤下的效果(鲸鱼娘女仆主题与君の名は主题),非插件自带。
+> 深色 / 浅色模式下的会话导航面板。三种形态:显示轮次、隐藏轮次、极简·左(极简·右自 0.2.6 暂缓,代码保留;极简收起仅露行内指示条,悬停展开定位面板)。更多截图见 [assets/screenshots](./assets/screenshots)。
 
 ## 功能
 
