@@ -1,0 +1,587 @@
+{
+ "version": 1,
+ "package": "dsh-conversation-navigator",
+ "repo": "gjj-star/dsh-conversation-navigator",
+ "createdAt": "2026-09-14T03:27:29.250Z",
+ "npmDaily": {
+  "2026-08-17": 2125,
+  "2026-08-18": 243,
+  "2026-08-19": 346,
+  "2026-08-20": 68,
+  "2026-08-21": 313,
+  "2026-08-22": 54,
+  "2026-08-23": 15,
+  "2026-08-24": 366,
+  "2026-08-25": 328,
+  "2026-08-26": 231,
+  "2026-08-27": 190,
+  "2026-08-28": 267,
+  "2026-08-29": 81,
+  "2026-08-30": 56,
+  "2026-08-31": 217,
+  "2026-09-01": 101,
+  "2026-09-02": 86,
+  "2026-09-03": 0,
+  "2026-09-04": 93,
+  "2026-09-05": 244,
+  "2026-09-06": 75,
+  "2026-09-07": 0,
+  "2026-09-08": 0,
+  "2026-09-09": 62,
+  "2026-09-10": 83,
+  "2026-09-11": 90,
+  "2026-09-12": 61,
+  "2026-09-13": 0,
+  "2026-09-14": 0
+ },
+ "viewsDaily": {
+  "2026-08-17": {
+   "count": 24,
+   "uniques": 5,
+   "source": "recovered-session-log"
+  },
+  "2026-08-18": {
+   "count": 7,
+   "uniques": 5,
+   "source": "recovered-session-log"
+  },
+  "2026-08-19": {
+   "count": 2,
+   "uniques": 1,
+   "source": "recovered-session-log"
+  },
+  "2026-08-20": {
+   "count": 2,
+   "uniques": 1,
+   "source": "recovered-session-log"
+  },
+  "2026-08-21": {
+   "count": 15,
+   "uniques": 9,
+   "source": "recovered-session-log"
+  },
+  "2026-08-22": {
+   "count": 3,
+   "uniques": 2,
+   "source": "recovered-session-log"
+  },
+  "2026-08-23": {
+   "count": 5,
+   "uniques": 5,
+   "source": "recovered-session-log"
+  },
+  "2026-08-24": {
+   "count": 20,
+   "uniques": 9,
+   "source": "recovered-session-log"
+  },
+  "2026-08-25": {
+   "count": 51,
+   "uniques": 5,
+   "source": "recovered-session-log"
+  },
+  "2026-08-26": {
+   "count": 63,
+   "uniques": 32,
+   "source": "recovered-session-log"
+  },
+  "2026-08-27": {
+   "count": 141,
+   "uniques": 38,
+   "source": "recovered-session-log"
+  },
+  "2026-08-28": {
+   "count": 112,
+   "uniques": 44,
+   "source": "recovered-session-log"
+  },
+  "2026-08-29": {
+   "count": 56,
+   "uniques": 29,
+   "source": "recovered-session-log"
+  },
+  "2026-08-30": {
+   "count": 22,
+   "uniques": 11,
+   "source": "github-api"
+  },
+  "2026-08-31": {
+   "count": 47,
+   "uniques": 27,
+   "source": "github-api"
+  },
+  "2026-09-01": {
+   "count": 63,
+   "uniques": 27,
+   "source": "github-api"
+  },
+  "2026-09-02": {
+   "count": 42,
+   "uniques": 25,
+   "source": "github-api"
+  },
+  "2026-09-03": {
+   "count": 59,
+   "uniques": 28,
+   "source": "github-api"
+  },
+  "2026-09-04": {
+   "count": 62,
+   "uniques": 28,
+   "source": "github-api"
+  },
+  "2026-09-05": {
+   "count": 58,
+   "uniques": 23,
+   "source": "github-api"
+  },
+  "2026-09-06": {
+   "count": 33,
+   "uniques": 14,
+   "source": "github-api"
+  },
+  "2026-09-07": {
+   "count": 54,
+   "uniques": 22,
+   "source": "github-api"
+  },
+  "2026-09-08": {
+   "count": 45,
+   "uniques": 15,
+   "source": "github-api"
+  },
+  "2026-09-09": {
+   "count": 28,
+   "uniques": 11,
+   "source": "github-api"
+  },
+  "2026-09-10": {
+   "count": 41,
+   "uniques": 14,
+   "source": "github-api"
+  },
+  "2026-09-11": {
+   "count": 29,
+   "uniques": 18,
+   "source": "github-api"
+  },
+  "2026-09-12": {
+   "count": 13,
+   "uniques": 10,
+   "source": "github-api"
+  }
+ },
+ "clonesDaily": {
+  "2026-08-17": {
+   "count": 51,
+   "uniques": 33,
+   "source": "recovered-session-log"
+  },
+  "2026-08-18": {
+   "count": 4,
+   "uniques": 4,
+   "source": "recovered-session-log"
+  },
+  "2026-08-19": {
+   "count": 12,
+   "uniques": 10,
+   "source": "recovered-session-log"
+  },
+  "2026-08-20": {
+   "count": 13,
+   "uniques": 10,
+   "source": "recovered-session-log"
+  },
+  "2026-08-21": {
+   "count": 9,
+   "uniques": 7,
+   "source": "recovered-session-log"
+  },
+  "2026-08-22": {
+   "count": 7,
+   "uniques": 4,
+   "source": "recovered-session-log"
+  },
+  "2026-08-23": {
+   "count": 6,
+   "uniques": 6,
+   "source": "recovered-session-log"
+  },
+  "2026-08-24": {
+   "count": 8,
+   "uniques": 6,
+   "source": "recovered-session-log"
+  },
+  "2026-08-25": {
+   "count": 25,
+   "uniques": 14,
+   "source": "recovered-session-log"
+  },
+  "2026-08-26": {
+   "count": 19,
+   "uniques": 14,
+   "source": "recovered-session-log"
+  },
+  "2026-08-27": {
+   "count": 21,
+   "uniques": 17,
+   "source": "recovered-session-log"
+  },
+  "2026-08-28": {
+   "count": 18,
+   "uniques": 12,
+   "source": "recovered-session-log"
+  },
+  "2026-08-29": {
+   "count": 2,
+   "uniques": 2,
+   "source": "recovered-session-log"
+  },
+  "2026-08-30": {
+   "count": 5,
+   "uniques": 5,
+   "source": "github-api"
+  },
+  "2026-08-31": {
+   "count": 20,
+   "uniques": 15,
+   "source": "github-api"
+  },
+  "2026-09-01": {
+   "count": 18,
+   "uniques": 9,
+   "source": "github-api"
+  },
+  "2026-09-02": {
+   "count": 5,
+   "uniques": 5,
+   "source": "github-api"
+  },
+  "2026-09-03": {
+   "count": 36,
+   "uniques": 17,
+   "source": "github-api"
+  },
+  "2026-09-04": {
+   "count": 2,
+   "uniques": 2,
+   "source": "github-api"
+  },
+  "2026-09-05": {
+   "count": 33,
+   "uniques": 18,
+   "source": "github-api"
+  },
+  "2026-09-06": {
+   "count": 3,
+   "uniques": 3,
+   "source": "github-api"
+  },
+  "2026-09-07": {
+   "count": 47,
+   "uniques": 25,
+   "source": "github-api"
+  },
+  "2026-09-08": {
+   "count": 41,
+   "uniques": 22,
+   "source": "github-api"
+  },
+  "2026-09-09": {
+   "count": 3,
+   "uniques": 3,
+   "source": "github-api"
+  },
+  "2026-09-10": {
+   "count": 7,
+   "uniques": 5,
+   "source": "github-api"
+  },
+  "2026-09-11": {
+   "count": 6,
+   "uniques": 6,
+   "source": "github-api"
+  },
+  "2026-09-12": {
+   "count": 2,
+   "uniques": 2,
+   "source": "github-api"
+  }
+ },
+ "starsDaily": {
+  "2026-08-21": 4,
+  "2026-08-25": 1,
+  "2026-08-26": 2,
+  "2026-08-27": 3,
+  "2026-08-28": 3,
+  "2026-08-29": 2,
+  "2026-08-30": 1,
+  "2026-09-02": 1,
+  "2026-09-04": 1,
+  "2026-09-05": 2,
+  "2026-09-09": 1,
+  "2026-09-10": 1
+ },
+ "releases": [
+  {
+   "version": "0.1.0",
+   "at": "2026-08-17T08:20:16.670Z"
+  },
+  {
+   "version": "0.1.1",
+   "at": "2026-08-17T08:38:06.585Z"
+  },
+  {
+   "version": "0.1.2",
+   "at": "2026-08-17T08:44:33.484Z"
+  },
+  {
+   "version": "0.1.3",
+   "at": "2026-08-17T09:10:49.433Z"
+  },
+  {
+   "version": "0.1.4",
+   "at": "2026-08-17T09:21:20.784Z"
+  },
+  {
+   "version": "0.1.5",
+   "at": "2026-08-17T09:36:01.101Z"
+  },
+  {
+   "version": "0.1.6",
+   "at": "2026-08-17T09:43:45.068Z"
+  },
+  {
+   "version": "0.1.7",
+   "at": "2026-08-17T09:54:22.873Z"
+  },
+  {
+   "version": "0.1.8",
+   "at": "2026-08-17T10:04:40.905Z"
+  },
+  {
+   "version": "0.1.9",
+   "at": "2026-08-17T10:11:50.327Z"
+  },
+  {
+   "version": "0.1.10",
+   "at": "2026-08-17T10:19:20.928Z"
+  },
+  {
+   "version": "0.1.11",
+   "at": "2026-08-17T10:23:03.428Z"
+  },
+  {
+   "version": "0.1.12",
+   "at": "2026-08-17T10:29:49.325Z"
+  },
+  {
+   "version": "0.1.13",
+   "at": "2026-08-17T10:35:24.305Z"
+  },
+  {
+   "version": "0.1.14",
+   "at": "2026-08-17T10:38:46.348Z"
+  },
+  {
+   "version": "0.1.15",
+   "at": "2026-08-17T10:40:48.676Z"
+  },
+  {
+   "version": "0.1.16",
+   "at": "2026-08-18T10:48:27.798Z"
+  },
+  {
+   "version": "0.1.17",
+   "at": "2026-08-19T02:37:17.776Z"
+  },
+  {
+   "version": "0.1.18",
+   "at": "2026-08-19T10:55:30.774Z"
+  },
+  {
+   "version": "0.1.19",
+   "at": "2026-08-21T07:26:15.655Z"
+  },
+  {
+   "version": "0.1.20",
+   "at": "2026-08-21T09:15:49.507Z"
+  },
+  {
+   "version": "0.1.21",
+   "at": "2026-08-24T07:54:41.165Z"
+  },
+  {
+   "version": "0.1.22",
+   "at": "2026-08-24T08:15:38.360Z"
+  },
+  {
+   "version": "0.1.23",
+   "at": "2026-08-25T04:26:33.259Z"
+  },
+  {
+   "version": "0.1.24",
+   "at": "2026-08-25T10:37:12.979Z"
+  },
+  {
+   "version": "0.1.25",
+   "at": "2026-08-26T02:50:05.680Z"
+  },
+  {
+   "version": "0.2.0",
+   "at": "2026-08-27T03:37:19.407Z"
+  },
+  {
+   "version": "0.2.1",
+   "at": "2026-08-28T07:44:53.500Z"
+  },
+  {
+   "version": "0.2.2",
+   "at": "2026-08-31T08:53:25.470Z"
+  },
+  {
+   "version": "0.2.3",
+   "at": "2026-09-03T07:12:30.644Z"
+  },
+  {
+   "version": "0.2.4",
+   "at": "2026-09-03T07:36:11.093Z"
+  },
+  {
+   "version": "0.2.5",
+   "at": "2026-09-03T10:45:36.536Z"
+  },
+  {
+   "version": "0.2.6",
+   "at": "2026-09-05T08:39:39.972Z"
+  },
+  {
+   "version": "0.2.7",
+   "at": "2026-09-07T03:45:18.642Z"
+  },
+  {
+   "version": "0.2.8",
+   "at": "2026-09-07T05:50:10.599Z"
+  }
+ ],
+ "referrers": [
+  {
+   "referrer": "github.com",
+   "count": 203,
+   "uniques": 14
+  },
+  {
+   "referrer": "Bing",
+   "count": 8,
+   "uniques": 5
+  },
+  {
+   "referrer": "awesome-dsh-plugin.com",
+   "count": 6,
+   "uniques": 3
+  },
+  {
+   "referrer": "dshfind.com",
+   "count": 3,
+   "uniques": 1
+  },
+  {
+   "referrer": "dshmarket.com",
+   "count": 1,
+   "uniques": 1
+  }
+ ],
+ "paths": [
+  {
+   "path": "/gjj-star/dsh-conversation-navigator",
+   "title": "Overview",
+   "count": 408,
+   "uniques": 223
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
+   "title": "/graphs/traffic",
+   "count": 40,
+   "uniques": 1
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/pulse",
+   "title": "/pulse",
+   "count": 33,
+   "uniques": 1
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/releases",
+   "title": "/releases",
+   "count": 12,
+   "uniques": 8
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/issues/3",
+   "title": "/issues/3",
+   "count": 10,
+   "uniques": 2
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/issues",
+   "title": "/issues",
+   "count": 9,
+   "uniques": 3
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/01-main.png",
+   "title": "/blob/main/assets/screenshots/01-main.png",
+   "count": 8,
+   "uniques": 4
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/02-steps.png",
+   "title": "/blob/main/assets/screenshots/02-steps.png",
+   "count": 5,
+   "uniques": 3
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/tree/main/assets/screenshots",
+   "title": "/tree/main/assets/screenshots",
+   "count": 4,
+   "uniques": 4
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/blob/main/README.md",
+   "title": "/blob/main/README.md",
+   "count": 3,
+   "uniques": 3
+  }
+ ],
+ "stats": {
+  "stars": 22,
+  "forks": 1,
+  "watchers": 0,
+  "openIssues": 0,
+  "pushedAt": "2026-09-08T02:18:51Z",
+  "size": 5884
+ },
+ "history": [
+  {
+   "at": "2026-09-14T03:27:29.250Z",
+   "npm": "days=29",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
+  },
+  {
+   "at": "2026-09-14T03:28:38.132Z",
+   "npm": "days=29",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
+  },
+  {
+   "at": "2026-09-14T03:32:18.731Z",
+   "npm": "days=29",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
+  }
+ ],
+ "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
+ "latestVersion": "0.2.8",
+ "updatedAt": "2026-09-14T03:32:18.731Z"
+}

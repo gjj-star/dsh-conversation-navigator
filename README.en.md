@@ -119,6 +119,14 @@ cordis.patch.yml     # bundle patch layer (inserts the plugin row)
 example.patch.yml    # patch example for manual installs
 ```
 
+## Traffic
+
+![Traffic trend](./docs/traffic/traffic-trend.svg)
+
+- Refreshed daily by GitHub Actions (top: GitHub unique visitors / unique cloners; bottom: npm daily downloads; orange dashed lines mark releases).
+- Details: [traffic-report.md](./docs/traffic/traffic-report.md) | raw archive: [traffic-archive.json](./docs/traffic/traffic-archive.json) | docs & manual refresh: [docs/traffic](./docs/traffic/README.md)
+- Why an archive: GitHub's traffic API only keeps a rolling 14-day window, and older data is lost forever — this repo merges every fetch into a durable, append-mostly daily series.
+
 ## License
 
 MIT

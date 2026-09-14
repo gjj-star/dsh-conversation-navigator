@@ -1,0 +1,53 @@
+name: Traffic archive
+
+# 每日把插件分发流量（npm 下载 + GitHub 独立访客/克隆者 + star 历史）合并进
+# docs/traffic/traffic-archive.json，并刷新趋势图与报告后提交。
+#
+# 为什么需要它：GitHub 的 traffic API 只保留滚动 14 天，过期即永久丢失。
+# 只要本工作流每天跑一次，逐日序列就会持续累积，不会出现缺口。
+on:
+  schedule:
+    # 每日 03:23 UTC（11:23 CST）：此时 GitHub 前一日流量已结算，npm 当日数据也已更新
+    - cron: '23 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write # 需要提交刷新后的归档/图表/报告
+
+concurrency:
+  group: traffic-archive
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Refresh archive, chart and report
+        env:
+          # traffic API 需要仓库写权限；本仓库的 GITHUB_TOKEN 在 contents: write 下具备该权限
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STRICT: '1' # 任一数据源抓取失败即让本次 run 失败（避免静默失联）
+        run: node docs/traffic/traffic-archive.mjs
+
+      - name: Validate chart against archive
+        run: node docs/traffic/validate-chart.mjs
+
+      - name: Commit changes
+        run: |
+          set -euo pipefail
+          git add docs/traffic
+          if git diff --cached --quiet; then
+            echo "流量数据无变化，跳过提交"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(traffic): 每日流量归档 $(date -u +%Y-%m-%d)"
+          git push

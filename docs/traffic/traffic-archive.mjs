@@ -1,0 +1,395 @@
+#!/usr/bin/env node
+/**
+ * traffic-archive.mjs — 插件流量归档 + 趋势图生成
+ *
+ * 为什么需要它：GitHub 的 traffic API 只保留滚动 14 天，过期即永久丢失；
+ * npm 的逐日下载虽然可回溯，但最近 1–2 天有结算延迟。本脚本把每次抓取的
+ * 结果合并进一份本地归档（新数据覆盖同日旧值，历史天数永不删除），并在
+ * 归档之上重新生成趋势图与报告。
+ *
+ * 数据源：
+ *   - npm   : api.npmjs.org downloads/range（全量逐日）+ registry（版本发布时间）
+ *   - GitHub: traffic/views、traffic/clones、popular/referrers、popular/paths、仓库概况
+ *   - Star  : stargazers?starred_at（全量，不受 14 天限制，用于长期趋势）
+ *
+ * 用法（需要 GitHub token，推荐用同目录的 refresh-traffic.ps1）：
+ *   PowerShell:  $env:GH_TOKEN = (gh auth token); node docs/traffic/traffic-archive.mjs
+ *   Bash:        GH_TOKEN=$(gh auth token) node docs/traffic/traffic-archive.mjs
+ * 可选环境变量：NPM_PKG、GH_REPO、OUT_DIR
+ */
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const OUT_DIR = process.env.OUT_DIR ?? HERE;
+const NPM_PKG = process.env.NPM_PKG ?? "dsh-conversation-navigator";
+const GH_REPO = process.env.GH_REPO ?? "gjj-star/dsh-conversation-navigator";
+const TOKEN = process.env.GH_TOKEN ?? process.env.GITHUB_TOKEN ?? "";
+const ARCHIVE = join(OUT_DIR, "traffic-archive.json");
+const SVG = join(OUT_DIR, "traffic-trend.svg");
+const REPORT = join(OUT_DIR, "traffic-report.md");
+
+/**
+ * 从会话日志中抢救回来的历史快照（GitHub 已不再提供，见 README 说明）。
+ * 仅在归档首次创建时作为种子写入，之后由真实抓取覆盖。
+ */
+const RECOVERED_SEED = {
+  note: "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
+  views: {
+    "2026-08-17": [24, 5], "2026-08-18": [7, 5], "2026-08-19": [2, 1], "2026-08-20": [2, 1],
+    "2026-08-21": [15, 9], "2026-08-22": [3, 2], "2026-08-23": [5, 5], "2026-08-24": [20, 9],
+    "2026-08-25": [51, 5], "2026-08-26": [63, 32], "2026-08-27": [141, 38], "2026-08-28": [112, 44],
+    "2026-08-29": [56, 29], "2026-08-30": [22, 11], "2026-08-31": [47, 27], "2026-09-01": [63, 27],
+    "2026-09-02": [42, 25], "2026-09-03": [59, 28], "2026-09-04": [62, 28], "2026-09-05": [58, 23]
+  },
+  clones: {
+    "2026-08-17": [51, 33], "2026-08-18": [4, 4], "2026-08-19": [12, 10], "2026-08-20": [13, 10],
+    "2026-08-21": [9, 7], "2026-08-22": [7, 4], "2026-08-23": [6, 6], "2026-08-24": [8, 6],
+    "2026-08-25": [25, 14], "2026-08-26": [19, 14], "2026-08-27": [21, 17], "2026-08-28": [18, 12],
+    "2026-08-29": [2, 2], "2026-08-30": [5, 5], "2026-08-31": [20, 15], "2026-09-01": [18, 9],
+    "2026-09-02": [5, 5], "2026-09-03": [36, 17], "2026-09-04": [2, 2], "2026-09-05": [33, 18]
+  }
+};
+
+const day = (d) => new Date(d).toISOString().slice(0, 10);
+const today = () => day(Date.now());
+const num = (n) => (typeof n === "number" ? n.toLocaleString("en-US") : "—");
+
+async function getJSON(url, headers = {}, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(url, { headers: { "user-agent": "dsh-traffic-archive", accept: "application/vnd.github+json", ...headers } });
+      if (res.status === 404) return { error: `404 ${url}` };
+      if (res.status === 403 || res.status === 429) { await sleep(1500 * (i + 1)); continue; }
+      if (!res.ok) return { error: `HTTP ${res.status} ${url}: ${(await res.text()).slice(0, 200)}` };
+      return { json: await res.json() };
+    } catch (e) {
+      if (i === retries - 1) return { error: `${e.name}: ${e.message} (${url})` };
+      await sleep(800 * (i + 1));
+    }
+  }
+  return { error: `exhausted retries ${url}` };
+}
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// ---------------------------------------------------------------- collectors
+async function fetchNpm() {
+  const meta = await getJSON(`https://registry.npmjs.org/${NPM_PKG}`);
+  const releases = [];
+  let created = null;
+  if (meta.json) {
+    created = meta.json.time?.created?.slice(0, 10) ?? null;
+    for (const [v, at] of Object.entries(meta.json.time ?? {})) if (!["created", "modified"].includes(v)) releases.push({ version: v, at });
+    releases.sort((a, b) => new Date(a.at) - new Date(b.at));
+  }
+  const from = created ?? "2026-01-01";
+  const range = await getJSON(`https://api.npmjs.org/downloads/range/${from}:${today()}/${NPM_PKG}`);
+  const daily = {};
+  if (range.json?.downloads) for (const r of range.json.downloads) daily[day(r.day)] = r.downloads;
+  return { daily, releases, version: meta.json?.["dist-tags"]?.latest ?? null, created, error: meta.error ?? range.error };
+}
+
+async function fetchGithub() {
+  const auth = TOKEN ? { authorization: `Bearer ${TOKEN}` } : {};
+  if (!TOKEN) return { error: "no GH_TOKEN/GITHUB_TOKEN set" };
+  const base = `https://api.github.com/repos/${GH_REPO}`;
+  const [views, clones, referrers, paths, repo] = await Promise.all([
+    getJSON(`${base}/traffic/views?per=day`, auth),
+    getJSON(`${base}/traffic/clones?per=day`, auth),
+    getJSON(`${base}/traffic/popular/referrers`, auth),
+    getJSON(`${base}/traffic/popular/paths`, auth),
+    getJSON(base, auth)
+  ]);
+  const pack = (r) => {
+    if (!r.json?.views && !r.json?.clones) return {};
+    const out = {};
+    for (const d of r.json.views ?? r.json.clones ?? []) out[day(d.timestamp)] = { count: d.count, uniques: d.uniques };
+    return out;
+  };
+  return {
+    views: pack(views), clones: pack(clones),
+    referrers: referrers.json ?? [], paths: paths.json ?? [],
+    stats: repo.json ? { stars: repo.json.stargazers_count, forks: repo.json.forks_count, watchers: repo.json.subscribers_count, openIssues: repo.json.open_issues_count, pushedAt: repo.json.pushed_at, size: repo.json.size } : null,
+    error: views.error ?? clones.error
+  };
+}
+
+async function fetchStars() {
+  const auth = TOKEN ? { authorization: `Bearer ${TOKEN}` } : {};
+  const byDay = {};
+  let page = 1, total = 0;
+  for (;;) {
+    const r = await getJSON(`https://api.github.com/repos/${GH_REPO}/stargazers?per_page=100&page=${page}`, { ...auth, accept: "application/vnd.github.star+json" });
+    if (!r.json || !Array.isArray(r.json) || r.json.length === 0) { if (r.error) return { byDay, error: r.error }; break; }
+    for (const s of r.json) { const d = day(s.starred_at ?? Date.now()); byDay[d] = (byDay[d] ?? 0) + 1; total++; }
+    if (r.json.length < 100) break;
+    page++;
+    await sleep(200);
+  }
+  return { byDay, total };
+}
+
+// ---------------------------------------------------------------- archive
+function loadArchive() {
+  if (existsSync(ARCHIVE)) {
+    try { return JSON.parse(readFileSync(ARCHIVE, "utf8")); } catch (e) { console.warn("归档损坏，将重建：", e.message); }
+  }
+  return null;
+}
+
+function seedArchive() {
+  const viewsDaily = {}, clonesDaily = {};
+  for (const [d, [c, u]] of Object.entries(RECOVERED_SEED.views)) viewsDaily[d] = { count: c, uniques: u, source: "recovered-session-log" };
+  for (const [d, [c, u]] of Object.entries(RECOVERED_SEED.clones)) clonesDaily[d] = { count: c, uniques: u, source: "recovered-session-log" };
+  return {
+    version: 1, package: NPM_PKG, repo: GH_REPO, createdAt: new Date().toISOString(),
+    npmDaily: {}, viewsDaily, clonesDaily, starsDaily: {}, releases: [],
+    referrers: [], paths: [], stats: null, history: [], recovered: RECOVERED_SEED.note
+  };
+}
+
+/**
+ * 合并逐日数据：新值覆盖同日旧值，历史天数永不删除（这就是对抗 14 天窗口的核心）。
+ * numeric=true 时（npm 下载量）存纯数字；否则存 {count, uniques, source} 结构。
+ */
+function mergeDaily(target, incoming, source, numeric = false) {
+  let added = 0, updated = 0;
+  for (const [d, v] of Object.entries(incoming ?? {})) {
+    const next = numeric ? v : { ...v, source };
+    const prev = target[d];
+    if (prev === undefined) { target[d] = next; added++; }
+    else if (JSON.stringify(prev) !== JSON.stringify(next)) { target[d] = next; updated++; }
+  }
+  return { added, updated };
+}
+
+// ---------------------------------------------------------------- chart
+const COLORS = { views: "#2563eb", clones: "#10b981", npm: "#f59e0b", star: "#a855f7" };
+
+function niceMax(max) {
+  if (max <= 5) return 5;
+  const pow = Math.pow(10, Math.floor(Math.log10(max)));
+  for (const m of [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10]) if (max <= m * pow) return m * pow;
+  return 10 * pow;
+}
+
+function buildSVG(a) {
+  const days = [...new Set([...Object.keys(a.npmDaily), ...Object.keys(a.viewsDaily), ...Object.keys(a.clonesDaily), ...Object.keys(a.starsDaily)])].sort();
+  const W = 1120, H = 560, L = 68, R = 24, T = 104, B = 92;
+  const plotW = W - L - R;
+  const x0 = T, x1 = 348;             // panel A: GitHub uniques
+  const y0 = 404, y1 = 486;           // panel B: npm downloads
+  const n = Math.max(days.length, 2);
+  const X = (i) => L + (n === 1 ? plotW / 2 : (i * plotW) / (n - 1));
+  const barW = Math.max(3, Math.min(18, plotW / n - 2));
+
+  const ghMax = niceMax(Math.max(5, ...days.flatMap((d) => [a.viewsDaily[d]?.uniques ?? 0, a.clonesDaily[d]?.uniques ?? 0])));
+  const npmMax = niceMax(Math.max(5, ...days.map((d) => a.npmDaily[d] ?? 0)));
+  const YA = (v) => x1 - (v / ghMax) * (x1 - x0);
+  const YB = (v) => y1 - (v / npmMax) * (y1 - y0);
+
+  // 折线按日历索引定位；缺值为 null 时断开子路径，不产生 NaN
+  const subpaths = (pick) => {
+    let d = "", open = false;
+    days.forEach((dayKey, i) => {
+      const v = pick(dayKey);
+      if (v === null || v === undefined) { open = false; return; }
+      d += `${open ? "L" : "M"}${X(i).toFixed(1)},${YA(v).toFixed(1)} `;
+      open = true;
+    });
+    return d.trim();
+  };
+  const line = (pick) => subpaths(pick);
+  const area = (pick) => {
+    const pts = days.map((dayKey, i) => ({ i, v: pick(dayKey) })).filter((p) => p.v !== null && p.v !== undefined);
+    if (pts.length === 0) return "";
+    const top = pts.map((p) => `${p.i === pts[0].i ? "M" : "L"}${X(p.i).toFixed(1)},${YA(p.v).toFixed(1)}`).join(" ");
+    return `${top} L${X(pts.at(-1).i).toFixed(1)},${x1} L${X(pts[0].i).toFixed(1)},${x1} Z`;
+  };
+  const dots = (pick, color) => days.map((d, i) => {
+    const v = pick(d); if (v === null || v === undefined) return "";
+    return `<circle cx="${X(i).toFixed(1)}" cy="${YA(v).toFixed(1)}" r="2.6" fill="${color}"><title>${d} · ${v}</title></circle>`;
+  }).join("");
+
+  const gridA = [0, 0.25, 0.5, 0.75, 1].map((f) => {
+    const y = YA(ghMax * f);
+    return `<line class="grid" x1="${L}" y1="${y.toFixed(1)}" x2="${W - R}" y2="${y.toFixed(1)}"/><text class="tick" x="${L - 8}" y="${(y + 3.5).toFixed(1)}" text-anchor="end">${Math.round(ghMax * f)}</text>`;
+  }).join("");
+  const gridB = [0, 0.5, 1].map((f) => {
+    const y = YB(npmMax * f);
+    return `<line class="grid" x1="${L}" y1="${y.toFixed(1)}" x2="${W - R}" y2="${y.toFixed(1)}"/><text class="tick" x="${L - 8}" y="${(y + 3.5).toFixed(1)}" text-anchor="end">${Math.round(npmMax * f)}</text>`;
+  }).join("");
+
+  // release markers (dedupe same-day, group versions)
+  const byDayRel = new Map();
+  for (const r of a.releases ?? []) { const d = day(r.at); if (!byDayRel.has(d)) byDayRel.set(d, []); byDayRel.get(d).push(r.version); }
+  const relMarks = [...byDayRel.entries()].filter(([d]) => days.includes(d)).map(([d, vs]) => {
+    const i = days.indexOf(d), x = X(i);
+    const label = vs.length > 2 ? `${vs[0]}…${vs.at(-1)}` : vs.join("+");
+    return `<line class="rel" x1="${x.toFixed(1)}" y1="${x0 - 14}" x2="${x.toFixed(1)}" y2="${y1}"/><text class="rellabel" x="${x.toFixed(1)}" y="${x0 - 20}" text-anchor="middle">${label}</text><circle cx="${x.toFixed(1)}" cy="${x0 - 26}" r="2.4" fill="${COLORS.npm}"/>`;
+  }).join("");
+
+  const step = Math.max(1, Math.ceil(n / 16));
+  const xLabels = days.map((d, i) => i % step === 0 || i === n - 1 ? `<text class="tick" x="${X(i).toFixed(1)}" y="${y1 + 18}" text-anchor="middle">${d.slice(5)}</text>` : "").join("");
+
+  const sum = (obj, key) => Object.values(obj).reduce((acc, v) => acc + (key ? (v?.[key] ?? 0) : v), 0);
+  const npmTotal = sum(a.npmDaily), viewsTotal = sum(a.viewsDaily, "count"), viewsUniq = sum(a.viewsDaily, "uniques");
+  const cloneTotal = sum(a.clonesDaily, "count"), cloneUniq = sum(a.clonesDaily, "uniques");
+  const stars = a.stats?.stars ?? Object.values(a.starsDaily).reduce((x, y) => x + y, 0);
+  const lastRelease = (a.releases ?? []).at(-1);
+  const daysSince = lastRelease ? Math.round((Date.now() - new Date(lastRelease.at)) / 86400000) : null;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${NPM_PKG} 流量趋势">
+<style>
+  .bg{fill:#ffffff}.panel{fill:#f8fafc;stroke:#e2e8f0}
+  .grid{stroke:#e5e7eb;stroke-width:1}.tick{fill:#64748b;font:11px ui-sans-serif,system-ui,sans-serif}
+  .title{fill:#0f172a;font:600 17px ui-sans-serif,system-ui,sans-serif}
+  .sub{fill:#475569;font:12px ui-sans-serif,system-ui,sans-serif}
+  .lbl{fill:#334155;font:600 12px ui-sans-serif,system-ui,sans-serif}
+  .rellabel{fill:#b45309;font:10px ui-sans-serif,system-ui,sans-serif}
+  .rel{stroke:#f59e0b;stroke-width:1;stroke-dasharray:3 4;opacity:.65}
+  .kpi{fill:#0f172a;font:600 15px ui-sans-serif,system-ui,sans-serif}
+  .kpisub{fill:#64748b;font:10px ui-sans-serif,system-ui,sans-serif}
+  @media (prefers-color-scheme: dark){
+    .bg{fill:#0b1220}.panel{fill:#111a2e;stroke:#1f2a44}.grid{stroke:#1f2a44}.tick{fill:#94a3b8}
+    .title{fill:#e2e8f0}.sub{fill:#94a3b8}.lbl{fill:#cbd5e1}.kpi{fill:#e2e8f0}.kpisub{fill:#94a3b8}
+    .rellabel{fill:#fbbf24}
+  }
+</style>
+<rect class="bg" width="${W}" height="${H}"/>
+<text class="title" x="${L}" y="34">${NPM_PKG} · 流量趋势</text>
+<text class="sub" x="${L}" y="54">${days[0] ?? ""} → ${days.at(-1) ?? ""}　累计 ${days.length} 天　数据源：npm downloads + GitHub traffic${a.recovered ? "（8/17–8/29 GitHub 数据由会话日志快照恢复）" : ""}</text>
+<text class="sub" x="${L}" y="72">最近发版 ${lastRelease ? `${lastRelease.version} @ ${day(lastRelease.at)}（${daysSince} 天前）` : "—"}　生成于 ${new Date().toISOString().slice(0, 16).replace("T", " ")}Z</text>
+
+<g class="kpi">
+  <text x="${L}" y="92">${num(npmTotal)}</text><text class="kpisub" x="${L}" y="104" dy="0">npm 累计下载</text>
+</g>
+<g class="kpi" transform="translate(190,0)"><text x="0" y="92">${num(viewsUniq)}</text><text class="kpisub" x="0" y="104">GitHub 独立访客</text></g>
+<g class="kpi" transform="translate(380,0)"><text x="0" y="92">${num(cloneUniq)}</text><text class="kpisub" x="0" y="104">独立克隆者</text></g>
+<g class="kpi" transform="translate(560,0)"><text x="0" y="92">${num(stars)}</text><text class="kpisub" x="0" y="104">Stars</text></g>
+<g class="kpi" transform="translate(700,0)"><text x="0" y="92">${num(viewsTotal)} / ${num(cloneTotal)}</text><text class="kpisub" x="0" y="104">views / clones 次数</text></g>
+
+${relMarks}
+<text class="lbl" x="${L}" y="${x0 - 34}">GitHub 独立访客 / 独立克隆者（上限 ${ghMax}）</text>
+<rect class="panel" x="${L}" y="${x0}" width="${plotW}" height="${x1 - x0}" rx="6"/>
+${gridA}
+<path d="${area((d) => a.viewsDaily[d]?.uniques ?? null)}" fill="${COLORS.views}" opacity=".10"/>
+<path d="${line((d) => a.viewsDaily[d]?.uniques ?? null)}" fill="none" stroke="${COLORS.views}" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="${line((d) => a.clonesDaily[d]?.uniques ?? null)}" fill="none" stroke="${COLORS.clones}" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 3"/>
+${dots((d) => a.viewsDaily[d]?.uniques ?? null, COLORS.views)}
+${dots((d) => a.clonesDaily[d]?.uniques ?? null, COLORS.clones)}
+<g transform="translate(${L + 8},${x0 + 18})">
+  <rect x="0" y="-10" width="10" height="10" fill="${COLORS.views}" rx="2"/><text class="tick" x="15" y="0">views 独立</text>
+  <rect x="96" y="-10" width="10" height="10" fill="${COLORS.clones}" rx="2"/><text class="tick" x="111" y="0">clones 独立（虚线）</text>
+</g>
+
+<text class="lbl" x="${L}" y="${y0 - 10}">npm 每日下载（上限 ${npmMax}）</text>
+<rect class="panel" x="${L}" y="${y0}" width="${plotW}" height="${y1 - y0}" rx="6"/>
+${gridB}
+${days.map((d, i) => {
+  const v = a.npmDaily[d] ?? 0; if (!v) return "";
+  const yTop = YB(v), h = Math.max(1.5, y1 - yTop), y = y1 - h; // 底部对齐，最小 1.5px 也不越出面板
+  return `<rect x="${(X(i) - barW / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${COLORS.npm}" opacity=".85" rx="1.5"><title>${d} · npm ${v}</title></rect>`;
+}).join("")}
+${xLabels}
+<text class="sub" x="${L}" y="${H - 18}">注：npm 下载含镜像/CI/重复安装，且最近 1–2 天有结算延迟；GitHub traffic 仅有滚动 14 天窗口，历史由本归档保留。</text>
+</svg>`;
+}
+
+// ---------------------------------------------------------------- render
+function buildReport(a) {
+  const days = [...new Set([...Object.keys(a.npmDaily), ...Object.keys(a.viewsDaily), ...Object.keys(a.clonesDaily)])].sort();
+  const relByDay = new Map();
+  for (const r of a.releases ?? []) { const d = day(r.at); relByDay.set(d, [...(relByDay.get(d) ?? []), r.version]); }
+  const sum = (obj, k) => Object.values(obj).reduce((acc, v) => acc + (k ? (v?.[k] ?? 0) : v), 0);
+  const rows = days.map((d) => {
+    const v = a.viewsDaily[d], c = a.clonesDaily[d];
+    return `| ${d} | ${a.npmDaily[d] ?? "—"} | ${v ? `${v.count}/${v.uniques}` : "—"} | ${c ? `${c.count}/${c.uniques}` : "—"} | ${relByDay.has(d) ? relByDay.get(d).join("+") : ""} |`;
+  });
+  const last7 = days.slice(-7);
+  const avg = (arr, pick) => Math.round(arr.reduce((s, d) => s + (pick(d) ?? 0), 0) / Math.max(1, arr.length));
+  const peak = (pick) => days.reduce((best, d) => ((pick(d) ?? 0) > (pick(best) ?? 0) ? d : best), days[0]);
+  const lastRelease = (a.releases ?? []).at(-1);
+  return `# ${NPM_PKG} 流量报告
+
+> 自动生成于 ${new Date().toISOString().slice(0, 16).replace("T", " ")}Z · 数据源 npm downloads + GitHub traffic
+> 图表：[traffic-trend.svg](./traffic-trend.svg) · 原始归档：[traffic-archive.json](./traffic-archive.json)
+
+## 汇总（${days[0]} → ${days.at(-1)}）
+
+| 指标 | 累计 | 最近 7 天日均 | 峰值日 |
+| --- | --- | --- | --- |
+| npm 下载 | ${num(sum(a.npmDaily))} | ${avg(last7, (d) => a.npmDaily[d])} | ${peak((d) => a.npmDaily[d])} |
+| GitHub 独立访客 | ${num(sum(a.viewsDaily, "uniques"))} | ${avg(last7, (d) => a.viewsDaily[d]?.uniques)} | ${peak((d) => a.viewsDaily[d]?.uniques)} |
+| GitHub 独立克隆者 | ${num(sum(a.clonesDaily, "uniques"))} | ${avg(last7, (d) => a.clonesDaily[d]?.uniques)} | ${peak((d) => a.clonesDaily[d]?.uniques)} |
+| Stars | ${num(a.stats?.stars ?? sum(a.starsDaily))} | — | — |
+| Forks | ${num(a.stats?.forks ?? 0)} | — | — |
+
+最近发版：${lastRelease ? `**${lastRelease.version}** @ ${day(lastRelease.at)}（${Math.round((Date.now() - new Date(lastRelease.at)) / 86400000)} 天前）` : "—"}
+
+## 逐日明细
+
+| 日期 | npm | views 次/独立 | clones 次/独立 | 发版 |
+| --- | --- | --- | --- | --- |
+${rows.join("\n")}
+
+${a.referrers?.length ? `## 流量来源（近 14 天）\n\n| 来源 | 次数 | 独立 |\n| --- | --- | --- |\n${a.referrers.map((r) => `| ${r.referrer} | ${r.count} | ${r.uniques} |`).join("\n")}\n` : ""}
+${a.paths?.length ? `\n## 热门路径（近 14 天）\n\n| 路径 | 次数 | 独立 |\n| --- | --- | --- |\n${a.paths.slice(0, 10).map((p) => `| ${p.path} | ${p.count} | ${p.uniques} |`).join("\n")}\n` : ""}
+## 口径说明
+
+- **npm 下载**：包含镜像站、CI、重复安装，且最近 1–2 天存在结算延迟，不等于真实用户数。
+- **GitHub traffic**：API 仅提供滚动 14 天窗口，过期永久丢失；本归档把每次抓取合并保存，8/17–8/29 的窗口外数据由 DSH 会话日志中的历史快照恢复。
+- **独立访客/克隆者**：比下载数更接近真实人数，建议作为主要观测指标。
+`;
+}
+
+// ---------------------------------------------------------------- main
+const npmData = await fetchNpm();
+const ghData = await fetchGithub();
+const starData = await fetchStars();
+
+const archive = loadArchive() ?? seedArchive();
+const changes = {
+  npm: mergeDaily(archive.npmDaily, npmData.daily, "npm-api", true),
+  views: mergeDaily(archive.viewsDaily, ghData.views, "github-api"),
+  clones: mergeDaily(archive.clonesDaily, ghData.clones, "github-api")
+};
+// starsDaily 存"当日新增 star 数"（来自 starred_at，绝对量：每次抓取重算并覆盖）
+for (const [d, c] of Object.entries(starData.byDay ?? {})) archive.starsDaily[d] = c;
+if (npmData.releases?.length) archive.releases = npmData.releases;
+if (ghData.referrers?.length) archive.referrers = ghData.referrers;
+if (ghData.paths?.length) archive.paths = ghData.paths;
+if (ghData.stats) archive.stats = ghData.stats;
+if (npmData.version) archive.latestVersion = npmData.version;
+archive.updatedAt = new Date().toISOString();
+archive.history = [...(archive.history ?? []), {
+  at: archive.updatedAt,
+  npm: npmData.error ? `ERROR ${npmData.error}` : `days=${Object.keys(npmData.daily).length}`,
+  github: ghData.error ? `ERROR ${ghData.error}` : `views=${Object.keys(ghData.views).length} clones=${Object.keys(ghData.clones).length}`,
+  stars: starData.error ? `ERROR ${starData.error}` : `total=${starData.total}`
+}].slice(-30);
+
+mkdirSync(OUT_DIR, { recursive: true });
+writeFileSync(ARCHIVE, JSON.stringify(archive, null, 1) + "\n");
+writeFileSync(SVG, buildSVG(archive));
+writeFileSync(REPORT, buildReport(archive));
+
+const nDays = (o) => Object.keys(o).length;
+console.log("归档已更新:", ARCHIVE);
+console.log(`  npm   : ${nDays(archive.npmDaily)} 天（本次 +${changes.npm.added} / 更新 ${changes.npm.updated}）${npmData.error ? " ⚠️ " + npmData.error : ""}`);
+console.log(`  views : ${nDays(archive.viewsDaily)} 天（本次 +${changes.views.added} / 更新 ${changes.views.updated}）${ghData.error ? " ⚠️ " + ghData.error : ""}`);
+console.log(`  clones: ${nDays(archive.clonesDaily)} 天（本次 +${changes.clones.added} / 更新 ${changes.clones.updated}）`);
+console.log(`  stars : ${nDays(archive.starsDaily)} 天有记录，共 ${starData.total ?? "?"} 个 star 事件${starData.error ? " ⚠️ " + starData.error : ""}`);
+console.log("图表已生成:", SVG);
+console.log("报告已生成:", REPORT);
+
+// STRICT=1（CI 用）：任一数据源抓取失败即退出码 1，避免"静默成功"掩盖 token 失效等问题
+const errors = [npmData.error, ghData.error, starData.error].filter(Boolean);
+if (errors.length > 0) {
+  console.error("抓取告警：" + errors.join(" | "));
+  if (process.env.STRICT === "1") {
+    console.error("STRICT=1：存在抓取错误，以退出码 1 结束");
+    process.exit(1);
+  }
+}
