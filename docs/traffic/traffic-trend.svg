@@ -19,7 +19,7 @@
 <rect class="bg" width="1120" height="604"/>
 <text class="title" x="68" y="32">dsh-conversation-navigator · 流量趋势</text>
 <text class="sub" x="68" y="52">2026-08-17 → 2026-09-14　累计 29 天　数据源：npm downloads + GitHub traffic（8/17–8/29 GitHub 数据由会话日志快照恢复）</text>
-<text class="sub" x="68" y="68">最近发版 0.2.8 @ 2026-09-07（7 天前）　生成于 2026-09-14 03:51Z</text>
+<text class="sub" x="68" y="68">最近发版 0.2.8 @ 2026-09-07（7 天前）　生成于 2026-09-14 04:15Z</text>
 
 <g class="kpi">
   <text x="68" y="94">5,795</text><text class="kpisub" x="68" y="109">npm 累计下载</text>
