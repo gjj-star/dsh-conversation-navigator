@@ -14,6 +14,11 @@ on:
     # 每日 03:23 UTC（11:23 CST）：此时 GitHub 前一日流量已结算，npm 当日数据也已更新
     - cron: '23 3 * * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: 强制重绘并提交（数据无变化时也提交一次，便于验证抓取是否正常）
+        type: boolean
+        default: false
 
 permissions:
   contents: write # 需要提交刷新后的归档/图表/报告
@@ -40,6 +45,7 @@ jobs:
           # 已配置 TRAFFIC_TOKEN 时，流量抓取失败也视为致命错误（避免悄悄失效）
           EXPECT_TRAFFIC: ${{ secrets.TRAFFIC_TOKEN != '' && '1' || '0' }}
           STRICT: '1' # npm / star 抓取失败即让本次 run 失败
+          FORCE: ${{ inputs.force && '1' || '0' }} # 手动触发时可选强制重绘
           STATUS_FILE: /tmp/traffic-status.md
         run: node docs/traffic/traffic-archive.mjs
 
