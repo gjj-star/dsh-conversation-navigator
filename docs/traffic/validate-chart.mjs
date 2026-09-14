@@ -19,13 +19,41 @@ const niceMax = (max) => {
   return 10 * pow;
 };
 
-const W = 1120, H = 560;
-const panelA = svg.match(/<rect class="panel" x="68" y="104" width="1028" height="(\d+)"/);
-const panelB = svg.match(/<rect class="panel" x="68" y="404" width="1028" height="(\d+)"/);
+const W = 1120, H = 604;
+const panelA = svg.match(/<rect class="panel" x="68" y="156" width="1028" height="(\d+)"/);
+const panelB = svg.match(/<rect class="panel" x="68" y="450" width="1028" height="(\d+)"/);
 check(!!panelA && !!panelB, `面板存在 A(高 ${panelA?.[1]}) B(高 ${panelB?.[1]})`);
 if (!panelA || !panelB) process.exit(1);
-const gA = { y0: 104, y1: 104 + +panelA[1] };
-const gB = { y0: 404, y1: 404 + +panelB[1] };
+const gA = { y0: 156, y1: 156 + +panelA[1] };
+const gB = { y0: 450, y1: 450 + +panelB[1] };
+
+// 0) 文字重叠检测：按字体大小与字符宽度估算包围盒，两两比对。
+//    注意：KPI/图例在 <g transform="translate(dx,dy)"> 组内，坐标是相对的，必须先加上组的位移。
+const FS = { title: 17, sub: 12, lbl: 12, tick: 11, kpi: 16, kpisub: 10, rellabel: 10, note: 10 };
+const collectTexts = (chunk, dx, dy, out) => {
+  for (const m of chunk.matchAll(/<text class="(\w+)" x="(-?[\d.]+)" y="(-?[\d.]+)"([^>]*)>([^<]*)<\/text>/g)) {
+    const [, cls, x, y, rest, body] = m;
+    const fs = FS[cls] ?? 11;
+    const anchor = /text-anchor="middle"/.test(rest) ? "middle" : /text-anchor="end"/.test(rest) ? "end" : "start";
+    const width = [...body].reduce((w, ch) => w + (ch.codePointAt(0) > 0x2e80 ? 1 : 0.56) * fs, 0);
+    const x0 = (anchor === "middle" ? +x - width / 2 : anchor === "end" ? +x - width : +x) + dx;
+    out.push({ cls, body, x0, x1: x0 + width, y0: +y + dy - fs * 0.8, y1: +y + dy + fs * 0.25 });
+  }
+};
+const textEls = [];
+const grouped = [...svg.matchAll(/<g[^>]*transform="translate\(([\d.]+),([\d.]+)\)"[^>]*>([\s\S]*?)<\/g>/g)];
+for (const g of grouped) collectTexts(g[3], +g[1], +g[2], textEls);
+collectTexts(svg.replace(/<g[^>]*transform="translate\([\d.]+,[\d.]+\)"[^>]*>[\s\S]*?<\/g>/g, ""), 0, 0, textEls);
+const overlaps = [];
+for (let i = 0; i < textEls.length; i++) {
+  for (let j = i + 1; j < textEls.length; j++) {
+    const a = textEls[i], b = textEls[j];
+    const ox = Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0);
+    const oy = Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0);
+    if (ox > 1.5 && oy > 1.5) overlaps.push(`${a.cls}:"${a.body.slice(0, 18)}" × ${b.cls}:"${b.body.slice(0, 18)}" (${ox.toFixed(0)}×${oy.toFixed(0)}px)`);
+  }
+}
+check(overlaps.length === 0, `文字元素 ${textEls.length} 个，重叠 ${overlaps.length} 对${overlaps.length ? "\n      " + overlaps.slice(0, 12).join("\n      ") : ""}`);
 
 // 1) 顶层坐标（排除 <g transform> 组内的相对坐标）必须有限且在画布内
 const topLevel = svg.replace(/<g[^>]*transform="[^"]*"[\s\S]*?<\/g>/g, "");
@@ -96,8 +124,8 @@ for (const [label, val] of [
 const relCount = [...svg.matchAll(/class="rel"/g)].length;
 const relDays = new Set((a.releases ?? []).map((r) => r.at.slice(0, 10)).filter((d) => days.includes(d)));
 check(relCount === relDays.size, `发版竖线 ${relCount} 条 = 有发版的日期数 ${relDays.size}`);
-check(svg.includes("views 独立") && svg.includes("clones 独立"), "图例文字存在");
-check(/npm 每日下载（上限 \d+）/.test(svg) && /GitHub 独立访客 \/ 独立克隆者（上限 \d+）/.test(svg), "两个面板标题带正确上限");
+check(svg.includes("views 独立（上限") && svg.includes("clones 独立（虚线）"), "图例文字存在且带轴上限");
+check(/npm 每日下载（上限 \d+）/.test(svg), "面板 B 标题带正确上限");
 const last = (a.releases ?? []).at(-1);
 check(last ? svg.includes(`最近发版 ${last.version}`) : true, `最近发版信息正确（${last?.version}）`);
 

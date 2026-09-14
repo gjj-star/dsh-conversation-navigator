@@ -558,7 +558,7 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-09-08T02:18:51Z",
+  "pushedAt": "2026-09-14T03:41:29Z",
   "size": 5884
  },
  "history": [
@@ -579,9 +579,21 @@
    "npm": "days=29",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-09-14T03:49:51.591Z",
+   "npm": "days=29",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
+  },
+  {
+   "at": "2026-09-14T03:51:10.443Z",
+   "npm": "days=29",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.8",
- "updatedAt": "2026-09-14T03:32:18.731Z"
+ "updatedAt": "2026-09-14T03:51:10.443Z"
 }

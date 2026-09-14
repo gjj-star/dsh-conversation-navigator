@@ -196,10 +196,13 @@ function niceMax(max) {
 
 function buildSVG(a) {
   const days = [...new Set([...Object.keys(a.npmDaily), ...Object.keys(a.viewsDaily), ...Object.keys(a.clonesDaily), ...Object.keys(a.starsDaily)])].sort();
-  const W = 1120, H = 560, L = 68, R = 24, T = 104, B = 92;
+  const W = 1120, H = 604, L = 68, R = 24;
   const plotW = W - L - R;
-  const x0 = T, x1 = 348;             // panel A: GitHub uniques
-  const y0 = 404, y1 = 486;           // panel B: npm downloads
+  // 垂直分区（严格不重叠）：标题 32 / 副标题 52,68 / KPI 值 94 + 标签 109 /
+  // 发版圆点 133 + 标签 147 / 面板A 156..412 / 面板B 标题 440 + 面板 450..536 / 轴标签 554 / 脚注 572,588
+  const REL_DOT_Y = 133, REL_LABEL_Y = 147, REL_LINE_Y = 155;
+  const x0 = 156, x1 = 412;           // panel A: GitHub uniques
+  const y0 = 450, y1 = 536;           // panel B: npm downloads
   const n = Math.max(days.length, 2);
   const X = (i) => L + (n === 1 ? plotW / 2 : (i * plotW) / (n - 1));
   const barW = Math.max(3, Math.min(18, plotW / n - 2));
@@ -244,11 +247,19 @@ function buildSVG(a) {
   // release markers (dedupe same-day, group versions)
   const byDayRel = new Map();
   for (const r of a.releases ?? []) { const d = day(r.at); if (!byDayRel.has(d)) byDayRel.set(d, []); byDayRel.get(d).push(r.version); }
-  const relMarks = [...byDayRel.entries()].filter(([d]) => days.includes(d)).map(([d, vs]) => {
+  // 发版标记分两段绘制：圆点+版本标签在头部标记带；竖虚线必须画在面板之后，
+  // 否则会被不透明面板填充盖住（曾经如此）。
+  const relDots = [...byDayRel.entries()].filter(([d]) => days.includes(d)).map(([d, vs]) => {
     const i = days.indexOf(d), x = X(i);
-    const label = vs.length > 2 ? `${vs[0]}…${vs.at(-1)}` : vs.join("+");
-    return `<line class="rel" x1="${x.toFixed(1)}" y1="${x0 - 14}" x2="${x.toFixed(1)}" y2="${y1}"/><text class="rellabel" x="${x.toFixed(1)}" y="${x0 - 20}" text-anchor="middle">${label}</text><circle cx="${x.toFixed(1)}" cy="${x0 - 26}" r="2.4" fill="${COLORS.npm}"/>`;
+    // 标签缩写：同日多次发版只留补丁号区间（0.1.0…0.1.15 → 0–15），避免密集发版互相压字
+    const seg = (v) => v.split(".");
+    const sameMinor = seg(vs[0])[0] === seg(vs.at(-1))[0] && seg(vs[0])[1] === seg(vs.at(-1))[1];
+    const label = vs.length === 1 ? vs[0] : (sameMinor ? `${seg(vs[0])[2]}–${seg(vs.at(-1))[2]}` : `${vs[0]}–${vs.at(-1)}`);
+    return `<circle cx="${x.toFixed(1)}" cy="${REL_DOT_Y}" r="2.6" fill="${COLORS.npm}"><title>${d} · ${vs.join(", ")}</title></circle>`
+      + `<text class="rellabel" x="${x.toFixed(1)}" y="${REL_LABEL_Y}" text-anchor="middle">${label}</text>`;
   }).join("");
+  const relLines = [...byDayRel.keys()].filter((d) => days.includes(d))
+    .map((d) => `<line class="rel" x1="${X(days.indexOf(d)).toFixed(1)}" y1="${REL_LINE_Y}" x2="${X(days.indexOf(d)).toFixed(1)}" y2="${y1}"/>`).join("");
 
   const step = Math.max(1, Math.ceil(n / 16));
   const xLabels = days.map((d, i) => i % step === 0 || i === n - 1 ? `<text class="tick" x="${X(i).toFixed(1)}" y="${y1 + 18}" text-anchor="middle">${d.slice(5)}</text>` : "").join("");
@@ -269,29 +280,29 @@ function buildSVG(a) {
   .lbl{fill:#334155;font:600 12px ui-sans-serif,system-ui,sans-serif}
   .rellabel{fill:#b45309;font:10px ui-sans-serif,system-ui,sans-serif}
   .rel{stroke:#f59e0b;stroke-width:1;stroke-dasharray:3 4;opacity:.65}
-  .kpi{fill:#0f172a;font:600 15px ui-sans-serif,system-ui,sans-serif}
+  .kpi{fill:#0f172a;font:600 16px ui-sans-serif,system-ui,sans-serif}
   .kpisub{fill:#64748b;font:10px ui-sans-serif,system-ui,sans-serif}
+  .note{fill:#94a3b8;font:10px ui-sans-serif,system-ui,sans-serif}
   @media (prefers-color-scheme: dark){
     .bg{fill:#0b1220}.panel{fill:#111a2e;stroke:#1f2a44}.grid{stroke:#1f2a44}.tick{fill:#94a3b8}
     .title{fill:#e2e8f0}.sub{fill:#94a3b8}.lbl{fill:#cbd5e1}.kpi{fill:#e2e8f0}.kpisub{fill:#94a3b8}
-    .rellabel{fill:#fbbf24}
+    .rellabel{fill:#fbbf24}.note{fill:#64748b}
   }
 </style>
 <rect class="bg" width="${W}" height="${H}"/>
-<text class="title" x="${L}" y="34">${NPM_PKG} · 流量趋势</text>
-<text class="sub" x="${L}" y="54">${days[0] ?? ""} → ${days.at(-1) ?? ""}　累计 ${days.length} 天　数据源：npm downloads + GitHub traffic${a.recovered ? "（8/17–8/29 GitHub 数据由会话日志快照恢复）" : ""}</text>
-<text class="sub" x="${L}" y="72">最近发版 ${lastRelease ? `${lastRelease.version} @ ${day(lastRelease.at)}（${daysSince} 天前）` : "—"}　生成于 ${new Date().toISOString().slice(0, 16).replace("T", " ")}Z</text>
+<text class="title" x="${L}" y="32">${NPM_PKG} · 流量趋势</text>
+<text class="sub" x="${L}" y="52">${days[0] ?? ""} → ${days.at(-1) ?? ""}　累计 ${days.length} 天　数据源：npm downloads + GitHub traffic${a.recovered ? "（8/17–8/29 GitHub 数据由会话日志快照恢复）" : ""}</text>
+<text class="sub" x="${L}" y="68">最近发版 ${lastRelease ? `${lastRelease.version} @ ${day(lastRelease.at)}（${daysSince} 天前）` : "—"}　生成于 ${new Date().toISOString().slice(0, 16).replace("T", " ")}Z</text>
 
 <g class="kpi">
-  <text x="${L}" y="92">${num(npmTotal)}</text><text class="kpisub" x="${L}" y="104" dy="0">npm 累计下载</text>
+  <text x="${L}" y="94">${num(npmTotal)}</text><text class="kpisub" x="${L}" y="109">npm 累计下载</text>
 </g>
-<g class="kpi" transform="translate(190,0)"><text x="0" y="92">${num(viewsUniq)}</text><text class="kpisub" x="0" y="104">GitHub 独立访客</text></g>
-<g class="kpi" transform="translate(380,0)"><text x="0" y="92">${num(cloneUniq)}</text><text class="kpisub" x="0" y="104">独立克隆者</text></g>
-<g class="kpi" transform="translate(560,0)"><text x="0" y="92">${num(stars)}</text><text class="kpisub" x="0" y="104">Stars</text></g>
-<g class="kpi" transform="translate(700,0)"><text x="0" y="92">${num(viewsTotal)} / ${num(cloneTotal)}</text><text class="kpisub" x="0" y="104">views / clones 次数</text></g>
+<g class="kpi" transform="translate(236,0)"><text x="0" y="94">${num(viewsUniq)}</text><text class="kpisub" x="0" y="109">GitHub 独立访客</text></g>
+<g class="kpi" transform="translate(400,0)"><text x="0" y="94">${num(cloneUniq)}</text><text class="kpisub" x="0" y="109">独立克隆者</text></g>
+<g class="kpi" transform="translate(556,0)"><text x="0" y="94">${num(stars)}</text><text class="kpisub" x="0" y="109">Stars</text></g>
+<g class="kpi" transform="translate(690,0)"><text x="0" y="94">${num(viewsTotal)} / ${num(cloneTotal)}</text><text class="kpisub" x="0" y="109">views / clones 次数</text></g>
 
-${relMarks}
-<text class="lbl" x="${L}" y="${x0 - 34}">GitHub 独立访客 / 独立克隆者（上限 ${ghMax}）</text>
+${relDots}
 <rect class="panel" x="${L}" y="${x0}" width="${plotW}" height="${x1 - x0}" rx="6"/>
 ${gridA}
 <path d="${area((d) => a.viewsDaily[d]?.uniques ?? null)}" fill="${COLORS.views}" opacity=".10"/>
@@ -299,9 +310,9 @@ ${gridA}
 <path d="${line((d) => a.clonesDaily[d]?.uniques ?? null)}" fill="none" stroke="${COLORS.clones}" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="6 3"/>
 ${dots((d) => a.viewsDaily[d]?.uniques ?? null, COLORS.views)}
 ${dots((d) => a.clonesDaily[d]?.uniques ?? null, COLORS.clones)}
-<g transform="translate(${L + 8},${x0 + 18})">
-  <rect x="0" y="-10" width="10" height="10" fill="${COLORS.views}" rx="2"/><text class="tick" x="15" y="0">views 独立</text>
-  <rect x="96" y="-10" width="10" height="10" fill="${COLORS.clones}" rx="2"/><text class="tick" x="111" y="0">clones 独立（虚线）</text>
+<g transform="translate(${L + 10},${x0 + 18})">
+  <rect x="0" y="-9" width="10" height="10" fill="${COLORS.views}" rx="2"/><text class="tick" x="15" y="0">views 独立（上限 ${ghMax}）</text>
+  <rect x="196" y="-9" width="10" height="10" fill="${COLORS.clones}" rx="2"/><text class="tick" x="211" y="0">clones 独立（虚线）</text>
 </g>
 
 <text class="lbl" x="${L}" y="${y0 - 10}">npm 每日下载（上限 ${npmMax}）</text>
@@ -312,8 +323,10 @@ ${days.map((d, i) => {
   const yTop = YB(v), h = Math.max(1.5, y1 - yTop), y = y1 - h; // 底部对齐，最小 1.5px 也不越出面板
   return `<rect x="${(X(i) - barW / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${COLORS.npm}" opacity=".85" rx="1.5"><title>${d} · npm ${v}</title></rect>`;
 }).join("")}
+${relLines}
 ${xLabels}
-<text class="sub" x="${L}" y="${H - 18}">注：npm 下载含镜像/CI/重复安装，且最近 1–2 天有结算延迟；GitHub traffic 仅有滚动 14 天窗口，历史由本归档保留。</text>
+<text class="note" x="${L}" y="${H - 32}">注：npm 下载含镜像/CI/重复安装，且最近 1–2 天有结算延迟；GitHub traffic 仅保留滚动 14 天窗口，历史由本归档留存。</text>
+<text class="note" x="${L}" y="${H - 16}">橙色圆点与竖虚线为发版日，其下数字为该日版本号（同日多次发版显示为 起始–结束 补丁号）。</text>
 </svg>`;
 }
 
@@ -386,7 +399,9 @@ const dataChanges = changes.npm.added + changes.npm.updated + changes.views.adde
   + changes.clones.added + changes.clones.updated + starChanged;
 
 mkdirSync(OUT_DIR, { recursive: true });
-if (dataChanges === 0) {
+// FORCE=1：数据无变化也重写归档/图表/报告（改了绘图或报告排版后需要一次强制重绘）
+const force = process.env.FORCE === "1";
+if (dataChanges === 0 && !force) {
   // 数据无变化时不写文件：图表/报告含生成时间戳，写了就会每天产生无意义提交
   console.log("数据无变化：归档/图表/报告保持不变（不产生提交）");
 } else {
@@ -412,7 +427,7 @@ console.log(`  npm   : ${nDays(archive.npmDaily)} 天（本次 +${changes.npm.ad
 console.log(`  views : ${nDays(archive.viewsDaily)} 天（本次 +${changes.views.added} / 更新 ${changes.views.updated}）${ghData.error ? " ⚠️ " + ghData.error : ""}`);
 console.log(`  clones: ${nDays(archive.clonesDaily)} 天（本次 +${changes.clones.added} / 更新 ${changes.clones.updated}）`);
 console.log(`  stars : ${nDays(archive.starsDaily)} 天有记录，共 ${starData.total ?? "?"} 个 star 事件（本次变更 ${starChanged} 天）`);
-console.log(dataChanges === 0 ? "文件未改动（数据无变化）" : "图表与报告已刷新");
+console.log(dataChanges === 0 && !force ? "文件未改动（数据无变化）" : "图表与报告已刷新");
 
 
 // ---------------------------------------------------------------- 状态与退出码
