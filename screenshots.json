@@ -1,10 +1,15 @@
 [
-  "assets/screenshots/01-main.png",
-  "assets/screenshots/02-steps.png",
-  "assets/screenshots/03-no-round.png",
-  "assets/screenshots/04-minimal.png",
-  "assets/screenshots/05-search-n-hover.png",
-  "assets/screenshots/06-dark.png",
-  "assets/screenshots/07-theme1-preview.png",
-  "assets/screenshots/08-theme2-preview.png"
+  "assets/screenshots/01-main-dark.png",
+  "assets/screenshots/02-main-light.png",
+  "assets/screenshots/03-steps.png",
+  "assets/screenshots/04-no-round.png",
+  "assets/screenshots/05-no-round-expand.png",
+  "assets/screenshots/06-minimal-left.png",
+  "assets/screenshots/07-minimal-expand.png",
+  "assets/screenshots/08-search.png",
+  "assets/screenshots/09-theme1.png",
+  "assets/screenshots/10-theme2-dark.png",
+  "assets/screenshots/11-theme2-light.png",
+  "assets/screenshots/12-theme3-dark.png",
+  "assets/screenshots/13-theme3-light.png"
 ]

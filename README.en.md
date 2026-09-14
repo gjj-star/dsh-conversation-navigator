@@ -17,8 +17,9 @@ A **DeepSeek Harness (DSH) Web conversation navigator panel**: a turn-folded out
 
 Browser-only (no host behavior), plain JavaScript, zero build step, zero npm dependencies (buttons/tooltips reuse the official primitives from the DSH kernel seed).
 
-![Dark mode](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/dark.png)
-![Light mode](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/light.png)
+| Dark mode | Light mode |
+| :---: | :---: |
+| ![Dark mode](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/dark.png) | ![Light mode](https://raw.githubusercontent.com/gjj-star/dsh-conversation-navigator/main/assets/modes/light.png) |
 
 > The conversation navigator in dark and light mode. Three forms: full, hidden, and minimal-left (minimal-right is shelved as of 0.2.6, code retained). The minimal strips collapse to the in-row indicator bars; hover expands the positioning panel. More screenshots in [assets/screenshots](./assets/screenshots).
 
