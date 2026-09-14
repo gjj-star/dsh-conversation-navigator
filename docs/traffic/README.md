@@ -28,6 +28,23 @@
 
 > 首次启用前，请先把 `docs/traffic/` 提交并推送到 `main`，否则 Actions 里没有可刷新的基线文件。
 
+### CI 里的 GitHub 流量需要 PAT（重要）
+
+`/traffic/*` 接口要求"具备 push 权限的用户令牌"；Actions 自带的 `GITHUB_TOKEN` 是安装令牌，无法获得该接口需要的权限，实测返回 **403**（同一令牌读 star 列表则正常）。因此：
+
+| 配置 | CI 能采集到的数据 |
+| --- | --- |
+| 仅默认 `GITHUB_TOKEN` | npm 下载 ✅ ｜ star 历史 ✅ ｜ **views / clones ❌** |
+| 额外添加 `TRAFFIC_TOKEN` | 全部 ✅ |
+
+添加步骤：
+
+1. GitHub → 头像 → Settings → Developer settings → **Tokens (classic)** → Generate new token，勾选 **`repo`** 范围（fine-grained 令牌请勾 `Administration: read`）；
+2. 仓库 → Settings → Secrets and variables → Actions → **New repository secret**，名称填 **`TRAFFIC_TOKEN`**；
+3. 无需改代码：工作流会优先使用它；配置后流量抓取失败会直接让 run 红灯（`EXPECT_TRAFFIC=1`）。
+
+未配置期间的兜底：本地执行 `.\docs\traffic\refresh-traffic.ps1` 也能补齐流量数据 —— 但 GitHub 只保留 **14 天**窗口，**超过 14 天没补就永久丢失**（8/17–8/29 那一段就是因为当时查过、被日志留存才救得回来）。
+
 ## 刷新方式
 
 ```powershell

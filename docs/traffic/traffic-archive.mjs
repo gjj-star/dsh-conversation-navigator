@@ -30,6 +30,14 @@ const ARCHIVE = join(OUT_DIR, "traffic-archive.json");
 const SVG = join(OUT_DIR, "traffic-trend.svg");
 const REPORT = join(OUT_DIR, "traffic-report.md");
 
+/** traffic API 403 时的可执行提示（Actions 的 GITHUB_TOKEN 无法访问 /traffic/*）。 */
+const TRAFFIC_HINT = [
+  "GitHub 的 /traffic/* 接口要求\"具备 push 权限的用户令牌\"；Actions 自带的 GITHUB_TOKEN 是安装令牌，",
+  "无法授予该接口需要的权限（Administration），因此通常返回 403。",
+  "解决：生成 classic PAT（scope: repo，或 fine-grained 勾选 Administration: read）并保存为仓库 secret `TRAFFIC_TOKEN`，",
+  "工作流会自动优先使用它。添加之前，CI 仍会采集 npm 下载与 star 历史；views/clones 可由本地 `refresh-traffic.ps1` 补齐（14 天窗口内都来得及）。"
+].join("");
+
 /**
  * 从会话日志中抢救回来的历史快照（GitHub 已不再提供，见 README 说明）。
  * 仅在归档首次创建时作为种子写入，之后由真实抓取覆盖。
@@ -57,19 +65,27 @@ const today = () => day(Date.now());
 const num = (n) => (typeof n === "number" ? n.toLocaleString("en-US") : "—");
 
 async function getJSON(url, headers = {}, retries = 3) {
+  let lastFailure = "";
   for (let i = 0; i < retries; i++) {
     try {
       const res = await fetch(url, { headers: { "user-agent": "dsh-traffic-archive", accept: "application/vnd.github+json", ...headers } });
       if (res.status === 404) return { error: `404 ${url}` };
-      if (res.status === 403 || res.status === 429) { await sleep(1500 * (i + 1)); continue; }
+      if (res.status === 403 || res.status === 429) {
+        // 403/429 多为权限或限流：保留 GitHub 自己的说明，便于定位（例如 traffic API 的 push 权限要求）
+        const body = (await res.text()).replace(/\s+/g, " ").slice(0, 200);
+        lastFailure = `HTTP ${res.status} ${body}`;
+        await sleep(1200 * (i + 1));
+        continue;
+      }
       if (!res.ok) return { error: `HTTP ${res.status} ${url}: ${(await res.text()).slice(0, 200)}` };
       return { json: await res.json() };
     } catch (e) {
-      if (i === retries - 1) return { error: `${e.name}: ${e.message} (${url})` };
+      lastFailure = `${e.name}: ${e.message}`;
+      if (i === retries - 1) return { error: `${lastFailure} (${url})` };
       await sleep(800 * (i + 1));
     }
   }
-  return { error: `exhausted retries ${url}` };
+  return { error: `${lastFailure || "exhausted retries"} (${url})` };
 }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -92,7 +108,7 @@ async function fetchNpm() {
 
 async function fetchGithub() {
   const auth = TOKEN ? { authorization: `Bearer ${TOKEN}` } : {};
-  if (!TOKEN) return { error: "no GH_TOKEN/GITHUB_TOKEN set" };
+  if (!TOKEN) return { error: "未设置 GH_TOKEN/GITHUB_TOKEN", forbidden: true, hint: TRAFFIC_HINT };
   const base = `https://api.github.com/repos/${GH_REPO}`;
   const [views, clones, referrers, paths, repo] = await Promise.all([
     getJSON(`${base}/traffic/views?per=day`, auth),
@@ -107,11 +123,15 @@ async function fetchGithub() {
     for (const d of r.json.views ?? r.json.clones ?? []) out[day(d.timestamp)] = { count: d.count, uniques: d.uniques };
     return out;
   };
+  const trafficError = views.error ?? clones.error;
+  const forbidden = /HTTP 403|Resource not accessible|push access/i.test(trafficError ?? "");
   return {
     views: pack(views), clones: pack(clones),
     referrers: referrers.json ?? [], paths: paths.json ?? [],
     stats: repo.json ? { stars: repo.json.stargazers_count, forks: repo.json.forks_count, watchers: repo.json.subscribers_count, openIssues: repo.json.open_issues_count, pushedAt: repo.json.pushed_at, size: repo.json.size } : null,
-    error: views.error ?? clones.error
+    error: trafficError,
+    forbidden,
+    hint: forbidden ? TRAFFIC_HINT : undefined
   };
 }
 
@@ -356,40 +376,74 @@ const changes = {
   clones: mergeDaily(archive.clonesDaily, ghData.clones, "github-api")
 };
 // starsDaily 存"当日新增 star 数"（来自 starred_at，绝对量：每次抓取重算并覆盖）
-for (const [d, c] of Object.entries(starData.byDay ?? {})) archive.starsDaily[d] = c;
-if (npmData.releases?.length) archive.releases = npmData.releases;
-if (ghData.referrers?.length) archive.referrers = ghData.referrers;
-if (ghData.paths?.length) archive.paths = ghData.paths;
-if (ghData.stats) archive.stats = ghData.stats;
+let starChanged = 0;
+for (const [d, c] of Object.entries(starData.byDay ?? {})) {
+  if (archive.starsDaily[d] !== c) { archive.starsDaily[d] = c; starChanged++; }
+}
 if (npmData.version) archive.latestVersion = npmData.version;
-archive.updatedAt = new Date().toISOString();
-archive.history = [...(archive.history ?? []), {
-  at: archive.updatedAt,
-  npm: npmData.error ? `ERROR ${npmData.error}` : `days=${Object.keys(npmData.daily).length}`,
-  github: ghData.error ? `ERROR ${ghData.error}` : `views=${Object.keys(ghData.views).length} clones=${Object.keys(ghData.clones).length}`,
-  stars: starData.error ? `ERROR ${starData.error}` : `total=${starData.total}`
-}].slice(-30);
+
+const dataChanges = changes.npm.added + changes.npm.updated + changes.views.added + changes.views.updated
+  + changes.clones.added + changes.clones.updated + starChanged;
 
 mkdirSync(OUT_DIR, { recursive: true });
-writeFileSync(ARCHIVE, JSON.stringify(archive, null, 1) + "\n");
-writeFileSync(SVG, buildSVG(archive));
-writeFileSync(REPORT, buildReport(archive));
+if (dataChanges === 0) {
+  // 数据无变化时不写文件：图表/报告含生成时间戳，写了就会每天产生无意义提交
+  console.log("数据无变化：归档/图表/报告保持不变（不产生提交）");
+} else {
+  if (npmData.releases?.length) archive.releases = npmData.releases;
+  if (ghData.referrers?.length) archive.referrers = ghData.referrers;
+  if (ghData.paths?.length) archive.paths = ghData.paths;
+  if (ghData.stats) archive.stats = ghData.stats;
+  archive.updatedAt = new Date().toISOString();
+  archive.history = [...(archive.history ?? []), {
+    at: archive.updatedAt,
+    npm: npmData.error ? `ERROR ${npmData.error}` : `days=${Object.keys(npmData.daily).length}`,
+    github: ghData.error ? `ERROR ${ghData.error}` : `views=${Object.keys(ghData.views).length} clones=${Object.keys(ghData.clones).length}`,
+    stars: starData.error ? `ERROR ${starData.error}` : `total=${starData.total}`
+  }].slice(-30);
+  writeFileSync(ARCHIVE, JSON.stringify(archive, null, 1) + "\n");
+  writeFileSync(SVG, buildSVG(archive));
+  writeFileSync(REPORT, buildReport(archive));
+}
 
 const nDays = (o) => Object.keys(o).length;
-console.log("归档已更新:", ARCHIVE);
+console.log("归档:", ARCHIVE);
 console.log(`  npm   : ${nDays(archive.npmDaily)} 天（本次 +${changes.npm.added} / 更新 ${changes.npm.updated}）${npmData.error ? " ⚠️ " + npmData.error : ""}`);
 console.log(`  views : ${nDays(archive.viewsDaily)} 天（本次 +${changes.views.added} / 更新 ${changes.views.updated}）${ghData.error ? " ⚠️ " + ghData.error : ""}`);
 console.log(`  clones: ${nDays(archive.clonesDaily)} 天（本次 +${changes.clones.added} / 更新 ${changes.clones.updated}）`);
-console.log(`  stars : ${nDays(archive.starsDaily)} 天有记录，共 ${starData.total ?? "?"} 个 star 事件${starData.error ? " ⚠️ " + starData.error : ""}`);
-console.log("图表已生成:", SVG);
-console.log("报告已生成:", REPORT);
+console.log(`  stars : ${nDays(archive.starsDaily)} 天有记录，共 ${starData.total ?? "?"} 个 star 事件（本次变更 ${starChanged} 天）`);
+console.log(dataChanges === 0 ? "文件未改动（数据无变化）" : "图表与报告已刷新");
 
-// STRICT=1（CI 用）：任一数据源抓取失败即退出码 1，避免"静默成功"掩盖 token 失效等问题
-const errors = [npmData.error, ghData.error, starData.error].filter(Boolean);
-if (errors.length > 0) {
-  console.error("抓取告警：" + errors.join(" | "));
-  if (process.env.STRICT === "1") {
-    console.error("STRICT=1：存在抓取错误，以退出码 1 结束");
-    process.exit(1);
-  }
+
+// ---------------------------------------------------------------- 状态与退出码
+// 致命错误：npm / star 抓取失败 —— STRICT=1（CI）时以退出码 1 结束，避免静默断更。
+// GitHub 流量失败：默认仅告警（未配置 TRAFFIC_TOKEN 的 CI 属预期）；若 EXPECT_TRAFFIC=1
+//（工作流检测到 secret 已配置）则同样视为致命，防止"配了令牌却悄悄失效"。
+const fatal = [];
+if (npmData.error) fatal.push(`npm: ${npmData.error}`);
+if (starData.error) fatal.push(`stars: ${starData.error}`);
+if (ghData.error && !ghData.forbidden) fatal.push(`github: ${ghData.error}`);
+if (ghData.error && ghData.forbidden && process.env.EXPECT_TRAFFIC === "1") fatal.push(`github/traffic: ${ghData.error}`);
+
+const status = [
+  "## 流量归档状态",
+  "",
+  `- npm 下载：${npmData.error ? `❌ ${npmData.error}` : `✅ ${Object.keys(npmData.daily).length} 天`}`,
+  `- star 历史：${starData.error ? `❌ ${starData.error}` : `✅ ${starData.total} 个 star 事件`}`,
+  `- GitHub 流量（views/clones）：${ghData.error ? `⚠️ ${ghData.error}` : `✅ 已采集 ${Object.keys(ghData.views).length} 天`}`,
+  ""
+];
+if (ghData.error) {
+  console.error("GitHub 流量抓取失败：" + ghData.error);
+  if (ghData.hint) console.error("提示：" + ghData.hint);
+  status.push(`> ${ghData.hint ?? ""}`, "");
 }
+if (fatal.length > 0) console.error("致命抓取错误：" + fatal.join(" | "));
+const statusFile = process.env.STATUS_FILE;
+if (statusFile) { try { writeFileSync(statusFile, status.join("\n")); } catch (e) { console.warn("状态文件写入失败:", e.message); } }
+
+if (fatal.length > 0 && process.env.STRICT === "1") {
+  console.error("STRICT=1：存在致命抓取错误，以退出码 1 结束");
+  process.exit(1);
+}
+if (fatal.length > 0) console.warn("存在致命抓取错误（未设置 STRICT=1，仍以退出码 0 结束）");

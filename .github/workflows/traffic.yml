@@ -5,6 +5,10 @@ name: Traffic archive
 #
 # 为什么需要它：GitHub 的 traffic API 只保留滚动 14 天，过期即永久丢失。
 # 只要本工作流每天跑一次，逐日序列就会持续累积，不会出现缺口。
+#
+# 关于令牌：/traffic/* 接口要求"具备 push 权限的用户令牌"，Actions 自带的 GITHUB_TOKEN
+# （安装令牌）无法访问，会返回 403 —— 此时仍会采集 npm 与 star，只是 views/clones 空缺。
+# 若要 CI 也采集流量，请添加仓库 secret `TRAFFIC_TOKEN`（classic PAT，scope: repo）。
 on:
   schedule:
     # 每日 03:23 UTC（11:23 CST）：此时 GitHub 前一日流量已结算，npm 当日数据也已更新
@@ -31,9 +35,12 @@ jobs:
 
       - name: Refresh archive, chart and report
         env:
-          # traffic API 需要仓库写权限；本仓库的 GITHUB_TOKEN 在 contents: write 下具备该权限
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          STRICT: '1' # 任一数据源抓取失败即让本次 run 失败（避免静默失联）
+          # 优先用 TRAFFIC_TOKEN（PAT，可读 traffic API）；未配置时回退到 GITHUB_TOKEN
+          GH_TOKEN: ${{ secrets.TRAFFIC_TOKEN != '' && secrets.TRAFFIC_TOKEN || secrets.GITHUB_TOKEN }}
+          # 已配置 TRAFFIC_TOKEN 时，流量抓取失败也视为致命错误（避免悄悄失效）
+          EXPECT_TRAFFIC: ${{ secrets.TRAFFIC_TOKEN != '' && '1' || '0' }}
+          STRICT: '1' # npm / star 抓取失败即让本次 run 失败
+          STATUS_FILE: /tmp/traffic-status.md
         run: node docs/traffic/traffic-archive.mjs
 
       - name: Validate chart against archive
@@ -51,3 +58,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore(traffic): 每日流量归档 $(date -u +%Y-%m-%d)"
           git push
+
+      - name: Run summary
+        if: always()
+        env:
+          STATUS_FILE: /tmp/traffic-status.md
+        run: |
+          if [ -f "$STATUS_FILE" ]; then cat "$STATUS_FILE" >> "$GITHUB_STEP_SUMMARY"; fi
