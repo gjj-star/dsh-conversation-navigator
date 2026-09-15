@@ -31,8 +31,9 @@
   "2026-09-10": 83,
   "2026-09-11": 90,
   "2026-09-12": 61,
-  "2026-09-13": 0,
-  "2026-09-14": 0
+  "2026-09-13": 72,
+  "2026-09-14": 0,
+  "2026-09-15": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -168,6 +169,16 @@
   "2026-09-12": {
    "count": 13,
    "uniques": 10,
+   "source": "github-api"
+  },
+  "2026-09-13": {
+   "count": 9,
+   "uniques": 6,
+   "source": "github-api"
+  },
+  "2026-09-14": {
+   "count": 37,
+   "uniques": 16,
    "source": "github-api"
   }
  },
@@ -305,6 +316,16 @@
   "2026-09-12": {
    "count": 2,
    "uniques": 2,
+   "source": "github-api"
+  },
+  "2026-09-13": {
+   "count": 2,
+   "uniques": 2,
+   "source": "github-api"
+  },
+  "2026-09-14": {
+   "count": 38,
+   "uniques": 17,
    "source": "github-api"
   }
  },
@@ -467,8 +488,8 @@
  "referrers": [
   {
    "referrer": "github.com",
-   "count": 203,
-   "uniques": 14
+   "count": 194,
+   "uniques": 11
   },
   {
    "referrer": "Bing",
@@ -477,8 +498,8 @@
   },
   {
    "referrer": "awesome-dsh-plugin.com",
-   "count": 6,
-   "uniques": 3
+   "count": 5,
+   "uniques": 2
   },
   {
    "referrer": "dshfind.com",
@@ -495,19 +516,19 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 408,
-   "uniques": 223
+   "count": 386,
+   "uniques": 211
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
    "title": "/graphs/traffic",
-   "count": 40,
+   "count": 35,
    "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/pulse",
    "title": "/pulse",
-   "count": 33,
+   "count": 28,
    "uniques": 1
   },
   {
@@ -519,8 +540,8 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator/issues/3",
    "title": "/issues/3",
-   "count": 10,
-   "uniques": 2
+   "count": 11,
+   "uniques": 3
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/issues",
@@ -547,10 +568,10 @@
    "uniques": 4
   },
   {
-   "path": "/gjj-star/dsh-conversation-navigator/blob/main/README.md",
-   "title": "/blob/main/README.md",
-   "count": 3,
-   "uniques": 3
+   "path": "/gjj-star/dsh-conversation-navigator/blob/main/docs/traffic/traffic-trend.svg",
+   "title": "/blob/main/docs/traffic/traffic-trend.svg",
+   "count": 4,
+   "uniques": 2
   }
  ],
  "stats": {
@@ -558,8 +579,8 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-09-14T04:15:14Z",
-  "size": 5884
+  "pushedAt": "2026-09-14T06:21:06Z",
+  "size": 18083
  },
  "history": [
   {
@@ -597,9 +618,15 @@
    "npm": "days=29",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-09-15T08:45:14.691Z",
+   "npm": "days=30",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.8",
- "updatedAt": "2026-09-14T04:15:32.181Z"
+ "updatedAt": "2026-09-15T08:45:14.691Z"
 }

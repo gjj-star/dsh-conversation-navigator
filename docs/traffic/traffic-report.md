@@ -1,19 +1,19 @@
 # dsh-conversation-navigator 流量报告
 
-> 自动生成于 2026-09-14 04:15Z · 数据源 npm downloads + GitHub traffic
+> 自动生成于 2026-09-15 08:45Z · 数据源 npm downloads + GitHub traffic
 > 图表：[traffic-trend.svg](./traffic-trend.svg) · 原始归档：[traffic-archive.json](./traffic-archive.json)
 
-## 汇总（2026-08-17 → 2026-09-14）
+## 汇总（2026-08-17 → 2026-09-15）
 
 | 指标 | 累计 | 最近 7 天日均 | 峰值日 |
 | --- | --- | --- | --- |
-| npm 下载 | 5,795 | 42 | 2026-08-17 |
-| GitHub 独立访客 | 458 | 10 | 2026-08-28 |
-| GitHub 独立克隆者 | 276 | 5 | 2026-08-17 |
+| npm 下载 | 5,867 | 53 | 2026-08-17 |
+| GitHub 独立访客 | 480 | 11 | 2026-08-28 |
+| GitHub 独立克隆者 | 295 | 5 | 2026-08-17 |
 | Stars | 22 | — | — |
 | Forks | 1 | — | — |
 
-最近发版：**0.2.8** @ 2026-09-07（7 天前）
+最近发版：**0.2.8** @ 2026-09-07（8 天前）
 
 ## 逐日明细
 
@@ -46,16 +46,17 @@
 | 2026-09-10 | 83 | 41/14 | 7/5 |  |
 | 2026-09-11 | 90 | 29/18 | 6/6 |  |
 | 2026-09-12 | 61 | 13/10 | 2/2 |  |
-| 2026-09-13 | 0 | — | — |  |
-| 2026-09-14 | 0 | — | — |  |
+| 2026-09-13 | 72 | 9/6 | 2/2 |  |
+| 2026-09-14 | 0 | 37/16 | 38/17 |  |
+| 2026-09-15 | 0 | — | — |  |
 
 ## 流量来源（近 14 天）
 
 | 来源 | 次数 | 独立 |
 | --- | --- | --- |
-| github.com | 203 | 14 |
+| github.com | 194 | 11 |
 | Bing | 8 | 5 |
-| awesome-dsh-plugin.com | 6 | 3 |
+| awesome-dsh-plugin.com | 5 | 2 |
 | dshfind.com | 3 | 1 |
 | dshmarket.com | 1 | 1 |
 
@@ -64,16 +65,16 @@
 
 | 路径 | 次数 | 独立 |
 | --- | --- | --- |
-| /gjj-star/dsh-conversation-navigator | 408 | 223 |
-| /gjj-star/dsh-conversation-navigator/graphs/traffic | 40 | 1 |
-| /gjj-star/dsh-conversation-navigator/pulse | 33 | 1 |
+| /gjj-star/dsh-conversation-navigator | 386 | 211 |
+| /gjj-star/dsh-conversation-navigator/graphs/traffic | 35 | 1 |
+| /gjj-star/dsh-conversation-navigator/pulse | 28 | 1 |
 | /gjj-star/dsh-conversation-navigator/releases | 12 | 8 |
-| /gjj-star/dsh-conversation-navigator/issues/3 | 10 | 2 |
+| /gjj-star/dsh-conversation-navigator/issues/3 | 11 | 3 |
 | /gjj-star/dsh-conversation-navigator/issues | 9 | 3 |
 | /gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/01-main.png | 8 | 4 |
 | /gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/02-steps.png | 5 | 3 |
 | /gjj-star/dsh-conversation-navigator/tree/main/assets/screenshots | 4 | 4 |
-| /gjj-star/dsh-conversation-navigator/blob/main/README.md | 3 | 3 |
+| /gjj-star/dsh-conversation-navigator/blob/main/docs/traffic/traffic-trend.svg | 4 | 2 |
 
 ## 口径说明
 
