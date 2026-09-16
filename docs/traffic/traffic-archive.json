@@ -32,8 +32,9 @@
   "2026-09-11": 90,
   "2026-09-12": 61,
   "2026-09-13": 72,
-  "2026-09-14": 0,
-  "2026-09-15": 0
+  "2026-09-14": 67,
+  "2026-09-15": 0,
+  "2026-09-16": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -179,6 +180,11 @@
   "2026-09-14": {
    "count": 37,
    "uniques": 16,
+   "source": "github-api"
+  },
+  "2026-09-15": {
+   "count": 26,
+   "uniques": 17,
    "source": "github-api"
   }
  },
@@ -327,6 +333,11 @@
    "count": 38,
    "uniques": 17,
    "source": "github-api"
+  },
+  "2026-09-15": {
+   "count": 7,
+   "uniques": 5,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -341,7 +352,8 @@
   "2026-09-04": 1,
   "2026-09-05": 2,
   "2026-09-09": 1,
-  "2026-09-10": 1
+  "2026-09-10": 1,
+  "2026-09-16": 1
  },
  "releases": [
   {
@@ -488,12 +500,12 @@
  "referrers": [
   {
    "referrer": "github.com",
-   "count": 194,
+   "count": 182,
    "uniques": 11
   },
   {
    "referrer": "Bing",
-   "count": 8,
+   "count": 5,
    "uniques": 5
   },
   {
@@ -516,19 +528,19 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 386,
-   "uniques": 211
+   "count": 361,
+   "uniques": 200
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
    "title": "/graphs/traffic",
-   "count": 35,
+   "count": 33,
    "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/pulse",
    "title": "/pulse",
-   "count": 28,
+   "count": 27,
    "uniques": 1
   },
   {
@@ -562,25 +574,25 @@
    "uniques": 3
   },
   {
+   "path": "/gjj-star/dsh-conversation-navigator/blob/main/docs/traffic/traffic-trend.svg",
+   "title": "/blob/main/docs/traffic/traffic-trend.svg",
+   "count": 5,
+   "uniques": 2
+  },
+  {
    "path": "/gjj-star/dsh-conversation-navigator/tree/main/assets/screenshots",
    "title": "/tree/main/assets/screenshots",
    "count": 4,
    "uniques": 4
-  },
-  {
-   "path": "/gjj-star/dsh-conversation-navigator/blob/main/docs/traffic/traffic-trend.svg",
-   "title": "/blob/main/docs/traffic/traffic-trend.svg",
-   "count": 4,
-   "uniques": 2
   }
  ],
  "stats": {
-  "stars": 22,
+  "stars": 23,
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-09-14T06:21:06Z",
-  "size": 18083
+  "pushedAt": "2026-09-15T08:45:16Z",
+  "size": 18086
  },
  "history": [
   {
@@ -624,9 +636,15 @@
    "npm": "days=30",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-09-16T08:39:46.631Z",
+   "npm": "days=31",
+   "github": "views=14 clones=14",
+   "stars": "total=23"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.8",
- "updatedAt": "2026-09-15T08:45:14.691Z"
+ "updatedAt": "2026-09-16T08:39:46.631Z"
 }
