@@ -101,7 +101,7 @@ Official v0.1.2-rc.1 made a breaking change to the conversation data layer (conv
 
 | Host `dsh-client-ui-conversation` | Matching plugin version | npm tag |
 |---|---|---|
-| **≥ 0.1.2-rc.1** (has the `uiConversation` service) | **0.2.6 and later** (currently 0.2.8) | `latest` (default) |
+| **≥ 0.1.2-rc.1** (has the `uiConversation` service) | **0.2.6 and later** (currently 0.2.9) | `latest` (default) |
 | **≤ 0.1.1-rc.2** (no `uiConversation`, legacy `session.chat` snapshot) | **0.2.5 and earlier** | `legacy` |
 
 - New hosts can install the latest normally (`dsh plugin --profile web add dsh-conversation-navigator`).
