@@ -34,7 +34,8 @@
   "2026-09-13": 72,
   "2026-09-14": 67,
   "2026-09-15": 0,
-  "2026-09-16": 0
+  "2026-09-16": 0,
+  "2026-09-17": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -185,6 +186,11 @@
   "2026-09-15": {
    "count": 26,
    "uniques": 17,
+   "source": "github-api"
+  },
+  "2026-09-16": {
+   "count": 26,
+   "uniques": 15,
    "source": "github-api"
   }
  },
@@ -337,6 +343,11 @@
   "2026-09-15": {
    "count": 7,
    "uniques": 5,
+   "source": "github-api"
+  },
+  "2026-09-16": {
+   "count": 26,
+   "uniques": 13,
    "source": "github-api"
   }
  },
@@ -495,22 +506,26 @@
   {
    "version": "0.2.8",
    "at": "2026-09-07T05:50:10.599Z"
+  },
+  {
+   "version": "0.2.9",
+   "at": "2026-09-16T11:00:51.508Z"
   }
  ],
  "referrers": [
   {
    "referrer": "github.com",
-   "count": 182,
-   "uniques": 11
+   "count": 177,
+   "uniques": 10
   },
   {
    "referrer": "Bing",
-   "count": 5,
-   "uniques": 5
+   "count": 4,
+   "uniques": 4
   },
   {
    "referrer": "awesome-dsh-plugin.com",
-   "count": 5,
+   "count": 4,
    "uniques": 2
   },
   {
@@ -528,19 +543,19 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 361,
-   "uniques": 200
+   "count": 348,
+   "uniques": 196
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
    "title": "/graphs/traffic",
-   "count": 33,
+   "count": 32,
    "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/pulse",
    "title": "/pulse",
-   "count": 27,
+   "count": 26,
    "uniques": 1
   },
   {
@@ -556,16 +571,16 @@
    "uniques": 3
   },
   {
-   "path": "/gjj-star/dsh-conversation-navigator/issues",
-   "title": "/issues",
-   "count": 9,
-   "uniques": 3
-  },
-  {
    "path": "/gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/01-main.png",
    "title": "/blob/main/assets/screenshots/01-main.png",
    "count": 8,
    "uniques": 4
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/issues",
+   "title": "/issues",
+   "count": 8,
+   "uniques": 2
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/02-steps.png",
@@ -591,8 +606,8 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-09-15T08:45:16Z",
-  "size": 18086
+  "pushedAt": "2026-09-16T11:08:01Z",
+  "size": 18067
  },
  "history": [
   {
@@ -642,9 +657,15 @@
    "npm": "days=31",
    "github": "views=14 clones=14",
    "stars": "total=23"
+  },
+  {
+   "at": "2026-09-17T08:43:15.436Z",
+   "npm": "days=32",
+   "github": "views=14 clones=14",
+   "stars": "total=23"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
- "latestVersion": "0.2.8",
- "updatedAt": "2026-09-16T08:39:46.631Z"
+ "latestVersion": "0.2.9",
+ "updatedAt": "2026-09-17T08:43:15.436Z"
 }
