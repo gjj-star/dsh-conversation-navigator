@@ -122,11 +122,14 @@ example.patch.yml    # patch example for manual installs
 
 ## Traffic
 
-![Traffic trend](./docs/traffic/traffic-trend.svg)
+Window **2026-08-17 → 2026-09-20** (refreshed daily by GitHub Actions):
 
-- Refreshed daily by GitHub Actions (top: GitHub unique visitors / unique cloners; bottom: npm daily downloads; orange dashed lines mark releases).
-- Details: [traffic-report.md](./docs/traffic/traffic-report.md) | raw archive: [traffic-archive.json](./docs/traffic/traffic-archive.json) | docs & manual refresh: [docs/traffic](./docs/traffic/README.md)
-- Why an archive: GitHub's traffic API only keeps a rolling 14-day window, and older data is lost forever — this repo merges every fetch into a durable, append-mostly daily series.
+| npm downloads | GitHub unique visitors | GitHub unique cloners | Stars | Forks |
+| ---: | ---: | ---: | ---: | ---: |
+| 6,206 | 540 | 335 | 23 | 1 |
+
+- Details: [traffic-report.md](./docs/traffic/traffic-report.md) | raw archive: [traffic-archive.json](./docs/traffic/traffic-archive.json) | chart & docs: [docs/traffic](./docs/traffic/README.md)
+- Caveats: npm downloads include mirrors, CI and reinstalls, with a 1–2 day settlement lag; GitHub unique visitors / cloners are closer to real user counts.
 
 ## License
 

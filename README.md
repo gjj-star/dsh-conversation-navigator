@@ -119,11 +119,14 @@ example.patch.yml    # 手动安装时的补丁示例
 
 ## 流量
 
-![流量趋势](./docs/traffic/traffic-trend.svg)
+统计区间 **2026-08-17 → 2026-09-20**（GitHub Actions 每日自动刷新）：
 
-- 上图由 GitHub Actions 每日自动刷新（上半区 GitHub 独立访客/独立克隆者，下半区 npm 每日下载，橙色虚线为发版日）。
-- 明细报告：[traffic-report.md](./docs/traffic/traffic-report.md)｜原始归档：[traffic-archive.json](./docs/traffic/traffic-archive.json)｜说明与本地刷新：[docs/traffic](./docs/traffic/README.md)
-- 为什么需要归档：GitHub 流量 API 只保留最近 14 天，过期即永久丢失；本仓库把每次抓取合并留存，逐日序列只增不减。
+| npm 下载 | GitHub 独立访客 | GitHub 独立克隆者 | Stars | Forks |
+| ---: | ---: | ---: | ---: | ---: |
+| 6,206 | 540 | 335 | 23 | 1 |
+
+- 明细报告：[traffic-report.md](./docs/traffic/traffic-report.md)｜原始归档：[traffic-archive.json](./docs/traffic/traffic-archive.json)｜趋势图与说明：[docs/traffic](./docs/traffic/README.md)
+- 口径：npm 下载含镜像站、CI 与重复安装，且有 1–2 天结算延迟；GitHub 独立访客 / 独立克隆者更接近真实人数。
 
 ## License
 
