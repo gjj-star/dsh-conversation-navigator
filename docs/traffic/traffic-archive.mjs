@@ -199,8 +199,9 @@ function buildSVG(a) {
   const W = 1120, H = 604, L = 68, R = 24;
   const plotW = W - L - R;
   // 垂直分区（严格不重叠）：标题 32 / 副标题 52,68 / KPI 值 94 + 标签 109 /
-  // 发版圆点 133 + 标签 147 / 面板A 156..412 / 面板B 标题 440 + 面板 450..536 / 轴标签 554 / 脚注 572,588
-  const REL_DOT_Y = 133, REL_LABEL_Y = 147, REL_LINE_Y = 155;
+  // 发版圆点 121 + 标签两行 133,144 / 面板A 156..412 / 面板B 标题 440 + 面板 450..536 / 轴标签 554 / 脚注 572,588
+  // 发版标签两行交错：序列变长后每天间距变小（39 天时约 27px），单行放不下相邻日的版本号
+  const REL_DOT_Y = 121, REL_LABEL_Y = 133, REL_LABEL_Y2 = 144, REL_LINE_Y = 155;
   const x0 = 156, x1 = 412;           // panel A: GitHub uniques
   const y0 = 450, y1 = 536;           // panel B: npm downloads
   const n = Math.max(days.length, 2);
@@ -249,14 +250,30 @@ function buildSVG(a) {
   for (const r of a.releases ?? []) { const d = day(r.at); if (!byDayRel.has(d)) byDayRel.set(d, []); byDayRel.get(d).push(r.version); }
   // 发版标记分两段绘制：圆点+版本标签在头部标记带；竖虚线必须画在面板之后，
   // 否则会被不透明面板填充盖住（曾经如此）。
+  // 标签宽度按 validate-chart.mjs 同款估算（CJK 记 1 字宽、其余 0.56），据此做两行交错布局：
+  // 同一行里与上一个标签水平重叠 > 1.5px 就换到下一行；两行都挤则省略该标签（圆点 title 仍可悬停查看）
+  const REL_LABEL_FS = 10;
+  const relLabelWidth = (s) => [...s].reduce((w, ch) => w + (ch.codePointAt(0) > 0x2e80 ? 1 : 0.56) * REL_LABEL_FS, 0);
+  const relRows = [null, null];
   const relDots = [...byDayRel.entries()].filter(([d]) => days.includes(d)).map(([d, vs]) => {
     const i = days.indexOf(d), x = X(i);
     // 标签缩写：同日多次发版只留补丁号区间（0.1.0…0.1.15 → 0–15），避免密集发版互相压字
     const seg = (v) => v.split(".");
     const sameMinor = seg(vs[0])[0] === seg(vs.at(-1))[0] && seg(vs[0])[1] === seg(vs.at(-1))[1];
     const label = vs.length === 1 ? vs[0] : (sameMinor ? `${seg(vs[0])[2]}–${seg(vs.at(-1))[2]}` : `${vs[0]}–${vs.at(-1)}`);
-    return `<circle cx="${x.toFixed(1)}" cy="${REL_DOT_Y}" r="2.6" fill="${COLORS.npm}"><title>${d} · ${vs.join(", ")}</title></circle>`
-      + `<text class="rellabel" x="${x.toFixed(1)}" y="${REL_LABEL_Y}" text-anchor="middle">${label}</text>`;
+    const w = relLabelWidth(label);
+    let row = -1;
+    for (let r = 0; r < relRows.length; r++) {
+      const prev = relRows[r];
+      const overlap = prev === null ? 0 : (prev.w + w) / 2 - Math.abs(prev.x - x);
+      if (overlap <= 1.5) { row = r; break; }
+    }
+    let labelEl = "";
+    if (row >= 0) {
+      relRows[row] = { x, w };
+      labelEl = `<text class="rellabel" x="${x.toFixed(1)}" y="${row === 0 ? REL_LABEL_Y : REL_LABEL_Y2}" text-anchor="middle">${label}</text>`;
+    }
+    return `<circle cx="${x.toFixed(1)}" cy="${REL_DOT_Y}" r="2.6" fill="${COLORS.npm}"><title>${d} · ${vs.join(", ")}</title></circle>` + labelEl;
   }).join("");
   const relLines = [...byDayRel.keys()].filter((d) => days.includes(d))
     .map((d) => `<line class="rel" x1="${X(days.indexOf(d)).toFixed(1)}" y1="${REL_LINE_Y}" x2="${X(days.indexOf(d)).toFixed(1)}" y2="${y1}"/>`).join("");
