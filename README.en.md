@@ -27,6 +27,7 @@ Browser-only (no host behavior), plain JavaScript, zero build step, zero npm dep
 
 - **Turn-folded outline**: shows "Turn N + your question" rows by default, long conversations at a glance
 - **Keyword filter**: click the top-left search icon to reveal the inline input; matches only your questions + the assistant's actual reply text (context, tool calls, commands, compaction and reasoning never match); hits are highlighted and the list text is windowed to the keyword
+- **Jump straight to the hit**: clicking a search result scrolls to where the keyword actually appears in the conversation (not just the top of the message) and marks every occurrence inside that message — a brief flash that eases into a soft persistent tint, so long replies no longer need hunting
 - **Expand / collapse steps**: the arrow button on the right of each turn row (`▸ N`, rotates to `▾` when expanded) smoothly expands or collapses the turn's step details (assistant replies, tool calls, commands, compaction points, etc.)
 - **Hover full text**: rest the mouse on a turn row and a bubble shows the user's complete question, no longer truncated to one line
 - **Full / Hidden / Minimal-left modes**: the header toggle cycles three states —
