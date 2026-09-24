@@ -99,7 +99,7 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 
 | 宿主 `dsh-client-ui-conversation` | 对应插件版本 | npm 标签 |
 |---|---|---|
-| **≥ 0.1.2-rc.1**（有 `uiConversation` 服务） | **0.2.6 及以后**（当前 0.2.9） | `latest`（默认） |
+| **≥ 0.1.2-rc.1**（有 `uiConversation` 服务） | **0.2.6 及以后**（当前 0.2.10） | `latest`（默认） |
 | **≤ 0.1.1-rc.2**（无 `uiConversation`，旧 `session.chat` 快照） | **0.2.5 及以前** | `legacy` |
 
 - 新宿主直接安装最新版即可（`dsh plugin --profile web add dsh-conversation-navigator`）。
