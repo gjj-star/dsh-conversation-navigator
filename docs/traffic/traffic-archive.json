@@ -42,7 +42,8 @@
   "2026-09-21": 66,
   "2026-09-22": 0,
   "2026-09-23": 0,
-  "2026-09-24": 0
+  "2026-09-24": 0,
+  "2026-09-25": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -228,6 +229,11 @@
   "2026-09-22": {
    "count": 13,
    "uniques": 8,
+   "source": "github-api"
+  },
+  "2026-09-23": {
+   "count": 8,
+   "uniques": 5,
    "source": "github-api"
   }
  },
@@ -416,6 +422,11 @@
    "count": 18,
    "uniques": 10,
    "source": "github-api"
+  },
+  "2026-09-23": {
+   "count": 5,
+   "uniques": 5,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -586,32 +597,32 @@
  "referrers": [
   {
    "referrer": "github.com",
-   "count": 76,
-   "uniques": 6
+   "count": 64,
+   "uniques": 5
   },
   {
    "referrer": "Bing",
-   "count": 5,
-   "uniques": 5
+   "count": 3,
+   "uniques": 3
   }
  ],
  "paths": [
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 223,
-   "uniques": 140
+   "count": 211,
+   "uniques": 135
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/pulse",
    "title": "/pulse",
-   "count": 17,
+   "count": 14,
    "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
    "title": "/graphs/traffic",
-   "count": 16,
+   "count": 12,
    "uniques": 1
   },
   {
@@ -651,8 +662,8 @@
    "uniques": 2
   },
   {
-   "path": "/gjj-star/dsh-conversation-navigator/releases",
-   "title": "/releases",
+   "path": "/gjj-star/dsh-conversation-navigator/tree/main/assets/screenshots",
+   "title": "/tree/main/assets/screenshots",
    "count": 2,
    "uniques": 2
   }
@@ -662,8 +673,8 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-09-24T09:44:10Z",
-  "size": 18102
+  "pushedAt": "2026-09-24T09:44:22Z",
+  "size": 18115
  },
  "history": [
   {
@@ -743,9 +754,15 @@
    "npm": "days=39",
    "github": "views=14 clones=14",
    "stars": "total=23"
+  },
+  {
+   "at": "2026-09-25T08:53:44.391Z",
+   "npm": "days=40",
+   "github": "views=14 clones=14",
+   "stars": "total=23"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.10",
- "updatedAt": "2026-09-24T09:44:21.418Z"
+ "updatedAt": "2026-09-25T08:53:44.391Z"
 }
