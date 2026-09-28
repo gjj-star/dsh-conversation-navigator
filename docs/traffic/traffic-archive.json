@@ -44,8 +44,9 @@
   "2026-09-23": 39,
   "2026-09-24": 165,
   "2026-09-25": 64,
-  "2026-09-26": 0,
-  "2026-09-27": 0
+  "2026-09-26": 70,
+  "2026-09-27": 0,
+  "2026-09-28": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -675,8 +676,8 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-09-25T08:53:45Z",
-  "size": 18118
+  "pushedAt": "2026-09-27T09:20:21Z",
+  "size": 18121
  },
  "history": [
   {
@@ -768,9 +769,15 @@
    "npm": "days=42",
    "github": "views=14 clones=14",
    "stars": "total=23"
+  },
+  {
+   "at": "2026-09-28T09:53:31.607Z",
+   "npm": "days=43",
+   "github": "views=14 clones=14",
+   "stars": "total=23"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.10",
- "updatedAt": "2026-09-27T09:20:19.573Z"
+ "updatedAt": "2026-09-28T09:53:31.607Z"
 }
