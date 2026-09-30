@@ -19,3 +19,17 @@ jobs:
           node --check lib/index.js
       - name: Validate screenshots.json
         run: node -e "JSON.parse(require('fs').readFileSync('screenshots.json','utf8')); console.log('screenshots.json OK')"
+      # 宿主导出契约：DSH 0.1.7 曾把图标导出从 IconXxxOutline16 静默改成 IconXxxOutlineRegular/Medium，
+      # 插件侧只在渲染期抛 minified React #130。这里对每个版本解包比对，把"静默移除"变成 CI 失败。
+      - name: Host export contract
+        run: |
+          set -euo pipefail
+          # 0.1.7-rc.2 = 改用「字重后缀」的首个版本（旧命名线的最低支持边界另由本地矩阵覆盖）
+          CURRENT=$(npm view @deepseek-ai/dsh@latest version)
+          echo "当前发布版 DSH: $CURRENT"
+          for V in 0.1.7-rc.2 "$CURRENT"; do
+            D=".hostcheck/$V"; mkdir -p "$D"
+            npm pack "@deepseek-ai/dsh-client-ui-primitives@$V" --pack-destination "$D" >/dev/null
+            tar -xzf "$D"/*.tgz -C "$D"
+            node scripts/check-host-exports.mjs "$D/package"
+          done

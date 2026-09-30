@@ -107,7 +107,8 @@ Official v0.1.2-rc.1 made a breaking change to the conversation data layer (conv
 
 - New hosts can install the latest normally (`dsh plugin --profile web add dsh-conversation-navigator`).
 - Legacy hosts should pin the legacy tag: `npm i dsh-conversation-navigator@legacy` (= 0.2.5).
-- From 0.2.6 the `peerDependencies` range is `>=0.1.2-rc.1 <0.2.0` (new host only); 0.2.5 and earlier declare no such range.
+- From 0.2.6 the `peerDependencies` range is `>=0.1.2-rc.1 <0.3.0` (both the conversation data layer and the UI primitives package).
+- Icon export compatibility: DSH **0.1.7** silently renamed `IconXxxOutline16` to `IconXxxOutlineRegular / Medium` (0.1.2–0.1.6 only ship the old names). From 0.2.11 the plugin resolves them in one place, preferring the new names and falling back to the old ones, and degrades to placeholder components with a diagnostic error instead of letting the whole slot die on minified React error #130. CI checks the host export contract against released DSH versions (`scripts/check-host-exports.mjs`).
 
 ## Structure
 
@@ -117,6 +118,8 @@ lib/
   client.js  # full browser implementation (window.__ModuleLoader__ module format)
 assets/
   screenshots/   # screenshots (README hero + market gallery)
+scripts/
+  check-host-exports.mjs   # CI: host export contract check (silent removals like icon renames)
 cordis.patch.yml     # bundle patch layer (inserts the plugin row)
 example.patch.yml    # patch example for manual installs
 ```

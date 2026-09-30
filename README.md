@@ -104,7 +104,8 @@ dsh plugin --profile web add ./dsh-conversation-navigator-<version>.tgz
 
 - 新宿主直接安装最新版即可（`dsh plugin --profile web add dsh-conversation-navigator`）。
 - 旧宿主请指定旧标签：`npm i dsh-conversation-navigator@legacy`（= 0.2.5）。
-- 0.2.6 起 `peerDependencies` 声明为 `>=0.1.2-rc.1 <0.2.0`（仅新宿主）；0.2.5 及以前不声明该范围。
+- 0.2.6 起 `peerDependencies` 声明 `>=0.1.2-rc.1 <0.3.0`（会话数据层与 UI primitives 两个包）。
+- 图标导出兼容:官方 **0.1.7** 起把 `IconXxxOutline16` 静默改为 `IconXxxOutlineRegular / Medium`(0.1.2~0.1.6 只有旧名)。0.2.11 起插件在**一处集中解析**、新名优先 → 旧名回退,缺失时打印可诊断的报错并退化为占位组件,不再让整个 slot 因 minified React error #130 被判崩溃;CI 对已发布 DSH 版本做宿主导出契约检查(`scripts/check-host-exports.mjs`)。
 
 ## 目录结构
 
@@ -114,6 +115,8 @@ lib/
   client.js  # 浏览器端完整实现(window.__ModuleLoader__ 模块格式)
 assets/
   screenshots/   # 截图(README 主图 + 市场截图墙)
+scripts/
+  check-host-exports.mjs   # CI: 宿主导出契约检查(图标改名这类静默移除)
 cordis.patch.yml     # 组合包补丁层(插入插件行)
 example.patch.yml    # 手动安装时的补丁示例
 ```
