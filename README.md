@@ -128,7 +128,7 @@ example.patch.yml    # 手动安装时的补丁示例
 
 | npm 下载 | GitHub 独立访客 | GitHub 独立克隆者 | Stars | Forks |
 | ---: | ---: | ---: | ---: | ---: |
-| 6,918 | 601 | 439 | 23 | 1 |
+| 6,918 | 602 | 439 | 23 | 1 |
 <!-- traffic:totals:end -->
 
 - 明细报告：[traffic-report.md](./docs/traffic/traffic-report.md)｜原始归档：[traffic-archive.json](./docs/traffic/traffic-archive.json)｜趋势图与说明：[docs/traffic](./docs/traffic/README.md)
