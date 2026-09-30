@@ -123,11 +123,13 @@ example.patch.yml    # 手动安装时的补丁示例
 
 ## 流量
 
-统计区间 **2026-08-17 → 2026-09-20**（GitHub Actions 每日自动刷新）：
+<!-- traffic:totals:start -->
+统计区间 **2026-08-17 → 2026-09-30**（GitHub Actions 每日自动刷新）：
 
 | npm 下载 | GitHub 独立访客 | GitHub 独立克隆者 | Stars | Forks |
 | ---: | ---: | ---: | ---: | ---: |
-| 6,206 | 540 | 335 | 23 | 1 |
+| 6,918 | 602 | 439 | 23 | 1 |
+<!-- traffic:totals:end -->
 
 - 明细报告：[traffic-report.md](./docs/traffic/traffic-report.md)｜原始归档：[traffic-archive.json](./docs/traffic/traffic-archive.json)｜趋势图与说明：[docs/traffic](./docs/traffic/README.md)
 - 口径：npm 下载含镜像站、CI 与重复安装，且有 1–2 天结算延迟；GitHub 独立访客 / 独立克隆者更接近真实人数。

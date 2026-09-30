@@ -424,6 +424,54 @@ if (npmData.version) archive.latestVersion = npmData.version;
 const dataChanges = changes.npm.added + changes.npm.updated + changes.views.added + changes.views.updated
   + changes.clones.added + changes.clones.updated + starChanged;
 
+/* ---------------------------------------------------------------- README 同步
+   把 README「流量」区的总量按标记块改写成本次归档的实际值，避免手抄的数据落伍
+   （README 由本工作流每日提交）。标记缺失时只跳过并告警，不擅自改 README。 */
+let readmeNotes = [];
+const README_MARK = /<!-- traffic:totals:start -->[\s\S]*?<!-- traffic:totals:end -->/;
+const README_BLOCKS = [
+  {
+    file: join(HERE, "..", "..", "README.md"),
+    range: (from, to) => `统计区间 **${from} → ${to}**（GitHub Actions 每日自动刷新）：`,
+    head: "| npm 下载 | GitHub 独立访客 | GitHub 独立克隆者 | Stars | Forks |",
+  },
+  {
+    file: join(HERE, "..", "..", "README.en.md"),
+    range: (from, to) => `Window **${from} → ${to}** (refreshed daily by GitHub Actions):`,
+    head: "| npm downloads | GitHub unique visitors | GitHub unique cloners | Stars | Forks |",
+  },
+];
+function syncReadmeTotals(a) {
+  const notes = [];
+  const days = [...new Set([...Object.keys(a.npmDaily ?? {}), ...Object.keys(a.viewsDaily ?? {}), ...Object.keys(a.clonesDaily ?? {})])].sort();
+  const total = (o, k) => Object.values(o ?? {}).reduce((s, v) => s + (k ? (v?.[k] ?? 0) : v), 0);
+  const cells = [
+    num(total(a.npmDaily)), num(total(a.viewsDaily, "uniques")), num(total(a.clonesDaily, "uniques")),
+    num(a.stats?.stars ?? 0), num(a.stats?.forks ?? 0),
+  ];
+  for (const b of README_BLOCKS) {
+    const label = b.file.split(/[\\/]/).pop();
+    let text;
+    try { text = readFileSync(b.file, "utf8"); } catch (e) { notes.push(`${label}: 读取失败（${e.message}）`); continue; }
+    if (!README_MARK.test(text)) { notes.push(`${label}: 未找到 traffic:totals 标记块，跳过`); continue; }
+    const eol = text.includes("\r\n") ? "\r\n" : "\n";
+    const block = [
+      "<!-- traffic:totals:start -->",
+      b.range(days[0] ?? "—", days.at(-1) ?? "—"),
+      "",
+      b.head,
+      "| ---: | ---: | ---: | ---: | ---: |",
+      `| ${cells.join(" | ")} |`,
+      "<!-- traffic:totals:end -->",
+    ].join(eol);
+    const next = text.replace(README_MARK, block);
+    if (next === text) { notes.push(`${label}: 已是当前值`); continue; }
+    writeFileSync(b.file, next);
+    notes.push(`${label}: 已刷新（${cells.join(" / ")}）`);
+  }
+  return notes;
+}
+
 mkdirSync(OUT_DIR, { recursive: true });
 // FORCE=1：数据无变化也重写归档/图表/报告（改了绘图或报告排版后需要一次强制重绘）
 const force = process.env.FORCE === "1";
@@ -445,6 +493,8 @@ if (dataChanges === 0 && !force) {
   writeFileSync(ARCHIVE, JSON.stringify(archive, null, 1) + "\n");
   writeFileSync(SVG, buildSVG(archive));
   writeFileSync(REPORT, buildReport(archive));
+  readmeNotes = syncReadmeTotals(archive);
+  for (const note of readmeNotes) console.log("  README:", note);
 }
 
 const nDays = (o) => Object.keys(o).length;
@@ -480,6 +530,7 @@ if (ghData.error) {
   status.push(`> ${ghData.hint ?? ""}`, "");
 }
 if (fatal.length > 0) console.error("致命抓取错误：" + fatal.join(" | "));
+if (readmeNotes.length > 0) status.push(`- README 流量区：${readmeNotes.join("；")}`, "");
 const statusFile = process.env.STATUS_FILE;
 if (statusFile) { try { writeFileSync(statusFile, status.join("\n")); } catch (e) { console.warn("状态文件写入失败:", e.message); } }
 

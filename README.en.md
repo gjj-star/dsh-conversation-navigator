@@ -126,11 +126,13 @@ example.patch.yml    # patch example for manual installs
 
 ## Traffic
 
-Window **2026-08-17 → 2026-09-20** (refreshed daily by GitHub Actions):
+<!-- traffic:totals:start -->
+Window **2026-08-17 → 2026-09-30** (refreshed daily by GitHub Actions):
 
 | npm downloads | GitHub unique visitors | GitHub unique cloners | Stars | Forks |
 | ---: | ---: | ---: | ---: | ---: |
-| 6,206 | 540 | 335 | 23 | 1 |
+| 6,918 | 602 | 439 | 23 | 1 |
+<!-- traffic:totals:end -->
 
 - Details: [traffic-report.md](./docs/traffic/traffic-report.md) | raw archive: [traffic-archive.json](./docs/traffic/traffic-archive.json) | chart & docs: [docs/traffic](./docs/traffic/README.md)
 - Caveats: npm downloads include mirrors, CI and reinstalls, with a 1–2 day settlement lag; GitHub unique visitors / cloners are closer to real user counts.

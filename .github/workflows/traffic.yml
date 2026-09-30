@@ -55,7 +55,7 @@ jobs:
       - name: Commit changes
         run: |
           set -euo pipefail
-          git add docs/traffic
+          git add docs/traffic README.md README.en.md
           if git diff --cached --quiet; then
             echo "流量数据无变化，跳过提交"
             exit 0
