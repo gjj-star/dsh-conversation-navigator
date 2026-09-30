@@ -106,6 +106,43 @@ async function fetchNpm() {
   return { daily, releases, version: meta.json?.["dist-tags"]?.latest ?? null, created, error: meta.error ?? range.error };
 }
 
+/* 「按版本」聚合端点只支持 last-week 这类固定窗口（实测窗口 = 最近 7 个已结算日，
+   今天 09-30 时为 09-22…09-28），没有参数能指定历史某周，所以每天存一条交叉核对快照。
+   价值：若某次快照的窗口里出现逐日缺口，就能用 周总量 − 非缺口日之和 判定该聚合是否
+   包含缺口天的量——含且恰好一个缺口日则可精确还原，不含则得到定论，不必再猜。 */
+const shiftDay = (d, n) => { const x = new Date(d + "T00:00:00Z"); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+const WEEK_WINDOWS = [[8, 2], [7, 1], [9, 3], [6, 0]]; // [起始偏移, 结束偏移]，相对今天
+async function fetchNpmWeekly(daily, prev) {
+  const r = await getJSON(`https://api.npmjs.org/versions/${NPM_PKG}/last-week`);
+  if (!r.json?.downloads) return { error: r.error ?? "last-week 无可解析数据" };
+  const total = Object.values(r.json.downloads).reduce((s, v) => s + v, 0);
+  /* 候选窗口顺序：优先沿用"上次已对齐"的那个偏移（窗口语义由 npm 决定，不该靠凑数字猜），
+     没有历史时退回默认候选；默认里若某个能精确对齐就采用（首次自举）。 */
+  const offsets = [];
+  if (prev?.windowMatched && prev.window && prev.at) {
+    const off = (d) => Math.round((new Date(prev.at.slice(0, 10) + "T00:00:00Z") - new Date(d + "T00:00:00Z")) / 86400000);
+    offsets.push([off(prev.window[0]), off(prev.window[1])]);
+  }
+  for (const w of WEEK_WINDOWS) if (!offsets.some((x) => x[0] === w[0] && x[1] === w[1])) offsets.push(w);
+  const cands = [];
+  for (const [a, b] of offsets) {
+    const from = shiftDay(today(), -a), to = shiftDay(today(), -b);
+    const win = Object.keys(daily).filter((d) => d >= from && d <= to);
+    if (win.length === 0) continue;
+    const sum = win.reduce((s, d) => s + (daily[d] ?? 0), 0);
+    cands.push({ window: [from, to], dailySum: sum, diff: total - sum, gapDays: win.filter((d) => (daily[d] ?? 0) === 0).length, windowMatched: total === sum });
+    if (cands.at(-1).windowMatched) break;
+  }
+  if (cands.length === 0) return { error: "周窗口内没有逐日数据" };
+  const best = cands.find((c) => c.windowMatched) ?? (prev?.windowMatched ? cands[0] : cands.reduce((m, c) => (Math.abs(c.diff) < Math.abs(m.diff) ? c : m), cands[0]));
+  const snap = { total, ...best };
+  if (snap.diff > 0 && snap.gapDays === 1) {
+    const gap = Object.keys(daily).filter((d) => d >= snap.window[0] && d <= snap.window[1] && (daily[d] ?? 0) === 0)[0];
+    if (gap) snap.derivedGapDay = { day: gap, value: snap.diff };
+  }
+  return { snap, versions: r.json.downloads, error: r.error };
+}
+
 async function fetchGithub() {
   const auth = TOKEN ? { authorization: `Bearer ${TOKEN}` } : {};
   if (!TOKEN) return { error: "未设置 GH_TOKEN/GITHUB_TOKEN", forbidden: true, hint: TRAFFIC_HINT };
@@ -405,10 +442,12 @@ ${a.paths?.length ? `\n## 热门路径（近 14 天）\n\n| 路径 | 次数 | �
 
 // ---------------------------------------------------------------- main
 const npmData = await fetchNpm();
+const baseArchive = loadArchive();
+const weeklyData = await fetchNpmWeekly(npmData.daily, (baseArchive?.weeklyChecks ?? []).at(-1));
 const ghData = await fetchGithub();
 const starData = await fetchStars();
 
-const archive = loadArchive() ?? seedArchive();
+const archive = baseArchive ?? seedArchive();
 const changes = {
   npm: mergeDaily(archive.npmDaily, npmData.daily, "npm-api", true),
   views: mergeDaily(archive.viewsDaily, ghData.views, "github-api"),
@@ -420,9 +459,23 @@ for (const [d, c] of Object.entries(starData.byDay ?? {})) {
   if (archive.starsDaily[d] !== c) { archive.starsDaily[d] = c; starChanged++; }
 }
 if (npmData.version) archive.latestVersion = npmData.version;
+/* 周总量交叉核对快照：内容变化才追加，避免同一天多次运行重复写 */
+let weeklyChanged = 0;
+if (weeklyData.snap) {
+  const list = archive.weeklyChecks ?? (archive.weeklyChecks = []);
+  const last = list.at(-1);
+  const same = last && last.window?.[0] === weeklyData.snap.window[0] && last.window?.[1] === weeklyData.snap.window[1]
+    && last.total === weeklyData.snap.total && last.dailySum === weeklyData.snap.dailySum && last.gapDays === weeklyData.snap.gapDays;
+  if (!same) {
+    list.push({ at: new Date().toISOString(), ...weeklyData.snap });
+    if (list.length > 60) list.splice(0, list.length - 60);
+    weeklyChanged = 1;
+  }
+  if (weeklyData.versions) archive.latestVersions = weeklyData.versions;
+}
 
 const dataChanges = changes.npm.added + changes.npm.updated + changes.views.added + changes.views.updated
-  + changes.clones.added + changes.clones.updated + starChanged;
+  + changes.clones.added + changes.clones.updated + starChanged + weeklyChanged;
 
 /* ---------------------------------------------------------------- README 同步
    把 README「流量」区的总量按标记块改写成本次归档的实际值，避免手抄的数据落伍
@@ -503,6 +556,14 @@ console.log(`  npm   : ${nDays(archive.npmDaily)} 天（本次 +${changes.npm.ad
 console.log(`  views : ${nDays(archive.viewsDaily)} 天（本次 +${changes.views.added} / 更新 ${changes.views.updated}）${ghData.error ? " ⚠️ " + ghData.error : ""}`);
 console.log(`  clones: ${nDays(archive.clonesDaily)} 天（本次 +${changes.clones.added} / 更新 ${changes.clones.updated}）`);
 console.log(`  stars : ${nDays(archive.starsDaily)} 天有记录，共 ${starData.total ?? "?"} 个 star 事件（本次变更 ${starChanged} 天）`);
+if (weeklyData.snap) {
+  const w = weeklyData.snap;
+  console.log(`  周核对: ${w.window[0]}→${w.window[1]} 周总量 ${w.total} vs 逐日和 ${w.dailySum}`
+    + `（差 ${w.diff}，缺口 ${w.gapDays} 天${w.windowMatched ? "，窗口已对齐" : "，窗口未对齐"}）`
+    + (w.derivedGapDay ? `；可还原 ${w.derivedGapDay.day} = ${w.derivedGapDay.value}` : ""));
+} else if (weeklyData.error) {
+  console.log(`  周核对: 跳过（${weeklyData.error}）`);
+}
 console.log(dataChanges === 0 && !force ? "文件未改动（数据无变化）" : "图表与报告已刷新");
 
 
@@ -531,6 +592,13 @@ if (ghData.error) {
 }
 if (fatal.length > 0) console.error("致命抓取错误：" + fatal.join(" | "));
 if (readmeNotes.length > 0) status.push(`- README 流量区：${readmeNotes.join("；")}`, "");
+if (weeklyData.snap) {
+  const w = weeklyData.snap;
+  status.push(`- 周总量交叉核对：${w.window[0]}→${w.window[1]} 周总量 ${w.total} / 逐日和 ${w.dailySum}（差 ${w.diff}，缺口 ${w.gapDays} 天）`
+    + (w.derivedGapDay ? `；可还原 ${w.derivedGapDay.day}=${w.derivedGapDay.value}` : ""), "");
+} else if (weeklyData.error) {
+  status.push(`- 周总量交叉核对：⚠️ ${weeklyData.error}`, "");
+}
 const statusFile = process.env.STATUS_FILE;
 if (statusFile) { try { writeFileSync(statusFile, status.join("\n")); } catch (e) { console.warn("状态文件写入失败:", e.message); } }
 
