@@ -36,6 +36,18 @@ jobs:
           fi
       - name: Publish
         if: steps.skip.outputs.skip != 'true'
-        run: npm publish --provenance
+        # 幂等保护的第二道：上面用 npm view 判断"是否已发布"，但版本处于 npm 暂存处理中时
+        # 还查不到，重复推同一 tag 会撞 E409（Cannot publish over previously staged version）。
+        # 这类冲突按"已发布"处理，避免一次白跑的红叉。
+        run: |
+          set +e
+          npm publish --provenance 2>&1 | tee /tmp/publish.log
+          code=${PIPESTATUS[0]}
+          set -e
+          if [ "$code" -ne 0 ] && grep -qE 'E409|EPUBLISHCONFLICT|previously staged|Cannot publish over' /tmp/publish.log; then
+            echo "::notice::该版本已在 npm（或仍在暂存处理中），视为已发布，跳过"
+            exit 0
+          fi
+          exit "$code"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -35,7 +35,7 @@
   "2026-09-14": 67,
   "2026-09-15": 0,
   "2026-09-16": 184,
-  "2026-09-17": 0,
+  "2026-09-17": 125,
   "2026-09-18": 42,
   "2026-09-19": 46,
   "2026-09-20": 63,
@@ -45,8 +45,10 @@
   "2026-09-24": 165,
   "2026-09-25": 64,
   "2026-09-26": 70,
-  "2026-09-27": 0,
-  "2026-09-28": 0
+  "2026-09-27": 47,
+  "2026-09-28": 51,
+  "2026-09-29": 0,
+  "2026-09-30": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -236,6 +238,31 @@
   },
   "2026-09-23": {
    "count": 8,
+   "uniques": 5,
+   "source": "github-api"
+  },
+  "2026-09-24": {
+   "count": 25,
+   "uniques": 7,
+   "source": "github-api"
+  },
+  "2026-09-25": {
+   "count": 8,
+   "uniques": 3,
+   "source": "github-api"
+  },
+  "2026-09-26": {
+   "count": 12,
+   "uniques": 5,
+   "source": "github-api"
+  },
+  "2026-09-27": {
+   "count": 9,
+   "uniques": 7,
+   "source": "github-api"
+  },
+  "2026-09-28": {
+   "count": 11,
    "uniques": 5,
    "source": "github-api"
   }
@@ -430,6 +457,31 @@
    "count": 5,
    "uniques": 5,
    "source": "github-api"
+  },
+  "2026-09-24": {
+   "count": 47,
+   "uniques": 21,
+   "source": "github-api"
+  },
+  "2026-09-25": {
+   "count": 7,
+   "uniques": 6,
+   "source": "github-api"
+  },
+  "2026-09-26": {
+   "count": 2,
+   "uniques": 2,
+   "source": "github-api"
+  },
+  "2026-09-27": {
+   "count": 7,
+   "uniques": 4,
+   "source": "github-api"
+  },
+  "2026-09-28": {
+   "count": 25,
+   "uniques": 18,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -595,13 +647,17 @@
   {
    "version": "0.2.10",
    "at": "2026-09-24T02:40:03.514Z"
+  },
+  {
+   "version": "0.2.11",
+   "at": "2026-09-30T01:46:11.144Z"
   }
  ],
  "referrers": [
   {
    "referrer": "github.com",
-   "count": 64,
-   "uniques": 5
+   "count": 46,
+   "uniques": 6
   },
   {
    "referrer": "Bing",
@@ -613,62 +669,62 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 211,
-   "uniques": 135
+   "count": 168,
+   "uniques": 102
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/pulse",
    "title": "/pulse",
-   "count": 14,
+   "count": 16,
    "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
    "title": "/graphs/traffic",
-   "count": 12,
+   "count": 15,
    "uniques": 1
-  },
-  {
-   "path": "/gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/01-main.png",
-   "title": "/blob/main/assets/screenshots/01-main.png",
-   "count": 6,
-   "uniques": 2
-  },
-  {
-   "path": "/gjj-star/dsh-conversation-navigator/blob/main/docs/traffic/traffic-trend.svg",
-   "title": "/blob/main/docs/traffic/traffic-trend.svg",
-   "count": 5,
-   "uniques": 2
-  },
-  {
-   "path": "/gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/02-steps.png",
-   "title": "/blob/main/assets/screenshots/02-steps.png",
-   "count": 4,
-   "uniques": 2
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/blob/main/README.en.md",
    "title": "/blob/main/README.en.md",
+   "count": 4,
+   "uniques": 4
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/releases/tag/v0.2.10",
+   "title": "/releases/tag/v0.2.10",
    "count": 3,
-   "uniques": 3
+   "uniques": 2
   },
   {
-   "path": "/gjj-star/dsh-conversation-navigator/blob/main/LICENSE",
-   "title": "/blob/main/LICENSE",
+   "path": "/gjj-star/dsh-conversation-navigator/releases",
+   "title": "/releases",
    "count": 2,
    "uniques": 2
   },
   {
-   "path": "/gjj-star/dsh-conversation-navigator/blob/main/docs/traffic/traffic-report.md",
-   "title": "/blob/main/docs/traffic/traffic-report.md",
+   "path": "/gjj-star/dsh-conversation-navigator/actions/runs/35975787609",
+   "title": "/actions/runs/35975787609",
    "count": 2,
-   "uniques": 2
+   "uniques": 1
   },
   {
-   "path": "/gjj-star/dsh-conversation-navigator/tree/main/assets/screenshots",
-   "title": "/tree/main/assets/screenshots",
-   "count": 2,
-   "uniques": 2
+   "path": "/gjj-star/dsh-conversation-navigator/actions/runs/35581053940",
+   "title": "/actions/runs/35581053940",
+   "count": 1,
+   "uniques": 1
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/actions/runs/35838329548",
+   "title": "/actions/runs/35838329548",
+   "count": 1,
+   "uniques": 1
+  },
+  {
+   "path": "/gjj-star/dsh-conversation-navigator/actions/runs/35975787609/job/107555817881",
+   "title": "/actions/runs/35975787609/job/107555817881",
+   "count": 1,
+   "uniques": 1
   }
  ],
  "stats": {
@@ -676,8 +732,8 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-09-27T09:20:21Z",
-  "size": 18121
+  "pushedAt": "2026-09-30T01:45:54Z",
+  "size": 18126
  },
  "history": [
   {
@@ -775,9 +831,15 @@
    "npm": "days=43",
    "github": "views=14 clones=14",
    "stars": "total=23"
+  },
+  {
+   "at": "2026-09-30T02:36:47.226Z",
+   "npm": "days=45",
+   "github": "views=14 clones=14",
+   "stars": "total=23"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
- "latestVersion": "0.2.10",
- "updatedAt": "2026-09-28T09:53:31.607Z"
+ "latestVersion": "0.2.11",
+ "updatedAt": "2026-09-30T02:36:47.226Z"
 }

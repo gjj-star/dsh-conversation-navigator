@@ -278,8 +278,17 @@ function buildSVG(a) {
   const relLines = [...byDayRel.keys()].filter((d) => days.includes(d))
     .map((d) => `<line class="rel" x1="${X(days.indexOf(d)).toFixed(1)}" y1="${REL_LINE_Y}" x2="${X(days.indexOf(d)).toFixed(1)}" y2="${y1}"/>`).join("");
 
+  /* x 轴日期标签：从最后一天往前按 step 取（保证末日一定被标注），再做一次宽度碰撞检查。
+     旧写法「按下标取模 + 强制补最后一天」在 (n-2) % step == 0 时会把最后两个标签挤在一起
+     —— 09-26 / 09-29 两次 CI 正是挂在 tick:"09-25"×"09-26" 与 tick:"09-28"×"09-29"。 */
   const step = Math.max(1, Math.ceil(n / 16));
-  const xLabels = days.map((d, i) => i % step === 0 || i === n - 1 ? `<text class="tick" x="${X(i).toFixed(1)}" y="${y1 + 18}" text-anchor="middle">${d.slice(5)}</text>` : "").join("");
+  const tickText = (i) => days[i].slice(5);
+  const tickWidth = (s) => [...s].reduce((w, ch) => w + (ch.codePointAt(0) > 0x2e80 ? 1 : 0.56) * 11, 0);
+  const tickIdx = [];
+  for (let i = n - 1; i >= 0; i -= step) tickIdx.push(i);
+  tickIdx.reverse();
+  if (tickIdx[0] !== 0 && X(tickIdx[0]) - X(0) > (tickWidth(tickText(0)) + tickWidth(tickText(tickIdx[0]))) / 2 + 1.5) tickIdx.unshift(0);
+  const xLabels = tickIdx.map((i) => `<text class="tick" x="${X(i).toFixed(1)}" y="${y1 + 18}" text-anchor="middle">${tickText(i)}</text>`).join("");
 
   const sum = (obj, key) => Object.values(obj).reduce((acc, v) => acc + (key ? (v?.[key] ?? 0) : v), 0);
   const npmTotal = sum(a.npmDaily), viewsTotal = sum(a.viewsDaily, "count"), viewsUniq = sum(a.viewsDaily, "uniques");

@@ -1,19 +1,19 @@
 # dsh-conversation-navigator 流量报告
 
-> 自动生成于 2026-09-28 09:53Z · 数据源 npm downloads + GitHub traffic
+> 自动生成于 2026-09-30 02:36Z · 数据源 npm downloads + GitHub traffic
 > 图表：[traffic-trend.svg](./traffic-trend.svg) · 原始归档：[traffic-archive.json](./traffic-archive.json)
 
-## 汇总（2026-08-17 → 2026-09-28）
+## 汇总（2026-08-17 → 2026-09-30）
 
 | 指标 | 累计 | 最近 7 天日均 | 峰值日 |
 | --- | --- | --- | --- |
-| npm 下载 | 6,695 | 51 | 2026-08-17 |
-| GitHub 独立访客 | 575 | 2 | 2026-08-28 |
-| GitHub 独立克隆者 | 388 | 2 | 2026-08-17 |
+| npm 下载 | 6,918 | 57 | 2026-08-17 |
+| GitHub 独立访客 | 602 | 4 | 2026-08-28 |
+| GitHub 独立克隆者 | 439 | 7 | 2026-08-17 |
 | Stars | 23 | — | — |
 | Forks | 1 | — | — |
 
-最近发版：**0.2.10** @ 2026-09-24（4 天前）
+最近发版：**0.2.11** @ 2026-09-30（0 天前）
 
 ## 逐日明细
 
@@ -50,24 +50,26 @@
 | 2026-09-14 | 67 | 37/16 | 38/17 |  |
 | 2026-09-15 | 0 | 26/17 | 7/5 |  |
 | 2026-09-16 | 184 | 26/15 | 26/13 | 0.2.9 |
-| 2026-09-17 | 0 | 32/16 | 9/6 |  |
+| 2026-09-17 | 125 | 32/16 | 9/6 |  |
 | 2026-09-18 | 42 | 21/12 | 27/16 |  |
 | 2026-09-19 | 46 | 7/6 | 20/13 |  |
 | 2026-09-20 | 63 | 8/6 | 21/13 |  |
 | 2026-09-21 | 66 | 14/10 | 17/12 |  |
 | 2026-09-22 | 22 | 13/8 | 18/10 |  |
 | 2026-09-23 | 39 | 8/5 | 5/5 |  |
-| 2026-09-24 | 165 | — | — | 0.2.10 |
-| 2026-09-25 | 64 | — | — |  |
-| 2026-09-26 | 70 | — | — |  |
-| 2026-09-27 | 0 | — | — |  |
-| 2026-09-28 | 0 | — | — |  |
+| 2026-09-24 | 165 | 25/7 | 47/21 | 0.2.10 |
+| 2026-09-25 | 64 | 8/3 | 7/6 |  |
+| 2026-09-26 | 70 | 12/5 | 2/2 |  |
+| 2026-09-27 | 47 | 9/7 | 7/4 |  |
+| 2026-09-28 | 51 | 11/5 | 25/18 |  |
+| 2026-09-29 | 0 | — | — |  |
+| 2026-09-30 | 0 | — | — | 0.2.11 |
 
 ## 流量来源（近 14 天）
 
 | 来源 | 次数 | 独立 |
 | --- | --- | --- |
-| github.com | 64 | 5 |
+| github.com | 46 | 6 |
 | Bing | 3 | 3 |
 
 
@@ -75,16 +77,16 @@
 
 | 路径 | 次数 | 独立 |
 | --- | --- | --- |
-| /gjj-star/dsh-conversation-navigator | 211 | 135 |
-| /gjj-star/dsh-conversation-navigator/pulse | 14 | 1 |
-| /gjj-star/dsh-conversation-navigator/graphs/traffic | 12 | 1 |
-| /gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/01-main.png | 6 | 2 |
-| /gjj-star/dsh-conversation-navigator/blob/main/docs/traffic/traffic-trend.svg | 5 | 2 |
-| /gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/02-steps.png | 4 | 2 |
-| /gjj-star/dsh-conversation-navigator/blob/main/README.en.md | 3 | 3 |
-| /gjj-star/dsh-conversation-navigator/blob/main/LICENSE | 2 | 2 |
-| /gjj-star/dsh-conversation-navigator/blob/main/docs/traffic/traffic-report.md | 2 | 2 |
-| /gjj-star/dsh-conversation-navigator/tree/main/assets/screenshots | 2 | 2 |
+| /gjj-star/dsh-conversation-navigator | 168 | 102 |
+| /gjj-star/dsh-conversation-navigator/pulse | 16 | 1 |
+| /gjj-star/dsh-conversation-navigator/graphs/traffic | 15 | 1 |
+| /gjj-star/dsh-conversation-navigator/blob/main/README.en.md | 4 | 4 |
+| /gjj-star/dsh-conversation-navigator/releases/tag/v0.2.10 | 3 | 2 |
+| /gjj-star/dsh-conversation-navigator/releases | 2 | 2 |
+| /gjj-star/dsh-conversation-navigator/actions/runs/35975787609 | 2 | 1 |
+| /gjj-star/dsh-conversation-navigator/actions/runs/35581053940 | 1 | 1 |
+| /gjj-star/dsh-conversation-navigator/actions/runs/35838329548 | 1 | 1 |
+| /gjj-star/dsh-conversation-navigator/actions/runs/35975787609/job/107555817881 | 1 | 1 |
 
 ## 口径说明
 
