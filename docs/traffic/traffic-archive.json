@@ -51,8 +51,9 @@
   "2026-09-30": 246,
   "2026-10-01": 84,
   "2026-10-02": 69,
-  "2026-10-03": 0,
-  "2026-10-04": 0
+  "2026-10-03": 74,
+  "2026-10-04": 0,
+  "2026-10-05": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -288,6 +289,16 @@
   "2026-10-02": {
    "count": 0,
    "uniques": 0,
+   "source": "github-api"
+  },
+  "2026-10-03": {
+   "count": 5,
+   "uniques": 3,
+   "source": "github-api"
+  },
+  "2026-10-04": {
+   "count": 11,
+   "uniques": 4,
    "source": "github-api"
   }
  },
@@ -526,6 +537,16 @@
    "count": 16,
    "uniques": 9,
    "source": "github-api"
+  },
+  "2026-10-03": {
+   "count": 21,
+   "uniques": 14,
+   "source": "github-api"
+  },
+  "2026-10-04": {
+   "count": 9,
+   "uniques": 7,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -701,7 +722,7 @@
  "referrers": [
   {
    "referrer": "github.com",
-   "count": 40,
+   "count": 39,
    "uniques": 8
   },
   {
@@ -714,8 +735,8 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 110,
-   "uniques": 61
+   "count": 103,
+   "uniques": 57
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
@@ -742,6 +763,12 @@
    "uniques": 2
   },
   {
+   "path": "/gjj-star/dsh-conversation-navigator/blob/main/README.md",
+   "title": "/blob/main/README.md",
+   "count": 2,
+   "uniques": 2
+  },
+  {
    "path": "/gjj-star/dsh-conversation-navigator/releases",
    "title": "/releases",
    "count": 2,
@@ -754,20 +781,14 @@
    "uniques": 1
   },
   {
+   "path": "/gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/08-search.png",
+   "title": "/blob/main/assets/screenshots/08-search.png",
+   "count": 2,
+   "uniques": 1
+  },
+  {
    "path": "/gjj-star/dsh-conversation-navigator/actions/runs/35581053940",
    "title": "/actions/runs/35581053940",
-   "count": 1,
-   "uniques": 1
-  },
-  {
-   "path": "/gjj-star/dsh-conversation-navigator/actions/runs/35838329548",
-   "title": "/actions/runs/35838329548",
-   "count": 1,
-   "uniques": 1
-  },
-  {
-   "path": "/gjj-star/dsh-conversation-navigator/actions/runs/35975787609/job/107555817881",
-   "title": "/actions/runs/35975787609/job/107555817881",
    "count": 1,
    "uniques": 1
   }
@@ -777,8 +798,8 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-10-03T09:13:57Z",
-  "size": 18264
+  "pushedAt": "2026-10-04T09:52:48Z",
+  "size": 18282
  },
  "history": [
   {
@@ -948,11 +969,17 @@
    "npm": "days=49",
    "github": "views=14 clones=14",
    "stars": "total=23"
+  },
+  {
+   "at": "2026-10-05T10:33:54.221Z",
+   "npm": "days=50",
+   "github": "views=14 clones=14",
+   "stars": "total=23"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-10-04T09:52:47.478Z",
+ "updatedAt": "2026-10-05T10:33:54.221Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1013,46 +1040,58 @@
    "diff": 0,
    "gapDays": 0,
    "windowMatched": true
+  },
+  {
+   "at": "2026-10-05T10:33:54.221Z",
+   "total": 677,
+   "window": [
+    "2026-09-27",
+    "2026-10-03"
+   ],
+   "dailySum": 677,
+   "diff": 0,
+   "gapDays": 0,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
-  "0.2.8": 7,
-  "0.1.3": 3,
-  "0.1.2": 3,
-  "0.2.4": 3,
-  "0.1.17": 3,
-  "0.2.3": 3,
-  "0.1.0": 10,
-  "0.1.20": 3,
-  "0.1.4": 2,
-  "0.1.11": 2,
-  "0.1.15": 2,
-  "0.1.21": 2,
-  "0.1.23": 2,
-  "0.2.6": 2,
-  "0.1.6": 2,
-  "0.1.19": 3,
-  "0.1.24": 2,
-  "0.1.16": 2,
-  "0.1.14": 3,
-  "0.1.5": 2,
-  "0.1.13": 2,
-  "0.2.7": 3,
-  "0.1.1": 2,
-  "0.1.8": 2,
-  "0.1.10": 3,
-  "0.1.18": 3,
-  "0.1.25": 2,
-  "0.2.11": 343,
-  "0.1.22": 2,
-  "0.1.9": 3,
-  "0.2.10": 214,
-  "0.1.7": 3,
-  "0.2.0": 2,
-  "0.1.12": 2,
-  "0.2.5": 5,
-  "0.2.2": 4,
-  "0.2.1": 3,
-  "0.2.9": 14
+  "0.2.9": 11,
+  "0.2.1": 2,
+  "0.1.22": 1,
+  "0.1.4": 1,
+  "0.1.9": 2,
+  "0.2.10": 185,
+  "0.2.2": 3,
+  "0.2.5": 4,
+  "0.2.8": 6,
+  "0.2.11": 414,
+  "0.2.0": 1,
+  "0.1.12": 1,
+  "0.2.3": 2,
+  "0.1.6": 1,
+  "0.1.24": 1,
+  "0.1.16": 1,
+  "0.1.0": 9,
+  "0.1.20": 2,
+  "0.1.7": 2,
+  "0.1.23": 1,
+  "0.1.19": 2,
+  "0.1.25": 1,
+  "0.1.1": 1,
+  "0.1.14": 2,
+  "0.1.3": 2,
+  "0.2.7": 2,
+  "0.1.8": 1,
+  "0.1.21": 1,
+  "0.1.13": 1,
+  "0.1.11": 1,
+  "0.1.18": 2,
+  "0.2.6": 1,
+  "0.1.10": 2,
+  "0.1.15": 1,
+  "0.1.5": 1,
+  "0.1.2": 2,
+  "0.2.4": 2,
+  "0.1.17": 2
  }
 }
