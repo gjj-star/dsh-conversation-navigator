@@ -124,11 +124,11 @@ example.patch.yml    # 手动安装时的补丁示例
 ## 流量
 
 <!-- traffic:totals:start -->
-统计区间 **2026-08-17 → 2026-10-05**（GitHub Actions 每日自动刷新）：
+统计区间 **2026-08-17 → 2026-10-06**（GitHub Actions 每日自动刷新）：
 
 | npm 下载 | GitHub 独立访客 | GitHub 独立克隆者 | Stars | Forks |
 | ---: | ---: | ---: | ---: | ---: |
-| 7,497 | 625 | 514 | 23 | 1 |
+| 7,567 | 631 | 528 | 23 | 1 |
 <!-- traffic:totals:end -->
 
 - 明细报告：[traffic-report.md](./docs/traffic/traffic-report.md)｜原始归档：[traffic-archive.json](./docs/traffic/traffic-archive.json)｜趋势图与说明：[docs/traffic](./docs/traffic/README.md)
