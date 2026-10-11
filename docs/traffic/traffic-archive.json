@@ -57,8 +57,9 @@
   "2026-10-06": 0,
   "2026-10-07": 79,
   "2026-10-08": 92,
-  "2026-10-09": 0,
-  "2026-10-10": 0
+  "2026-10-09": 73,
+  "2026-10-10": 0,
+  "2026-10-11": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -324,6 +325,16 @@
   "2026-10-08": {
    "count": 12,
    "uniques": 4,
+   "source": "github-api"
+  },
+  "2026-10-09": {
+   "count": 2,
+   "uniques": 2,
+   "source": "github-api"
+  },
+  "2026-10-10": {
+   "count": 9,
+   "uniques": 2,
    "source": "github-api"
   }
  },
@@ -592,6 +603,16 @@
    "count": 5,
    "uniques": 4,
    "source": "github-api"
+  },
+  "2026-10-09": {
+   "count": 6,
+   "uniques": 4,
+   "source": "github-api"
+  },
+  "2026-10-10": {
+   "count": 8,
+   "uniques": 7,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -767,7 +788,7 @@
  "referrers": [
   {
    "referrer": "github.com",
-   "count": 30,
+   "count": 33,
    "uniques": 7
   },
   {
@@ -784,25 +805,30 @@
    "referrer": "dshfind.com",
    "count": 1,
    "uniques": 1
+  },
+  {
+   "referrer": "npmjs.com",
+   "count": 1,
+   "uniques": 1
   }
  ],
  "paths": [
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 90,
-   "uniques": 49
+   "count": 86,
+   "uniques": 44
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
    "title": "/graphs/traffic",
-   "count": 12,
+   "count": 10,
    "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/pulse",
    "title": "/pulse",
-   "count": 11,
+   "count": 9,
    "uniques": 1
   },
   {
@@ -812,10 +838,10 @@
    "uniques": 2
   },
   {
-   "path": "/gjj-star/dsh-conversation-navigator/blob/main/README.en.md",
-   "title": "/blob/main/README.en.md",
-   "count": 2,
-   "uniques": 2
+   "path": "/gjj-star/dsh-conversation-navigator/tree/main",
+   "title": "/tree/main",
+   "count": 3,
+   "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/blob/main/README.md",
@@ -836,14 +862,14 @@
    "uniques": 1
   },
   {
-   "path": "/gjj-star/dsh-conversation-navigator/tree/main",
-   "title": "/tree/main",
-   "count": 2,
+   "path": "/gjj-star/dsh-conversation-navigator/actions/runs/36552229170",
+   "title": "/actions/runs/36552229170",
+   "count": 1,
    "uniques": 1
   },
   {
-   "path": "/gjj-star/dsh-conversation-navigator/actions/runs/36230447565",
-   "title": "/actions/runs/36230447565",
+   "path": "/gjj-star/dsh-conversation-navigator/actions/runs/36656671409",
+   "title": "/actions/runs/36656671409",
    "count": 1,
    "uniques": 1
   }
@@ -853,16 +879,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-10-09T10:40:00Z",
-  "size": 18376
+  "pushedAt": "2026-10-10T09:56:00Z",
+  "size": 18394
  },
  "history": [
-  {
-   "at": "2026-09-14T03:51:10.443Z",
-   "npm": "days=29",
-   "github": "views=14 clones=14",
-   "stars": "total=22"
-  },
   {
    "at": "2026-09-14T04:15:32.181Z",
    "npm": "days=29",
@@ -1036,11 +1056,17 @@
    "npm": "days=55",
    "github": "views=14 clones=14",
    "stars": "total=23"
+  },
+  {
+   "at": "2026-10-11T10:05:41.740Z",
+   "npm": "days=56",
+   "github": "views=14 clones=14",
+   "stars": "total=23"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-10-10T09:55:59.880Z",
+ "updatedAt": "2026-10-11T10:05:41.740Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1161,19 +1187,30 @@
    "diff": 0,
    "gapDays": 1,
    "windowMatched": true
+  },
+  {
+   "at": "2026-10-11T10:05:41.740Z",
+   "total": 467,
+   "window": [
+    "2026-10-03",
+    "2026-10-09"
+   ],
+   "dailySum": 467,
+   "diff": 0,
+   "gapDays": 1,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
   "0.2.5": 1,
-  "0.2.0": 1,
-  "0.2.9": 2,
-  "0.1.25": 1,
   "0.2.8": 2,
-  "0.1.18": 1,
-  "0.1.23": 1,
+  "0.2.0": 1,
   "0.1.24": 1,
+  "0.1.23": 1,
+  "0.2.9": 4,
+  "0.1.25": 1,
   "0.1.0": 6,
-  "0.2.10": 10,
-  "0.2.11": 437
+  "0.2.11": 441,
+  "0.2.10": 9
  }
 }
