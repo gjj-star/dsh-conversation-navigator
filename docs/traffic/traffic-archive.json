@@ -60,8 +60,10 @@
   "2026-10-09": 73,
   "2026-10-10": 84,
   "2026-10-11": 74,
-  "2026-10-12": 0,
-  "2026-10-13": 0
+  "2026-10-12": 80,
+  "2026-10-13": 0,
+  "2026-10-14": 0,
+  "2026-10-15": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -347,6 +349,11 @@
   "2026-10-12": {
    "count": 0,
    "uniques": 0,
+   "source": "github-api"
+  },
+  "2026-10-13": {
+   "count": 1,
+   "uniques": 1,
    "source": "github-api"
   }
  },
@@ -635,6 +642,11 @@
    "count": 11,
    "uniques": 7,
    "source": "github-api"
+  },
+  "2026-10-13": {
+   "count": 18,
+   "uniques": 12,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -810,8 +822,8 @@
  "referrers": [
   {
    "referrer": "github.com",
-   "count": 27,
-   "uniques": 7
+   "count": 22,
+   "uniques": 5
   },
   {
    "referrer": "Bing",
@@ -843,19 +855,19 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 71,
-   "uniques": 37
+   "count": 64,
+   "uniques": 34
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
    "title": "/graphs/traffic",
-   "count": 8,
+   "count": 7,
    "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/pulse",
    "title": "/pulse",
-   "count": 8,
+   "count": 7,
    "uniques": 1
   },
   {
@@ -902,20 +914,14 @@
   }
  ],
  "stats": {
-  "stars": 23,
+  "stars": 22,
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-10-12T10:58:30Z",
-  "size": 18433
+  "pushedAt": "2026-10-13T10:42:40Z",
+  "size": 18451
  },
  "history": [
-  {
-   "at": "2026-09-16T08:39:46.631Z",
-   "npm": "days=31",
-   "github": "views=14 clones=14",
-   "stars": "total=23"
-  },
   {
    "at": "2026-09-17T08:43:15.436Z",
    "npm": "days=32",
@@ -1089,11 +1095,17 @@
    "npm": "days=58",
    "github": "views=14 clones=14",
    "stars": "total=23"
+  },
+  {
+   "at": "2026-10-15T08:23:02.400Z",
+   "npm": "days=60",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-10-13T10:42:38.632Z",
+ "updatedAt": "2026-10-15T08:23:02.400Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1250,17 +1262,33 @@
    "diff": 0,
    "gapDays": 1,
    "windowMatched": true
+  },
+  {
+   "at": "2026-10-15T08:23:02.400Z",
+   "total": 482,
+   "window": [
+    "2026-10-07",
+    "2026-10-13"
+   ],
+   "dailySum": 482,
+   "diff": 0,
+   "gapDays": 1,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
-  "0.2.5": 1,
-  "0.2.11": 459,
-  "0.1.0": 6,
-  "0.2.10": 6,
+  "0.1.16": 2,
+  "0.2.7": 1,
   "0.1.10": 1,
-  "0.2.8": 2,
-  "0.1.16": 1,
+  "0.1.0": 6,
   "0.1.23": 1,
-  "0.2.9": 4
+  "0.1.5": 1,
+  "0.1.15": 1,
+  "0.2.11": 458,
+  "0.2.8": 2,
+  "0.2.10": 3,
+  "0.2.5": 1,
+  "0.2.9": 4,
+  "0.1.17": 1
  }
 }
