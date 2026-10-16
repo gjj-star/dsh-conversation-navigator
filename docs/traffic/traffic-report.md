@@ -1,19 +1,19 @@
 # dsh-conversation-navigator 流量报告
 
-> 自动生成于 2026-10-15 08:23Z · 数据源 npm downloads + GitHub traffic
+> 自动生成于 2026-10-16 08:15Z · 数据源 npm downloads + GitHub traffic
 > 图表：[traffic-trend.svg](./traffic-trend.svg) · 原始归档：[traffic-archive.json](./traffic-archive.json)
 
-## 汇总（2026-08-17 → 2026-10-15）
+## 汇总（2026-08-17 → 2026-10-16）
 
 | 指标 | 累计 | 最近 7 天日均 | 峰值日 |
 | --- | --- | --- | --- |
-| npm 下载 | 8,128 | 44 | 2026-08-17 |
-| GitHub 独立访客 | 657 | 1 | 2026-08-28 |
-| GitHub 独立克隆者 | 610 | 8 | 2026-08-17 |
+| npm 下载 | 8,128 | 34 | 2026-08-17 |
+| GitHub 独立访客 | 659 | 1 | 2026-08-28 |
+| GitHub 独立克隆者 | 619 | 9 | 2026-08-17 |
 | Stars | 22 | — | — |
 | Forks | 1 | — | — |
 
-最近发版：**0.2.11** @ 2026-09-30（15 天前）
+最近发版：**0.2.11** @ 2026-09-30（16 天前）
 
 ## 逐日明细
 
@@ -77,15 +77,16 @@
 | 2026-10-11 | 74 | 7/5 | 46/29 |  |
 | 2026-10-12 | 80 | 0/0 | 11/7 |  |
 | 2026-10-13 | 0 | 1/1 | 18/12 |  |
-| 2026-10-14 | 0 | — | — |  |
-| 2026-10-15 | 0 | — | — |  |
+| 2026-10-14 | 0 | 6/1 | 3/3 |  |
+| 2026-10-15 | 0 | 2/1 | 7/6 |  |
+| 2026-10-16 | 0 | — | — |  |
 
 ## 流量来源（近 14 天）
 
 | 来源 | 次数 | 独立 |
 | --- | --- | --- |
-| github.com | 22 | 5 |
-| Bing | 2 | 2 |
+| github.com | 16 | 3 |
+| Bing | 1 | 1 |
 | Google | 1 | 1 |
 | dshfind.com | 1 | 1 |
 | dshmarket.com | 1 | 1 |
@@ -96,16 +97,16 @@
 
 | 路径 | 次数 | 独立 |
 | --- | --- | --- |
-| /gjj-star/dsh-conversation-navigator | 64 | 34 |
-| /gjj-star/dsh-conversation-navigator/graphs/traffic | 7 | 1 |
-| /gjj-star/dsh-conversation-navigator/pulse | 7 | 1 |
+| /gjj-star/dsh-conversation-navigator | 49 | 27 |
+| /gjj-star/dsh-conversation-navigator/graphs/traffic | 5 | 1 |
+| /gjj-star/dsh-conversation-navigator/pulse | 5 | 1 |
 | /gjj-star/dsh-conversation-navigator/tree/main | 5 | 1 |
-| /gjj-star/dsh-conversation-navigator/issues | 4 | 3 |
+| /gjj-star/dsh-conversation-navigator/issues | 3 | 2 |
 | /gjj-star/dsh-conversation-navigator/blob/HEAD/README.en.md | 2 | 2 |
 | /gjj-star/dsh-conversation-navigator/blob/main/README.md | 2 | 2 |
+| /gjj-star/dsh-conversation-navigator/actions/runs/38537697267 | 2 | 1 |
 | /gjj-star/dsh-conversation-navigator/blob/main/assets/screenshots/08-search.png | 2 | 1 |
 | /gjj-star/dsh-conversation-navigator/pulls | 2 | 1 |
-| /gjj-star/dsh-conversation-navigator/actions/runs/36552229170 | 1 | 1 |
 
 ## 口径说明
 
