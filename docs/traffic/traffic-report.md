@@ -1,19 +1,19 @@
 # dsh-conversation-navigator 流量报告
 
-> 自动生成于 2026-10-21 08:39Z · 数据源 npm downloads + GitHub traffic
+> 自动生成于 2026-10-22 08:41Z · 数据源 npm downloads + GitHub traffic
 > 图表：[traffic-trend.svg](./traffic-trend.svg) · 原始归档：[traffic-archive.json](./traffic-archive.json)
 
-## 汇总（2026-08-17 → 2026-10-21）
+## 汇总（2026-08-17 → 2026-10-22）
 
 | 指标 | 累计 | 最近 7 天日均 | 峰值日 |
 | --- | --- | --- | --- |
 | npm 下载 | 8,353 | 32 | 2026-08-17 |
-| GitHub 独立访客 | 667 | 1 | 2026-08-28 |
-| GitHub 独立克隆者 | 667 | 8 | 2026-08-17 |
+| GitHub 独立访客 | 670 | 2 | 2026-08-28 |
+| GitHub 独立克隆者 | 678 | 8 | 2026-08-17 |
 | Stars | 23 | — | — |
 | Forks | 1 | — | — |
 
-最近发版：**0.2.11** @ 2026-09-30（21 天前）
+最近发版：**0.2.11** @ 2026-09-30（22 天前）
 
 ## 逐日明细
 
@@ -83,17 +83,16 @@
 | 2026-10-17 | 67 | 2/1 | 23/15 |  |
 | 2026-10-18 | 122 | 1/1 | 10/9 |  |
 | 2026-10-19 | 0 | 13/5 | 11/9 |  |
-| 2026-10-20 | 0 | — | — |  |
+| 2026-10-20 | 0 | 4/3 | 18/11 |  |
 | 2026-10-21 | 0 | — | — |  |
+| 2026-10-22 | 0 | — | — |  |
 
 ## 流量来源（近 14 天）
 
 | 来源 | 次数 | 独立 |
 | --- | --- | --- |
-| github.com | 14 | 2 |
+| github.com | 13 | 2 |
 | Bing | 2 | 2 |
-| Google | 1 | 1 |
-| dshfind.com | 1 | 1 |
 | dshmarket.com | 1 | 1 |
 | npmjs.com | 1 | 1 |
 
@@ -102,12 +101,12 @@
 
 | 路径 | 次数 | 独立 |
 | --- | --- | --- |
-| /gjj-star/dsh-conversation-navigator | 38 | 22 |
-| /gjj-star/dsh-conversation-navigator/pulse | 8 | 2 |
-| /gjj-star/dsh-conversation-navigator/graphs/traffic | 6 | 1 |
+| /gjj-star/dsh-conversation-navigator | 31 | 18 |
+| /gjj-star/dsh-conversation-navigator/pulse | 9 | 2 |
+| /gjj-star/dsh-conversation-navigator/graphs/traffic | 7 | 1 |
 | /gjj-star/dsh-conversation-navigator/issues | 4 | 3 |
-| /gjj-star/dsh-conversation-navigator/tree/main | 4 | 1 |
 | /gjj-star/dsh-conversation-navigator/pulls | 3 | 2 |
+| /gjj-star/dsh-conversation-navigator/tree/main | 3 | 1 |
 | /gjj-star/dsh-conversation-navigator/blob/HEAD/README.en.md | 2 | 2 |
 | /gjj-star/dsh-conversation-navigator/actions/runs/38537697267 | 2 | 1 |
 | /gjj-star/dsh-conversation-navigator/actions | 1 | 1 |
