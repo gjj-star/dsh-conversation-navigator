@@ -76,8 +76,9 @@
   "2026-10-25": 58,
   "2026-10-26": 63,
   "2026-10-27": 62,
-  "2026-10-28": 0,
-  "2026-10-29": 0
+  "2026-10-28": 65,
+  "2026-10-29": 0,
+  "2026-10-30": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -443,6 +444,11 @@
   "2026-10-28": {
    "count": 7,
    "uniques": 4,
+   "source": "github-api"
+  },
+  "2026-10-29": {
+   "count": 3,
+   "uniques": 3,
    "source": "github-api"
   }
  },
@@ -811,6 +817,11 @@
    "count": 18,
    "uniques": 14,
    "source": "github-api"
+  },
+  "2026-10-29": {
+   "count": 19,
+   "uniques": 12,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1001,19 +1012,19 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 24,
-   "uniques": 19
+   "count": 26,
+   "uniques": 21
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
    "title": "/graphs/traffic",
-   "count": 12,
+   "count": 11,
    "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/pulse",
    "title": "/pulse",
-   "count": 8,
+   "count": 7,
    "uniques": 2
   },
   {
@@ -1064,16 +1075,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-10-28T09:46:28Z",
-  "size": 18720
+  "pushedAt": "2026-10-29T10:04:56Z",
+  "size": 18740
  },
  "history": [
-  {
-   "at": "2026-09-30T03:05:50.653Z",
-   "npm": "days=45",
-   "github": "views=14 clones=14",
-   "stars": "total=23"
-  },
   {
    "at": "2026-09-30T03:06:16.738Z",
    "npm": "days=45",
@@ -1247,11 +1252,17 @@
    "npm": "days=74",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-10-30T10:08:09.225Z",
+   "npm": "days=75",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-10-29T10:04:54.857Z",
+ "updatedAt": "2026-10-30T10:08:09.225Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1556,6 +1567,22 @@
     "day": "2026-10-21",
     "value": 65
    }
+  },
+  {
+   "at": "2026-10-30T10:08:09.225Z",
+   "total": 491,
+   "window": [
+    "2026-10-21",
+    "2026-10-27"
+   ],
+   "dailySum": 470,
+   "diff": 21,
+   "gapDays": 1,
+   "windowMatched": false,
+   "derivedGapDay": {
+    "day": "2026-10-21",
+    "value": 21
+   }
   }
  ],
  "latestVersions": {
@@ -1588,7 +1615,7 @@
   "0.2.0": 2,
   "0.2.1": 2,
   "0.2.10": 1,
-  "0.2.11": 456,
+  "0.2.11": 412,
   "0.2.2": 4,
   "0.2.3": 2,
   "0.2.4": 2,

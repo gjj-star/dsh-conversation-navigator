@@ -1,19 +1,19 @@
 # dsh-conversation-navigator 流量报告
 
-> 自动生成于 2026-10-29 10:04Z · 数据源 npm downloads + GitHub traffic
+> 自动生成于 2026-10-30 10:08Z · 数据源 npm downloads + GitHub traffic
 > 图表：[traffic-trend.svg](./traffic-trend.svg) · 原始归档：[traffic-archive.json](./traffic-archive.json)
 
-## 汇总（2026-08-17 → 2026-10-29）
+## 汇总（2026-08-17 → 2026-10-30）
 
 | 指标 | 累计 | 最近 7 天日均 | 峰值日 |
 | --- | --- | --- | --- |
-| npm 下载 | 8,823 | 52 | 2026-08-17 |
-| GitHub 独立访客 | 687 | 2 | 2026-08-28 |
-| GitHub 独立克隆者 | 765 | 9 | 2026-08-17 |
+| npm 下载 | 8,888 | 44 | 2026-08-17 |
+| GitHub 独立访客 | 690 | 2 | 2026-08-28 |
+| GitHub 独立克隆者 | 777 | 10 | 2026-08-17 |
 | Stars | 22 | — | — |
 | Forks | 1 | — | — |
 
-最近发版：**0.2.11** @ 2026-09-30（29 天前）
+最近发版：**0.2.11** @ 2026-09-30（30 天前）
 
 ## 逐日明细
 
@@ -91,8 +91,9 @@
 | 2026-10-25 | 58 | 3/3 | 33/19 |  |
 | 2026-10-26 | 63 | 8/3 | 17/9 |  |
 | 2026-10-27 | 62 | 0/0 | 20/12 |  |
-| 2026-10-28 | 0 | 7/4 | 18/14 |  |
-| 2026-10-29 | 0 | — | — |  |
+| 2026-10-28 | 65 | 7/4 | 18/14 |  |
+| 2026-10-29 | 0 | 3/3 | 19/12 |  |
+| 2026-10-30 | 0 | — | — |  |
 
 ## 流量来源（近 14 天）
 
@@ -106,9 +107,9 @@
 
 | 路径 | 次数 | 独立 |
 | --- | --- | --- |
-| /gjj-star/dsh-conversation-navigator | 24 | 19 |
-| /gjj-star/dsh-conversation-navigator/graphs/traffic | 12 | 1 |
-| /gjj-star/dsh-conversation-navigator/pulse | 8 | 2 |
+| /gjj-star/dsh-conversation-navigator | 26 | 21 |
+| /gjj-star/dsh-conversation-navigator/graphs/traffic | 11 | 1 |
+| /gjj-star/dsh-conversation-navigator/pulse | 7 | 2 |
 | /gjj-star/dsh-conversation-navigator/pulls | 2 | 2 |
 | /gjj-star/dsh-conversation-navigator/actions | 1 | 1 |
 | /gjj-star/dsh-conversation-navigator/actions/metrics/performance | 1 | 1 |
