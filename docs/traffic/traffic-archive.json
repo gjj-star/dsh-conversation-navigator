@@ -79,7 +79,8 @@
   "2026-10-28": 65,
   "2026-10-29": 63,
   "2026-10-30": 0,
-  "2026-10-31": 0
+  "2026-10-31": 0,
+  "2026-11-01": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -450,6 +451,16 @@
   "2026-10-29": {
    "count": 3,
    "uniques": 3,
+   "source": "github-api"
+  },
+  "2026-10-30": {
+   "count": 1,
+   "uniques": 1,
+   "source": "github-api"
+  },
+  "2026-10-31": {
+   "count": 1,
+   "uniques": 1,
    "source": "github-api"
   }
  },
@@ -823,6 +834,16 @@
    "count": 19,
    "uniques": 12,
    "source": "github-api"
+  },
+  "2026-10-30": {
+   "count": 18,
+   "uniques": 11,
+   "source": "github-api"
+  },
+  "2026-10-31": {
+   "count": 11,
+   "uniques": 8,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1005,8 +1026,8 @@
   },
   {
    "referrer": "Bing",
-   "count": 2,
-   "uniques": 2
+   "count": 1,
+   "uniques": 1
   }
  ],
  "paths": [
@@ -1014,18 +1035,18 @@
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
    "count": 26,
-   "uniques": 21
+   "uniques": 22
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
    "title": "/graphs/traffic",
-   "count": 11,
+   "count": 10,
    "uniques": 1
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/pulse",
    "title": "/pulse",
-   "count": 7,
+   "count": 6,
    "uniques": 2
   },
   {
@@ -1076,16 +1097,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-10-30T10:08:10Z",
-  "size": 18759
+  "pushedAt": "2026-10-31T09:44:00Z",
+  "size": 18779
  },
  "history": [
-  {
-   "at": "2026-10-01T10:13:55.360Z",
-   "npm": "days=46",
-   "github": "views=14 clones=14",
-   "stars": "total=23"
-  },
   {
    "at": "2026-10-02T09:51:35.204Z",
    "npm": "days=47",
@@ -1259,11 +1274,17 @@
    "npm": "days=76",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-11-01T10:33:55.510Z",
+   "npm": "days=77",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-10-31T09:43:59.419Z",
+ "updatedAt": "2026-11-01T10:33:55.510Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1596,6 +1617,18 @@
    "diff": -57,
    "gapDays": 0,
    "windowMatched": false
+  },
+  {
+   "at": "2026-11-01T10:33:55.510Z",
+   "total": 433,
+   "window": [
+    "2026-10-23",
+    "2026-10-29"
+   ],
+   "dailySum": 491,
+   "diff": -58,
+   "gapDays": 0,
+   "windowMatched": false
   }
  ],
  "latestVersions": {
@@ -1605,7 +1638,7 @@
   "0.1.3": 1,
   "0.1.4": 1,
   "0.2.10": 1,
-  "0.2.11": 418,
+  "0.2.11": 417,
   "0.2.2": 2,
   "0.2.9": 1
  }
