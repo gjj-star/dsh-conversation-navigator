@@ -80,7 +80,8 @@
   "2026-10-29": 63,
   "2026-10-30": 0,
   "2026-10-31": 0,
-  "2026-11-01": 0
+  "2026-11-01": 0,
+  "2026-11-02": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -461,6 +462,11 @@
   "2026-10-31": {
    "count": 1,
    "uniques": 1,
+   "source": "github-api"
+  },
+  "2026-11-01": {
+   "count": 3,
+   "uniques": 3,
    "source": "github-api"
   }
  },
@@ -844,6 +850,11 @@
    "count": 11,
    "uniques": 8,
    "source": "github-api"
+  },
+  "2026-11-01": {
+   "count": 21,
+   "uniques": 12,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1034,8 +1045,8 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 26,
-   "uniques": 22
+   "count": 28,
+   "uniques": 23
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
@@ -1097,16 +1108,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-10-31T09:44:00Z",
-  "size": 18779
+  "pushedAt": "2026-11-01T10:33:56Z",
+  "size": 18798
  },
  "history": [
-  {
-   "at": "2026-10-02T09:51:35.204Z",
-   "npm": "days=47",
-   "github": "views=14 clones=14",
-   "stars": "total=23"
-  },
   {
    "at": "2026-10-03T09:13:56.570Z",
    "npm": "days=48",
@@ -1280,11 +1285,17 @@
    "npm": "days=77",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-11-02T11:19:04.187Z",
+   "npm": "days=78",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-11-01T10:33:55.510Z",
+ "updatedAt": "2026-11-02T11:19:04.187Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1629,17 +1640,40 @@
    "diff": -58,
    "gapDays": 0,
    "windowMatched": false
+  },
+  {
+   "at": "2026-11-02T11:19:04.187Z",
+   "total": 445,
+   "window": [
+    "2026-10-24",
+    "2026-10-30"
+   ],
+   "dailySum": 373,
+   "diff": 72,
+   "gapDays": 1,
+   "windowMatched": false,
+   "derivedGapDay": {
+    "day": "2026-10-30",
+    "value": 72
+   }
   }
  ],
  "latestVersions": {
-  "0.1.0": 8,
+  "0.1.0": 9,
   "0.1.1": 1,
   "0.1.2": 1,
+  "0.1.25": 1,
   "0.1.3": 1,
   "0.1.4": 1,
-  "0.2.10": 1,
+  "0.2.10": 2,
   "0.2.11": 417,
-  "0.2.2": 2,
-  "0.2.9": 1
+  "0.2.2": 3,
+  "0.2.3": 1,
+  "0.2.4": 1,
+  "0.2.5": 2,
+  "0.2.6": 1,
+  "0.2.7": 1,
+  "0.2.8": 1,
+  "0.2.9": 2
  }
 }
