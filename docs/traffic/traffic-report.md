@@ -1,19 +1,19 @@
 # dsh-conversation-navigator 流量报告
 
-> 自动生成于 2026-11-02 11:19Z · 数据源 npm downloads + GitHub traffic
+> 自动生成于 2026-11-03 10:57Z · 数据源 npm downloads + GitHub traffic
 > 图表：[traffic-trend.svg](./traffic-trend.svg) · 原始归档：[traffic-archive.json](./traffic-archive.json)
 
-## 汇总（2026-08-17 → 2026-11-02）
+## 汇总（2026-08-17 → 2026-11-03）
 
 | 指标 | 累计 | 最近 7 天日均 | 峰值日 |
 | --- | --- | --- | --- |
-| npm 下载 | 8,951 | 27 | 2026-08-17 |
-| GitHub 独立访客 | 695 | 2 | 2026-08-28 |
-| GitHub 独立克隆者 | 808 | 10 | 2026-08-17 |
+| npm 下载 | 9,199 | 54 | 2026-08-17 |
+| GitHub 独立访客 | 696 | 2 | 2026-08-28 |
+| GitHub 独立克隆者 | 825 | 11 | 2026-08-17 |
 | Stars | 22 | — | — |
 | Forks | 1 | — | — |
 
-最近发版：**0.2.11** @ 2026-09-30（33 天前）
+最近发版：**0.2.11** @ 2026-09-30（34 天前）
 
 ## 逐日明细
 
@@ -93,10 +93,11 @@
 | 2026-10-27 | 62 | 0/0 | 20/12 |  |
 | 2026-10-28 | 65 | 7/4 | 18/14 |  |
 | 2026-10-29 | 63 | 3/3 | 19/12 |  |
-| 2026-10-30 | 0 | 1/1 | 18/11 |  |
-| 2026-10-31 | 0 | 1/1 | 11/8 |  |
-| 2026-11-01 | 0 | 3/3 | 21/12 |  |
-| 2026-11-02 | 0 | — | — |  |
+| 2026-10-30 | 61 | 1/1 | 18/11 |  |
+| 2026-10-31 | 61 | 1/1 | 11/8 |  |
+| 2026-11-01 | 70 | 3/3 | 21/12 |  |
+| 2026-11-02 | 56 | 1/1 | 27/17 |  |
+| 2026-11-03 | 0 | — | — |  |
 
 ## 流量来源（近 14 天）
 
@@ -110,16 +111,16 @@
 
 | 路径 | 次数 | 独立 |
 | --- | --- | --- |
-| /gjj-star/dsh-conversation-navigator | 28 | 23 |
-| /gjj-star/dsh-conversation-navigator/graphs/traffic | 10 | 1 |
-| /gjj-star/dsh-conversation-navigator/pulse | 6 | 2 |
-| /gjj-star/dsh-conversation-navigator/pulls | 2 | 2 |
-| /gjj-star/dsh-conversation-navigator/actions | 1 | 1 |
+| /gjj-star/dsh-conversation-navigator | 26 | 21 |
+| /gjj-star/dsh-conversation-navigator/graphs/traffic | 9 | 1 |
+| /gjj-star/dsh-conversation-navigator/pulse | 3 | 1 |
 | /gjj-star/dsh-conversation-navigator/actions/metrics/performance | 1 | 1 |
 | /gjj-star/dsh-conversation-navigator/actions/metrics/usage | 1 | 1 |
-| /gjj-star/dsh-conversation-navigator/agents | 1 | 1 |
 | /gjj-star/dsh-conversation-navigator/blob/2cd4ba5b441e4fde21ffc66395ed67da467c98a6/README.md | 1 | 1 |
 | /gjj-star/dsh-conversation-navigator/graphs/commit-activity | 1 | 1 |
+| /gjj-star/dsh-conversation-navigator/graphs/community | 1 | 1 |
+| /gjj-star/dsh-conversation-navigator/pulls | 1 | 1 |
+| /gjj-star/dsh-conversation-navigator/tree/main | 1 | 1 |
 
 ## 口径说明
 
