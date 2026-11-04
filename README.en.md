@@ -127,11 +127,11 @@ example.patch.yml    # patch example for manual installs
 ## Traffic
 
 <!-- traffic:totals:start -->
-Window **2026-08-17 → 2026-11-03** (refreshed daily by GitHub Actions):
+Window **2026-08-17 → 2026-11-04** (refreshed daily by GitHub Actions):
 
 | npm downloads | GitHub unique visitors | GitHub unique cloners | Stars | Forks |
 | ---: | ---: | ---: | ---: | ---: |
-| 9,199 | 696 | 825 | 22 | 1 |
+| 9,270 | 701 | 837 | 22 | 1 |
 <!-- traffic:totals:end -->
 
 - Details: [traffic-report.md](./docs/traffic/traffic-report.md) | raw archive: [traffic-archive.json](./docs/traffic/traffic-archive.json) | chart & docs: [docs/traffic](./docs/traffic/README.md)
