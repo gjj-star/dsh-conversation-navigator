@@ -61,7 +61,7 @@
   "2026-10-10": 84,
   "2026-10-11": 74,
   "2026-10-12": 80,
-  "2026-10-13": 0,
+  "2026-10-13": 102,
   "2026-10-14": 0,
   "2026-10-15": 0,
   "2026-10-16": 36,
@@ -85,7 +85,8 @@
   "2026-11-03": 71,
   "2026-11-04": 73,
   "2026-11-05": 56,
-  "2026-11-06": 0
+  "2026-11-06": 46,
+  "2026-11-07": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -491,6 +492,11 @@
   "2026-11-05": {
    "count": 2,
    "uniques": 2,
+   "source": "github-api"
+  },
+  "2026-11-06": {
+   "count": 6,
+   "uniques": 4,
    "source": "github-api"
   }
  },
@@ -899,6 +905,11 @@
    "count": 21,
    "uniques": 12,
    "source": "github-api"
+  },
+  "2026-11-06": {
+   "count": 16,
+   "uniques": 10,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1083,14 +1094,19 @@
    "referrer": "Bing",
    "count": 2,
    "uniques": 2
+  },
+  {
+   "referrer": "my.feishu.cn",
+   "count": 1,
+   "uniques": 1
   }
  ],
  "paths": [
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 32,
-   "uniques": 26
+   "count": 38,
+   "uniques": 30
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/graphs/traffic",
@@ -1152,16 +1168,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-11-05T11:02:55Z",
-  "size": 18877
+  "pushedAt": "2026-11-06T11:00:12Z",
+  "size": 18897
  },
  "history": [
-  {
-   "at": "2026-10-07T10:21:07.925Z",
-   "npm": "days=52",
-   "github": "views=14 clones=14",
-   "stars": "total=23"
-  },
   {
    "at": "2026-10-08T10:40:58.869Z",
    "npm": "days=53",
@@ -1335,11 +1345,17 @@
    "npm": "days=82",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-11-07T10:20:45.728Z",
+   "npm": "days=83",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-11-06T11:00:11.304Z",
+ "updatedAt": "2026-11-07T10:20:45.728Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1748,6 +1764,18 @@
    "diff": 0,
    "gapDays": 0,
    "windowMatched": true
+  },
+  {
+   "at": "2026-11-07T10:20:45.727Z",
+   "total": 433,
+   "window": [
+    "2026-10-31",
+    "2026-11-06"
+   ],
+   "dailySum": 433,
+   "diff": 0,
+   "gapDays": 0,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
@@ -1757,7 +1785,7 @@
   "0.2.0": 1,
   "0.2.1": 1,
   "0.2.10": 5,
-  "0.2.11": 410,
+  "0.2.11": 396,
   "0.2.2": 2,
   "0.2.3": 2,
   "0.2.4": 2,
@@ -1765,6 +1793,6 @@
   "0.2.6": 2,
   "0.2.7": 2,
   "0.2.8": 2,
-  "0.2.9": 5
+  "0.2.9": 4
  }
 }
