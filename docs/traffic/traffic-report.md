@@ -1,19 +1,19 @@
 # dsh-conversation-navigator 流量报告
 
-> 自动生成于 2026-11-09 11:42Z · 数据源 npm downloads + GitHub traffic
+> 自动生成于 2026-11-10 11:19Z · 数据源 npm downloads + GitHub traffic
 > 图表：[traffic-trend.svg](./traffic-trend.svg) · 原始归档：[traffic-archive.json](./traffic-archive.json)
 
-## 汇总（2026-08-17 → 2026-11-09）
+## 汇总（2026-08-17 → 2026-11-10）
 
 | 指标 | 累计 | 最近 7 天日均 | 峰值日 |
 | --- | --- | --- | --- |
-| npm 下载 | 10,179 | 56 | 2026-08-17 |
-| GitHub 独立访客 | 718 | 3 | 2026-08-28 |
-| GitHub 独立克隆者 | 888 | 9 | 2026-08-17 |
+| npm 下载 | 10,336 | 52 | 2026-08-17 |
+| GitHub 独立访客 | 722 | 3 | 2026-08-28 |
+| GitHub 独立克隆者 | 898 | 9 | 2026-08-17 |
 | Stars | 22 | — | — |
 | Forks | 1 | — | — |
 
-最近发版：**0.2.11** @ 2026-09-30（40 天前）
+最近发版：**0.2.11** @ 2026-09-30（41 天前）
 
 ## 逐日明细
 
@@ -84,7 +84,7 @@
 | 2026-10-18 | 122 | 1/1 | 10/9 |  |
 | 2026-10-19 | 0 | 13/5 | 11/9 |  |
 | 2026-10-20 | 0 | 4/3 | 18/11 |  |
-| 2026-10-21 | 0 | 4/3 | 8/7 |  |
+| 2026-10-21 | 113 | 4/3 | 8/7 |  |
 | 2026-10-22 | 107 | 5/2 | 26/14 |  |
 | 2026-10-23 | 118 | 0/0 | 7/5 |  |
 | 2026-10-24 | 62 | 5/2 | 11/7 |  |
@@ -103,14 +103,16 @@
 | 2026-11-06 | 46 | 6/4 | 16/10 |  |
 | 2026-11-07 | 89 | 2/2 | 21/13 |  |
 | 2026-11-08 | 58 | 2/2 | 17/11 |  |
-| 2026-11-09 | 0 | — | — |  |
+| 2026-11-09 | 44 | 4/4 | 14/10 |  |
+| 2026-11-10 | 0 | — | — |  |
 
 ## 流量来源（近 14 天）
 
 | 来源 | 次数 | 独立 |
 | --- | --- | --- |
-| github.com | 4 | 1 |
 | Bing | 3 | 3 |
+| github.com | 2 | 1 |
+| awesome-dsh-plugin.com | 1 | 1 |
 | my.feishu.cn | 1 | 1 |
 
 
@@ -118,15 +120,12 @@
 
 | 路径 | 次数 | 独立 |
 | --- | --- | --- |
-| /gjj-star/dsh-conversation-navigator | 37 | 30 |
-| /gjj-star/dsh-conversation-navigator/graphs/traffic | 3 | 1 |
+| /gjj-star/dsh-conversation-navigator | 37 | 32 |
+| /gjj-star/dsh-conversation-navigator/graphs/traffic | 2 | 1 |
 | /gjj-star/dsh-conversation-navigator/tree/main | 2 | 1 |
-| /gjj-star/dsh-conversation-navigator/blob/2cd4ba5b441e4fde21ffc66395ed67da467c98a6/README.md | 1 | 1 |
+| /gjj-star/dsh-conversation-navigator/blob/HEAD/README.md | 1 | 1 |
 | /gjj-star/dsh-conversation-navigator/blob/main/README.md | 1 | 1 |
 | /gjj-star/dsh-conversation-navigator/blob/main/screenshots.json | 1 | 1 |
-| /gjj-star/dsh-conversation-navigator/graphs/commit-activity | 1 | 1 |
-| /gjj-star/dsh-conversation-navigator/graphs/community | 1 | 1 |
-| /gjj-star/dsh-conversation-navigator/pulse | 1 | 1 |
 
 ## 口径说明
 
