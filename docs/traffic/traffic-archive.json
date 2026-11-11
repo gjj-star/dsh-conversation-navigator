@@ -89,7 +89,8 @@
   "2026-11-07": 89,
   "2026-11-08": 58,
   "2026-11-09": 44,
-  "2026-11-10": 0
+  "2026-11-10": 53,
+  "2026-11-11": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -515,6 +516,11 @@
   "2026-11-09": {
    "count": 4,
    "uniques": 4,
+   "source": "github-api"
+  },
+  "2026-11-10": {
+   "count": 0,
+   "uniques": 0,
    "source": "github-api"
   }
  },
@@ -943,6 +949,11 @@
    "count": 14,
    "uniques": 10,
    "source": "github-api"
+  },
+  "2026-11-10": {
+   "count": 10,
+   "uniques": 8,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1182,16 +1193,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-11-09T11:42:01Z",
-  "size": 18957
+  "pushedAt": "2026-11-10T11:19:19Z",
+  "size": 18977
  },
  "history": [
-  {
-   "at": "2026-10-11T10:05:41.740Z",
-   "npm": "days=56",
-   "github": "views=14 clones=14",
-   "stars": "total=23"
-  },
   {
    "at": "2026-10-12T10:58:28.008Z",
    "npm": "days=57",
@@ -1365,11 +1370,17 @@
    "npm": "days=86",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-11-11T11:05:45.833Z",
+   "npm": "days=87",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-11-10T11:19:17.809Z",
+ "updatedAt": "2026-11-11T11:05:45.833Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1826,6 +1837,18 @@
    "diff": 0,
    "gapDays": 0,
    "windowMatched": true
+  },
+  {
+   "at": "2026-11-11T11:05:45.832Z",
+   "total": 419,
+   "window": [
+    "2026-11-04",
+    "2026-11-10"
+   ],
+   "dailySum": 419,
+   "diff": 0,
+   "gapDays": 0,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
@@ -1857,8 +1880,8 @@
   "0.1.9": 1,
   "0.2.0": 2,
   "0.2.1": 2,
-  "0.2.10": 6,
-  "0.2.11": 373,
+  "0.2.10": 4,
+  "0.2.11": 359,
   "0.2.2": 2,
   "0.2.3": 2,
   "0.2.4": 2,
@@ -1866,6 +1889,6 @@
   "0.2.6": 2,
   "0.2.7": 2,
   "0.2.8": 2,
-  "0.2.9": 4
+  "0.2.9": 2
  }
 }
