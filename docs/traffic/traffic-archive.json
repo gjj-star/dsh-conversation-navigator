@@ -92,7 +92,8 @@
   "2026-11-10": 53,
   "2026-11-11": 57,
   "2026-11-12": 53,
-  "2026-11-13": 0
+  "2026-11-13": 55,
+  "2026-11-14": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -528,6 +529,16 @@
   "2026-11-11": {
    "count": 2,
    "uniques": 2,
+   "source": "github-api"
+  },
+  "2026-11-12": {
+   "count": 7,
+   "uniques": 7,
+   "source": "github-api"
+  },
+  "2026-11-13": {
+   "count": 0,
+   "uniques": 0,
    "source": "github-api"
   }
  },
@@ -966,6 +977,16 @@
    "count": 11,
    "uniques": 6,
    "source": "github-api"
+  },
+  "2026-11-12": {
+   "count": 27,
+   "uniques": 16,
+   "source": "github-api"
+  },
+  "2026-11-13": {
+   "count": 14,
+   "uniques": 10,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1143,8 +1164,8 @@
  "referrers": [
   {
    "referrer": "Bing",
-   "count": 3,
-   "uniques": 3
+   "count": 4,
+   "uniques": 4
   },
   {
    "referrer": "github.com",
@@ -1166,8 +1187,8 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 34,
-   "uniques": 31
+   "count": 37,
+   "uniques": 34
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/tree/main",
@@ -1199,16 +1220,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-11-12T11:24:22Z",
-  "size": 19017
+  "pushedAt": "2026-11-13T11:07:53Z",
+  "size": 19037
  },
  "history": [
-  {
-   "at": "2026-10-15T08:23:02.400Z",
-   "npm": "days=60",
-   "github": "views=14 clones=14",
-   "stars": "total=22"
-  },
   {
    "at": "2026-10-16T08:15:53.228Z",
    "npm": "days=61",
@@ -1382,11 +1397,17 @@
    "npm": "days=89",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-11-14T10:34:49.229Z",
+   "npm": "days=90",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-11-13T11:07:50.223Z",
+ "updatedAt": "2026-11-14T10:34:49.229Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1879,11 +1900,23 @@
    "diff": 0,
    "gapDays": 0,
    "windowMatched": true
+  },
+  {
+   "at": "2026-11-14T10:34:49.229Z",
+   "total": 409,
+   "window": [
+    "2026-11-07",
+    "2026-11-13"
+   ],
+   "dailySum": 409,
+   "diff": 0,
+   "gapDays": 0,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
-  "0.1.0": 8,
-  "0.1.1": 1,
+  "0.1.0": 9,
+  "0.1.1": 2,
   "0.1.10": 1,
   "0.1.11": 1,
   "0.1.12": 1,
@@ -1910,9 +1943,9 @@
   "0.1.9": 1,
   "0.2.0": 1,
   "0.2.1": 1,
-  "0.2.10": 3,
-  "0.2.11": 352,
-  "0.2.2": 1,
+  "0.2.10": 2,
+  "0.2.11": 359,
+  "0.2.2": 2,
   "0.2.3": 1,
   "0.2.4": 1,
   "0.2.5": 2,
