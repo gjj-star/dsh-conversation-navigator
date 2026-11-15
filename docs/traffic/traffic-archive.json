@@ -93,7 +93,8 @@
   "2026-11-11": 57,
   "2026-11-12": 53,
   "2026-11-13": 55,
-  "2026-11-14": 0
+  "2026-11-14": 52,
+  "2026-11-15": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -539,6 +540,11 @@
   "2026-11-13": {
    "count": 0,
    "uniques": 0,
+   "source": "github-api"
+  },
+  "2026-11-14": {
+   "count": 5,
+   "uniques": 4,
    "source": "github-api"
   }
  },
@@ -987,6 +993,11 @@
    "count": 14,
    "uniques": 10,
    "source": "github-api"
+  },
+  "2026-11-14": {
+   "count": 59,
+   "uniques": 28,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1164,8 +1175,8 @@
  "referrers": [
   {
    "referrer": "Bing",
-   "count": 4,
-   "uniques": 4
+   "count": 5,
+   "uniques": 5
   },
   {
    "referrer": "github.com",
@@ -1187,8 +1198,8 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 37,
-   "uniques": 34
+   "count": 41,
+   "uniques": 38
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/tree/main",
@@ -1220,16 +1231,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-11-13T11:07:53Z",
-  "size": 19037
+  "pushedAt": "2026-11-14T10:34:50Z",
+  "size": 19057
  },
  "history": [
-  {
-   "at": "2026-10-16T08:15:53.228Z",
-   "npm": "days=61",
-   "github": "views=14 clones=14",
-   "stars": "total=22"
-  },
   {
    "at": "2026-10-17T07:52:07.887Z",
    "npm": "days=62",
@@ -1403,11 +1408,17 @@
    "npm": "days=90",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-11-15T11:03:54.304Z",
+   "npm": "days=91",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-11-14T10:34:49.229Z",
+ "updatedAt": "2026-11-15T11:03:54.304Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1912,46 +1923,28 @@
    "diff": 0,
    "gapDays": 0,
    "windowMatched": true
+  },
+  {
+   "at": "2026-11-15T11:03:54.304Z",
+   "total": 372,
+   "window": [
+    "2026-11-08",
+    "2026-11-14"
+   ],
+   "dailySum": 372,
+   "diff": 0,
+   "gapDays": 0,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
   "0.1.0": 9,
-  "0.1.1": 2,
-  "0.1.10": 1,
-  "0.1.11": 1,
-  "0.1.12": 1,
-  "0.1.13": 1,
-  "0.1.14": 1,
-  "0.1.15": 1,
-  "0.1.16": 1,
-  "0.1.17": 1,
-  "0.1.18": 1,
-  "0.1.19": 1,
-  "0.1.2": 1,
-  "0.1.20": 1,
-  "0.1.21": 1,
-  "0.1.22": 1,
-  "0.1.23": 1,
-  "0.1.24": 1,
+  "0.1.1": 1,
   "0.1.25": 1,
-  "0.1.3": 1,
-  "0.1.4": 1,
-  "0.1.5": 1,
-  "0.1.6": 1,
-  "0.1.7": 2,
-  "0.1.8": 1,
-  "0.1.9": 1,
-  "0.2.0": 1,
-  "0.2.1": 1,
-  "0.2.10": 2,
-  "0.2.11": 359,
-  "0.2.2": 2,
-  "0.2.3": 1,
-  "0.2.4": 1,
-  "0.2.5": 2,
-  "0.2.6": 1,
-  "0.2.7": 1,
-  "0.2.8": 1,
-  "0.2.9": 1
+  "0.1.7": 1,
+  "0.2.10": 1,
+  "0.2.11": 357,
+  "0.2.2": 1,
+  "0.2.5": 1
  }
 }
