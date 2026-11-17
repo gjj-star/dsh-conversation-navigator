@@ -95,7 +95,8 @@
   "2026-11-13": 55,
   "2026-11-14": 52,
   "2026-11-15": 52,
-  "2026-11-16": 0
+  "2026-11-16": 66,
+  "2026-11-17": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -546,6 +547,16 @@
   "2026-11-14": {
    "count": 5,
    "uniques": 4,
+   "source": "github-api"
+  },
+  "2026-11-15": {
+   "count": 1,
+   "uniques": 1,
+   "source": "github-api"
+  },
+  "2026-11-16": {
+   "count": 5,
+   "uniques": 5,
    "source": "github-api"
   }
  },
@@ -999,6 +1010,16 @@
    "count": 59,
    "uniques": 28,
    "source": "github-api"
+  },
+  "2026-11-15": {
+   "count": 16,
+   "uniques": 9,
+   "source": "github-api"
+  },
+  "2026-11-16": {
+   "count": 14,
+   "uniques": 9,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1176,13 +1197,13 @@
  "referrers": [
   {
    "referrer": "Bing",
-   "count": 5,
-   "uniques": 5
+   "count": 4,
+   "uniques": 4
   },
   {
    "referrer": "github.com",
-   "count": 2,
-   "uniques": 2
+   "count": 4,
+   "uniques": 4
   },
   {
    "referrer": "awesome-dsh-plugin.com",
@@ -1199,13 +1220,13 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 41,
-   "uniques": 38
+   "count": 42,
+   "uniques": 39
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/tree/main",
    "title": "/tree/main",
-   "count": 2,
+   "count": 3,
    "uniques": 1
   },
   {
@@ -1232,16 +1253,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-11-15T11:04:00Z",
-  "size": 19077
+  "pushedAt": "2026-11-16T11:33:31Z",
+  "size": 19097
  },
  "history": [
-  {
-   "at": "2026-10-18T08:06:55.060Z",
-   "npm": "days=63",
-   "github": "views=14 clones=14",
-   "stars": "total=23"
-  },
   {
    "at": "2026-10-19T08:59:54.117Z",
    "npm": "days=64",
@@ -1415,11 +1430,17 @@
    "npm": "days=92",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-11-17T11:58:39.388Z",
+   "npm": "days=93",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-11-16T11:33:25.557Z",
+ "updatedAt": "2026-11-17T11:58:39.388Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1948,14 +1969,25 @@
    "diff": 0,
    "gapDays": 0,
    "windowMatched": true
+  },
+  {
+   "at": "2026-11-17T11:58:39.388Z",
+   "total": 388,
+   "window": [
+    "2026-11-10",
+    "2026-11-16"
+   ],
+   "dailySum": 388,
+   "diff": 0,
+   "gapDays": 0,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
   "0.1.0": 9,
   "0.1.1": 1,
   "0.1.25": 1,
-  "0.2.10": 1,
-  "0.2.11": 352,
+  "0.2.11": 375,
   "0.2.2": 1,
   "0.2.5": 1
  }
