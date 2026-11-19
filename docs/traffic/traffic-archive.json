@@ -25,7 +25,7 @@
   "2026-09-04": 93,
   "2026-09-05": 244,
   "2026-09-06": 75,
-  "2026-09-07": 0,
+  "2026-09-07": 424,
   "2026-09-08": 0,
   "2026-09-09": 62,
   "2026-09-10": 83,
@@ -97,7 +97,8 @@
   "2026-11-15": 52,
   "2026-11-16": 66,
   "2026-11-17": 85,
-  "2026-11-18": 0
+  "2026-11-18": 73,
+  "2026-11-19": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -558,6 +559,16 @@
   "2026-11-16": {
    "count": 5,
    "uniques": 5,
+   "source": "github-api"
+  },
+  "2026-11-17": {
+   "count": 3,
+   "uniques": 3,
+   "source": "github-api"
+  },
+  "2026-11-18": {
+   "count": 2,
+   "uniques": 2,
    "source": "github-api"
   }
  },
@@ -1021,6 +1032,16 @@
    "count": 14,
    "uniques": 9,
    "source": "github-api"
+  },
+  "2026-11-17": {
+   "count": 18,
+   "uniques": 12,
+   "source": "github-api"
+  },
+  "2026-11-18": {
+   "count": 30,
+   "uniques": 19,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1198,13 +1219,13 @@
  "referrers": [
   {
    "referrer": "Bing",
-   "count": 4,
-   "uniques": 4
+   "count": 3,
+   "uniques": 3
   },
   {
    "referrer": "github.com",
-   "count": 4,
-   "uniques": 4
+   "count": 3,
+   "uniques": 3
   },
   {
    "referrer": "awesome-dsh-plugin.com",
@@ -1221,13 +1242,13 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 42,
-   "uniques": 39
+   "count": 37,
+   "uniques": 34
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/tree/main",
    "title": "/tree/main",
-   "count": 3,
+   "count": 2,
    "uniques": 1
   },
   {
@@ -1241,12 +1262,6 @@
    "title": "/blob/main/README.md",
    "count": 1,
    "uniques": 1
-  },
-  {
-   "path": "/gjj-star/dsh-conversation-navigator/blob/main/screenshots.json",
-   "title": "/blob/main/screenshots.json",
-   "count": 1,
-   "uniques": 1
   }
  ],
  "stats": {
@@ -1254,16 +1269,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-11-17T11:58:40Z",
-  "size": 19117
+  "pushedAt": "2026-11-18T11:50:51Z",
+  "size": 19137
  },
  "history": [
-  {
-   "at": "2026-10-20T08:38:07.901Z",
-   "npm": "days=65",
-   "github": "views=14 clones=14",
-   "stars": "total=24"
-  },
   {
    "at": "2026-10-21T08:39:25.445Z",
    "npm": "days=66",
@@ -1437,11 +1446,17 @@
    "npm": "days=94",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-11-19T11:47:43.572Z",
+   "npm": "days=95",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-11-18T11:50:50.249Z",
+ "updatedAt": "2026-11-19T11:47:43.572Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -1994,6 +2009,18 @@
    "diff": 0,
    "gapDays": 0,
    "windowMatched": true
+  },
+  {
+   "at": "2026-11-19T11:47:43.572Z",
+   "total": 436,
+   "window": [
+    "2026-11-12",
+    "2026-11-18"
+   ],
+   "dailySum": 436,
+   "diff": 0,
+   "gapDays": 0,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
@@ -2001,9 +2028,11 @@
   "0.1.1": 1,
   "0.1.25": 1,
   "0.2.10": 1,
-  "0.2.11": 403,
+  "0.2.11": 416,
   "0.2.2": 1,
-  "0.2.5": 1,
+  "0.2.4": 1,
+  "0.2.5": 2,
+  "0.2.6": 1,
   "0.2.7": 1,
   "0.2.8": 1,
   "0.2.9": 1
