@@ -1,19 +1,19 @@
 # dsh-conversation-navigator 流量报告
 
-> 自动生成于 2026-11-23 12:58Z · 数据源 npm downloads + GitHub traffic
+> 自动生成于 2026-11-24 13:51Z · 数据源 npm downloads + GitHub traffic
 > 图表：[traffic-trend.svg](./traffic-trend.svg) · 原始归档：[traffic-archive.json](./traffic-archive.json)
 
-## 汇总（2026-08-17 → 2026-11-23）
+## 汇总（2026-08-17 → 2026-11-24）
 
 | 指标 | 累计 | 最近 7 天日均 | 峰值日 |
 | --- | --- | --- | --- |
-| npm 下载 | 11,670 | 64 | 2026-08-17 |
-| GitHub 独立访客 | 755 | 2 | 2026-08-28 |
-| GitHub 独立克隆者 | 1,100 | 17 | 2026-08-17 |
+| npm 下载 | 11,774 | 60 | 2026-08-17 |
+| GitHub 独立访客 | 756 | 2 | 2026-08-28 |
+| GitHub 独立克隆者 | 1,118 | 17 | 2026-08-17 |
 | Stars | 22 | — | — |
 | Forks | 1 | — | — |
 
-最近发版：**0.2.11** @ 2026-09-30（54 天前）
+最近发版：**0.2.11** @ 2026-09-30（56 天前）
 
 ## 逐日明细
 
@@ -48,7 +48,7 @@
 | 2026-09-12 | 61 | 13/10 | 2/2 |  |
 | 2026-09-13 | 72 | 9/6 | 2/2 |  |
 | 2026-09-14 | 67 | 37/16 | 38/17 |  |
-| 2026-09-15 | 0 | 26/17 | 7/5 |  |
+| 2026-09-15 | 49 | 26/17 | 7/5 |  |
 | 2026-09-16 | 184 | 26/15 | 26/13 | 0.2.9 |
 | 2026-09-17 | 125 | 32/16 | 9/6 |  |
 | 2026-09-18 | 42 | 21/12 | 27/16 |  |
@@ -117,7 +117,8 @@
 | 2026-11-20 | 63 | 4/2 | 35/24 |  |
 | 2026-11-21 | 65 | 2/2 | 40/26 |  |
 | 2026-11-22 | 102 | 2/1 | 29/21 |  |
-| 2026-11-23 | 0 | — | — |  |
+| 2026-11-23 | 55 | 1/1 | 31/18 |  |
+| 2026-11-24 | 0 | — | — |  |
 
 ## 流量来源（近 14 天）
 
@@ -125,17 +126,15 @@
 | --- | --- | --- |
 | github.com | 3 | 3 |
 | Bing | 2 | 2 |
-| awesome-dsh-plugin.com | 1 | 1 |
 
 
 ## 热门路径（近 14 天）
 
 | 路径 | 次数 | 独立 |
 | --- | --- | --- |
-| /gjj-star/dsh-conversation-navigator | 34 | 32 |
+| /gjj-star/dsh-conversation-navigator | 32 | 30 |
 | /gjj-star/dsh-conversation-navigator/tree/main | 2 | 1 |
 | /gjj-star/dsh-conversation-navigator/blob/689b1e51b8356f568ca1a1e31404de9ded91bd97/README.md | 1 | 1 |
-| /gjj-star/dsh-conversation-navigator/blob/HEAD/README.md | 1 | 1 |
 | /gjj-star/dsh-conversation-navigator/blob/main/README.en.md | 1 | 1 |
 | /gjj-star/dsh-conversation-navigator/blob/main/README.md | 1 | 1 |
 | /gjj-star/dsh-conversation-navigator/graphs/traffic | 1 | 1 |
