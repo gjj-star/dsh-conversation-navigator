@@ -106,7 +106,8 @@
   "2026-11-24": 68,
   "2026-11-25": 58,
   "2026-11-26": 62,
-  "2026-11-27": 0
+  "2026-11-27": 62,
+  "2026-11-28": 0
  },
  "viewsDaily": {
   "2026-08-17": {
@@ -617,6 +618,11 @@
   "2026-11-26": {
    "count": 2,
    "uniques": 2,
+   "source": "github-api"
+  },
+  "2026-11-27": {
+   "count": 1,
+   "uniques": 1,
    "source": "github-api"
   }
  },
@@ -1130,6 +1136,11 @@
    "count": 46,
    "uniques": 25,
    "source": "github-api"
+  },
+  "2026-11-27": {
+   "count": 19,
+   "uniques": 10,
+   "source": "github-api"
   }
  },
  "starsDaily": {
@@ -1320,8 +1331,8 @@
   {
    "path": "/gjj-star/dsh-conversation-navigator",
    "title": "Overview",
-   "count": 32,
-   "uniques": 28
+   "count": 33,
+   "uniques": 29
   },
   {
    "path": "/gjj-star/dsh-conversation-navigator/blob/689b1e51b8356f568ca1a1e31404de9ded91bd97/README.md",
@@ -1371,16 +1382,10 @@
   "forks": 1,
   "watchers": 0,
   "openIssues": 0,
-  "pushedAt": "2026-11-26T12:44:15Z",
-  "size": 19301
+  "pushedAt": "2026-11-27T12:35:29Z",
+  "size": 19321
  },
  "history": [
-  {
-   "at": "2026-10-29T10:04:54.857Z",
-   "npm": "days=74",
-   "github": "views=14 clones=14",
-   "stars": "total=22"
-  },
   {
    "at": "2026-10-30T10:08:09.225Z",
    "npm": "days=75",
@@ -1554,11 +1559,17 @@
    "npm": "days=103",
    "github": "views=14 clones=14",
    "stars": "total=22"
+  },
+  {
+   "at": "2026-11-28T11:54:43.800Z",
+   "npm": "days=104",
+   "github": "views=14 clones=14",
+   "stars": "total=22"
   }
  ],
  "recovered": "recovered from DSH session logs (queries at 2026-08-25 and 2026-09-07); GitHub traffic API keeps only a rolling 14-day window",
  "latestVersion": "0.2.11",
- "updatedAt": "2026-11-27T12:35:28.044Z",
+ "updatedAt": "2026-11-28T11:54:43.800Z",
  "weeklyChecks": [
   {
    "at": "2026-09-30T03:04:31.393Z",
@@ -2219,6 +2230,18 @@
    "diff": 0,
    "gapDays": 0,
    "windowMatched": true
+  },
+  {
+   "at": "2026-11-28T11:54:43.800Z",
+   "total": 472,
+   "window": [
+    "2026-11-21",
+    "2026-11-27"
+   ],
+   "dailySum": 472,
+   "diff": 0,
+   "gapDays": 0,
+   "windowMatched": true
   }
  ],
  "latestVersions": {
@@ -2251,7 +2274,7 @@
   "0.2.0": 1,
   "0.2.1": 1,
   "0.2.10": 2,
-  "0.2.11": 422,
+  "0.2.11": 421,
   "0.2.2": 1,
   "0.2.3": 1,
   "0.2.4": 1,
